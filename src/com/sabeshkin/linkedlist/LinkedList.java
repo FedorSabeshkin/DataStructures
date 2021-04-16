@@ -111,6 +111,20 @@ public class LinkedList {
 		}
 	}
 
+	public static LinkedList multiplyEachNode(LinkedList firstList, LinkedList secondList) {
+		if(firstList.count() == secondList.count()){
+			Node nodeFromFirstList = firstList.head;
+			Node nodeFromSecondList = secondList.head;
+			while(nodeFromFirstList != null){
+				nodeFromFirstList.value = nodeFromFirstList.value * nodeFromSecondList.value;
+				nodeFromFirstList = nodeFromFirstList.next;
+				nodeFromSecondList = nodeFromSecondList.next;
+			}
+			return firstList;
+		}else{
+			throw new IllegalArgumentException("Передаваемые LinkedList'ы должны быть одинаковой длины");
+		}
+	}
 }
 
 class Node {
