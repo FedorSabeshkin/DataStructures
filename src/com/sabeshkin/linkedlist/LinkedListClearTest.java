@@ -1,0 +1,23 @@
+package com.sabeshkin.linkedlist;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class LinkedListClearTest {
+	LinkedList linkedList;
+	@Test
+	public void testClear() {
+		linkedList = new LinkedList();
+		Node node;
+		for (int i = 0; i < 10; i++){
+			node = new Node(i);
+			linkedList.addInTail(node);
+		}
+		linkedList.clear();
+		assertEquals(
+				0,
+				linkedList.count());
+	}
+
+}
