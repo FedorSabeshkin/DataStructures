@@ -61,7 +61,6 @@ public class LinkedList {
 
 	public void clear() {
 		this.head=null;
-		// здесь будет ваш код очистки всего списка
 	}
 
 	public int count() {
@@ -74,7 +73,7 @@ public class LinkedList {
 				count++;
 			}	
 		}
-		return count; // здесь будет ваш код подсчёта количества элементов в списке
+		return count; 
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
