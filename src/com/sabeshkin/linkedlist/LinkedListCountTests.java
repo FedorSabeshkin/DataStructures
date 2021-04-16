@@ -22,6 +22,16 @@ public class LinkedListCountTests {
 	}
 	
 	@Test
+	public void testCountOne() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		assertEquals(
+				1,
+				linkedList.count());
+	}
+	
+	@Test
 	public void testCountZero() {
 		linkedList = new LinkedList();
 		Node node;

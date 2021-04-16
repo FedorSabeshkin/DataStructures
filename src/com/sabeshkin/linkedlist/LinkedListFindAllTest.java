@@ -8,7 +8,42 @@ import org.junit.Test;
 
 public class LinkedListFindAllTest {
 	LinkedList linkedList;
+
+	@Test
+	public void testFindAllEmptyList() {
+		linkedList = new LinkedList();
+		Node node;
+		ArrayList<Node> foundedNodes = linkedList.findAll(1);
+		assertEquals(
+				0,
+				foundedNodes.size());
+	}
 	
+
+	@Test
+	public void testFindAllOneNodeInListFound() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		ArrayList<Node> foundedNodes = linkedList.findAll(1);
+		assertEquals(
+				1,
+				foundedNodes.size());
+	}
+	
+	
+	@Test
+	public void testFindAllOneNodeInListDidNotFound() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		ArrayList<Node> foundedNodes = linkedList.findAll(2);
+		assertEquals(
+				0,
+				foundedNodes.size());
+	}
+	
+
 	@Test
 	public void testFindAllNumberOne() {
 		linkedList = new LinkedList();
@@ -22,6 +57,7 @@ public class LinkedListFindAllTest {
 				1,
 				foundedNodes.size());
 	}
+
 	
 	@Test
 	public void testFindAllNumberThree() {
@@ -36,6 +72,7 @@ public class LinkedListFindAllTest {
 				5,
 				foundedNodes.size());
 	}
+
 	
 	@Test
 	public void testFindAllNumberHundred() {
