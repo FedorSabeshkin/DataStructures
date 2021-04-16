@@ -7,10 +7,6 @@ import org.junit.Test;
 
 public class LinkedListCountTests {
 	LinkedList linkedList;
-	@Before
-	public void setUp() throws Exception {
-		
-	}
 	
 	@Test
 	public void testCountTen() {
