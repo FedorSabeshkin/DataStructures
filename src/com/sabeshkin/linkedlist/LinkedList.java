@@ -34,7 +34,7 @@ public class LinkedList {
 		Node node = this.head;
 		while(node != null){
 			if(node.value == _value){
-				nodes.add(node);	
+				nodes.add(node);
 			}
 			node = node.next;
 		}
@@ -42,34 +42,50 @@ public class LinkedList {
 	}
 
 	public boolean remove(int _value) {
-		
+
 		Node node = this.head;
-		if(node.value == _value){
+		while(node != null){
+			if(node.value == _value){
 				this.head = node.next;
 				return true;
-		}
-		while(node != null){
+			}
 			if(node.next != null){
 				if(node.next.value == _value){
 					Node removedNode = node.next;
 					Node prevRemovedNode = node;
 					Node nextRemovedNode = removedNode.next;
-					prevRemovedNode.next = removedNode.next;
-					return true;	
+					prevRemovedNode.next = nextRemovedNode;
+					return true;
 				}
 			}
 			node = node.next;
 		}
-		// здесь будет ваш код удаления одного узла по заданному значению
-		return false; // если узел был удалён
+		return false;
 	}
 
 	public void removeAll(int _value) {
-		// здесь будет ваш код удаления всех узлов по заданному значению
+		Node node = this.head;
+		while(node != null){
+			if(this.head.value == _value){
+				this.head = node.next;
+				node = this.head;
+				continue;
+			}
+			if(node.next != null){
+				if(node.next.value == _value){
+					Node removedNode = node.next;
+					Node prevRemovedNode = node;
+					Node nextRemovedNode = removedNode.next;
+					prevRemovedNode.next = nextRemovedNode;
+					continue;
+				}
+			}
+			node = node.next;
+		}
 	}
 
 	public void clear() {
-		this.head=null;
+		this.head = null;
 	}
 
 	public int count() {
@@ -77,20 +93,20 @@ public class LinkedList {
 		Node node = this.head;
 		if(this.head != null){
 			count = 1;
-			while (node.next != null){
+			while(node.next != null){
 				node = node.next;
 				count++;
-			}	
+			}
 		}
-		return count; 
+		return count;
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
 		if(_nodeAfter != null){
 			Node nodeAfter = _nodeAfter.next;
 			_nodeToInsert.next = nodeAfter;
-			_nodeAfter.next = _nodeToInsert;	
-		}else{
+			_nodeAfter.next = _nodeToInsert;
+		} else{
 			this.head = _nodeToInsert;
 		}
 	}
@@ -105,5 +121,5 @@ class Node {
 		value = _value;
 		next = null;
 	}
-	
+
 }
