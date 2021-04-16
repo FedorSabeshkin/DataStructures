@@ -31,6 +31,7 @@ public class LinkedList {
 
 	public ArrayList<Node> findAll(int _value) {
 		ArrayList<Node> nodes = new ArrayList<Node>();
+		nodes.add(this.find(_value));
 		// здесь будет ваш код поиска всех узлов
 		return nodes;
 	}
@@ -77,6 +78,13 @@ public class LinkedList {
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
+		if(_nodeAfter != null){
+			Node nodeAfter = _nodeAfter.next;
+			_nodeToInsert.next = nodeAfter;
+			_nodeAfter.next = _nodeToInsert;	
+		}else{
+			this.head = _nodeToInsert;
+		}
 		// здесь будет ваш код вставки узла после заданного
 
 		// если _nodeAfter = null ,
