@@ -54,6 +54,9 @@ public class LinkedList {
 					Node removedNode = node.next;
 					Node prevRemovedNode = node;
 					Node nextRemovedNode = removedNode.next;
+					if(isTail(removedNode)){
+						this.tail = prevRemovedNode;
+					}
 					prevRemovedNode.next = nextRemovedNode;
 					return true;
 				}
@@ -76,6 +79,9 @@ public class LinkedList {
 					Node removedNode = node.next;
 					Node prevRemovedNode = node;
 					Node nextRemovedNode = removedNode.next;
+					if(isTail(removedNode)){
+						this.tail = prevRemovedNode;
+					}
 					prevRemovedNode.next = nextRemovedNode;
 					continue;
 				}
@@ -86,6 +92,7 @@ public class LinkedList {
 
 	public void clear() {
 		this.head = null;
+		this.tail = null;
 	}
 
 	public int count() {
@@ -102,12 +109,34 @@ public class LinkedList {
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
+		if(isTail(_nodeAfter)){
+			this.tail = _nodeToInsert;
+		}
+		if(isHead(_nodeAfter)){
+			this.head = _nodeToInsert;
+		}
 		if(_nodeAfter != null){
 			Node nodeAfter = _nodeAfter.next;
 			_nodeToInsert.next = nodeAfter;
 			_nodeAfter.next = _nodeToInsert;
 		} else{
 			this.head = _nodeToInsert;
+		}
+	}
+
+	public boolean isTail(Node node) {
+		if(node == this.tail){
+			return true;
+		} else{
+			return false;
+		}
+	}
+
+	public boolean isHead(Node node) {
+		if(node == this.head){
+			return true;
+		} else{
+			return false;
 		}
 	}
 
@@ -121,7 +150,7 @@ public class LinkedList {
 				nodeFromSecondList = nodeFromSecondList.next;
 			}
 			return firstList;
-		}else{
+		} else{
 			throw new IllegalArgumentException("Передаваемые LinkedList'ы должны быть одинаковой длины");
 		}
 	}
