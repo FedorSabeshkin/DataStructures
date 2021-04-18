@@ -151,7 +151,23 @@ public class LinkedList {
 			}
 			return firstList;
 		} else{
-			throw new IllegalArgumentException("Передаваемые LinkedList'ы должны быть одинаковой длины");
+			throw new IllegalArgumentException("The passed LinkedLists must be the same length");
+		}
+	}
+	
+	public static LinkedList sumEachNode(LinkedList firstList, LinkedList secondList) {
+		if(firstList.count() == secondList.count()){
+			Node nodeFromFirstList = firstList.head;
+			Node nodeFromSecondList = secondList.head;
+			while(nodeFromFirstList != null){
+				nodeFromFirstList.value = nodeFromFirstList.value + nodeFromSecondList.value;
+				nodeFromFirstList = nodeFromFirstList.next;
+				nodeFromSecondList = nodeFromSecondList.next;
+			}
+			// обработать случай с tail
+			return firstList;
+		} else{
+			throw new IllegalArgumentException("The passed LinkedLists must be the same length");
 		}
 	}
 }
