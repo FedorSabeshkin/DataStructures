@@ -4,15 +4,25 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class LinkedListFindAllTest {
 	LinkedList linkedList;
+	LinkedList largeLinkedList;
+	@Before
+	public void setUp() throws Exception {
+		largeLinkedList = new LinkedList();
+		Node node;
+		for (int i = 0; i < 10000000; i++){
+			node = new Node(i);
+			largeLinkedList.addInTail(node);
+		}	
+	}
 
 	@Test
 	public void testFindAllEmptyList() {
 		linkedList = new LinkedList();
-		Node node;
 		ArrayList<Node> foundedNodes = linkedList.findAll(1);
 		assertEquals(
 				0,
@@ -26,6 +36,14 @@ public class LinkedListFindAllTest {
 		Node node = new Node(1);
 		linkedList.addInTail(node);
 		ArrayList<Node> foundedNodes = linkedList.findAll(1);
+		assertEquals(
+				1,
+				foundedNodes.size());
+	}
+	
+	@Test
+	public void testFindAllInLargeListOneNodeInListFound() {										   
+		ArrayList<Node> foundedNodes = largeLinkedList.findAll(9999999);
 		assertEquals(
 				1,
 				foundedNodes.size());
