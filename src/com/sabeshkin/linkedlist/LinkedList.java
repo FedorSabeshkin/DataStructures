@@ -159,16 +159,20 @@ public class LinkedList {
 	}
 	
 	public static LinkedList sumEachNode(LinkedList firstList, LinkedList secondList) {
+		LinkedList resultList =  new LinkedList();
+		Node node;
+		int summa;
 		if(firstList.count() == secondList.count()){
 			Node nodeFromFirstList = firstList.head;
 			Node nodeFromSecondList = secondList.head;
 			while(nodeFromFirstList != null){
-				nodeFromFirstList.value = nodeFromFirstList.value + nodeFromSecondList.value;
+				summa = nodeFromFirstList.value + nodeFromSecondList.value;
 				nodeFromFirstList = nodeFromFirstList.next;
 				nodeFromSecondList = nodeFromSecondList.next;
+				node = new Node(summa);
+				resultList.addInTail(node);
 			}
-			// обработать случай с tail
-			return firstList;
+			return resultList;
 		} else{
 			throw new IllegalArgumentException("The passed LinkedLists must be the same length");
 		}
