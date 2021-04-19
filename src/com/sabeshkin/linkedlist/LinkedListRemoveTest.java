@@ -9,7 +9,29 @@ import com.sabeshkin.linkedlist.*;
 
 public class LinkedListRemoveTest {
 	LinkedList linkedList;
-
+	
+	@Test
+	public void testRemoveFromListWithOnlyOneElementHeadIsNull() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		linkedList.remove(1);
+		assertEquals(
+				null,
+				linkedList.head);
+	}
+	
+	@Test
+	public void testRemoveFromListWithOnlyOneElementTailIsNull() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		linkedList.remove(1);
+		assertEquals(
+				null,
+				linkedList.tail);
+	}
+	
 	@Test
 	public void testRemoveFromEmptyList() {
 		linkedList = new LinkedList();
@@ -17,6 +39,42 @@ public class LinkedListRemoveTest {
 		assertEquals(
 				0,
 				linkedList.count());
+	}
+	
+	@Test
+	public void testRemoveValueFromeListTailIsOneHundred() {
+		linkedList = new LinkedList();
+		Node node;
+		for (int i = 0; i < 100; i++){
+			if(i==0 || i ==99){
+				node = new Node(100);	
+			}else{
+				node = new Node(i);	
+			}
+			linkedList.addInTail(node);
+		}
+		linkedList.remove(100);
+		assertEquals(
+				100,
+				linkedList.tail.value);
+	}
+	
+	@Test
+	public void testRemoveValueFromeListHeadIsOne() {
+		linkedList = new LinkedList();
+		Node node;
+		for (int i = 0; i < 100; i++){
+			if(i==0 || i ==99){
+				node = new Node(100);	
+			}else{
+				node = new Node(i);	
+			}
+			linkedList.addInTail(node);
+		}
+		linkedList.remove(100);
+		assertEquals(
+				1,
+				linkedList.head.value);
 	}
 	
 	@Test
@@ -75,7 +133,7 @@ public class LinkedListRemoveTest {
 	}
 
 	@Test
-	public void testRemoveNumberHundred() {
+	public void testRemoveNumberOneHundred() {
 		linkedList = new LinkedList();
 		Node node;
 		for (int i = 0; i < 5; i++){

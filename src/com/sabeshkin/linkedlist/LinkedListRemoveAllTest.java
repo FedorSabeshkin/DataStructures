@@ -7,6 +7,32 @@ import org.junit.Test;
 public class LinkedListRemoveAllTest {
 	LinkedList linkedList;
 	
+	
+	
+	@Test
+	public void testRemoveAllFromListWithOnlyOneElementHeadIsNull() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		linkedList.removeAll(1);
+		assertEquals(
+				null,
+				linkedList.head);
+	}
+	
+	
+	@Test
+	public void testRemoveAllFromListWithOnlyOneElementTailIsNull() {
+		linkedList = new LinkedList();
+		Node node = new Node(1);
+		linkedList.addInTail(node);
+		linkedList.removeAll(1);
+		assertEquals(
+				null,
+				linkedList.tail);
+	}
+
+	
 	@Test
 	public void testRemoveAllTwoEqualNumbers() {
 		linkedList = new LinkedList();
@@ -24,6 +50,43 @@ public class LinkedListRemoveAllTest {
 				2,
 				linkedList.count());
 	}
+	
+	@Test
+	public void testRemoveAllValueFromeListTailIsOneHundred() {
+		linkedList = new LinkedList();
+		Node node;
+		for (int i = 0; i < 100; i++){
+			if(i==0 || i ==99){
+				node = new Node(100);	
+			}else{
+				node = new Node(i);	
+			}
+			linkedList.addInTail(node);
+		}
+		linkedList.removeAll(100);
+		assertEquals(
+				98,
+				linkedList.tail.value);
+	}
+	
+	@Test
+	public void testRemoveAllValueFromeListHeadIsOne() {
+		linkedList = new LinkedList();
+		Node node;
+		for (int i = 0; i < 100; i++){
+			if(i==0 || i ==99){
+				node = new Node(100);	
+			}else{
+				node = new Node(i);	
+			}
+			linkedList.addInTail(node);
+		}
+		linkedList.removeAll(100);
+		assertEquals(
+				1,
+				linkedList.head.value);
+	}
+	
 	
 	@Test
 	public void testRemoveAllTwoEqualNumbersFromTail() {

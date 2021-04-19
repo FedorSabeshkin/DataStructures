@@ -46,6 +46,9 @@ public class LinkedList {
 		Node node = this.head;
 		while(node != null){
 			if(node.value == _value){
+				if(isTail(node)){
+					this.tail = null;
+				}
 				this.head = node.next;
 				return true;
 			}
@@ -70,6 +73,9 @@ public class LinkedList {
 		Node node = this.head;
 		while(node != null){
 			if(this.head.value == _value){
+				if(isTail(node)){
+					this.tail = null;
+				}
 				this.head = node.next;
 				node = this.head;
 				continue;
