@@ -9,6 +9,26 @@ public class LinkedListSumEachNodeTest {
 	LinkedList secondList;
 	
 	@Test
+	public void testSumEachNodeHeadIsNull() {
+		firstList = new LinkedList();
+		secondList = new LinkedList();
+		firstList = LinkedList.sumEachNode(firstList, secondList);
+		assertEquals(
+				null,
+				firstList.head);
+	}
+	
+	@Test
+	public void testSumEachNodeTailIsNull() {
+		firstList = new LinkedList();
+		secondList = new LinkedList();
+		firstList = LinkedList.sumEachNode(firstList, secondList);
+		assertEquals(
+				null,
+				firstList.tail);
+	}
+	
+	@Test
 	public void testSumEachNodeTailIsFour() {
 		firstList = new LinkedList();
 		secondList = new LinkedList();
