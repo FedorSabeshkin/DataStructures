@@ -118,9 +118,6 @@ public class LinkedList {
 		if(isTail(_nodeAfter)){
 			this.tail = _nodeToInsert;
 		}
-		if(isHead(_nodeAfter)){
-			this.head = _nodeToInsert;
-		}
 		if(_nodeAfter != null){
 			Node nodeAfter = _nodeAfter.next;
 			_nodeToInsert.next = nodeAfter;
