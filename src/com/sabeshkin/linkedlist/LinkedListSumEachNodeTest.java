@@ -94,6 +94,25 @@ public class LinkedListSumEachNodeTest {
 				21,
 				firstList.tail.value);
 	}
+	
+	@Test
+	public void testSumEachNodeFirstListNotEqualResultList() {
+		LinkedList resultList;
+		firstList = new LinkedList();
+		secondList = new LinkedList();
+		Node nodeForFirstList;
+		Node nodeForSecondList;
+		for (int i = 0; i < 10; i++){
+			nodeForFirstList = new Node(i);
+			nodeForSecondList = new Node(i+3);
+			firstList.addInTail(nodeForFirstList);
+			secondList.addInTail(nodeForSecondList);
+		}
+		resultList = LinkedList.sumEachNode(firstList, secondList);
+		assertNotEquals(
+				resultList,
+				firstList);
+	}
 
 
 }
