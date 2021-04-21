@@ -14,7 +14,7 @@ public class LinkedListFindAllTest {
 	public void setUp() throws Exception {
 		largeLinkedList = new LinkedList();
 		Node node;
-		for (int i = 0; i < 10000000; i++){
+		for (int i = 0; i < 1000000; i++){
 			node = new Node(i);
 			largeLinkedList.addInTail(node);
 		}	
@@ -23,10 +23,10 @@ public class LinkedListFindAllTest {
 	@Test
 	public void testFindAllEmptyList() {
 		linkedList = new LinkedList();
-		ArrayList<Node> foundedNodes = linkedList.findAll(1);
+		ArrayList<Node> foundNodes = linkedList.findAll(1);
 		assertEquals(
 				0,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 	
 
@@ -35,18 +35,18 @@ public class LinkedListFindAllTest {
 		linkedList = new LinkedList();
 		Node node = new Node(1);
 		linkedList.addInTail(node);
-		ArrayList<Node> foundedNodes = linkedList.findAll(1);
+		ArrayList<Node> foundNodes = linkedList.findAll(1);
 		assertEquals(
 				1,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 	
 	@Test
 	public void testFindAllInLargeListOneNodeInListFound() {										   
-		ArrayList<Node> foundedNodes = largeLinkedList.findAll(9999999);
+		ArrayList<Node> foundNodes = largeLinkedList.findAll(999999);
 		assertEquals(
 				1,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 	
 	
@@ -55,10 +55,10 @@ public class LinkedListFindAllTest {
 		linkedList = new LinkedList();
 		Node node = new Node(1);
 		linkedList.addInTail(node);
-		ArrayList<Node> foundedNodes = linkedList.findAll(2);
+		ArrayList<Node> foundNodes = linkedList.findAll(2);
 		assertEquals(
 				0,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 	
 
@@ -70,10 +70,10 @@ public class LinkedListFindAllTest {
 			node = new Node(i);
 			linkedList.addInTail(node);
 		}
-		ArrayList<Node> foundedNodes = linkedList.findAll(1);
+		ArrayList<Node> foundNodes = linkedList.findAll(1);
 		assertEquals(
 				1,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 
 	
@@ -85,10 +85,10 @@ public class LinkedListFindAllTest {
 			node = new Node(3);
 			linkedList.addInTail(node);
 		}
-		ArrayList<Node> foundedNodes = linkedList.findAll(3);
+		ArrayList<Node> foundNodes = linkedList.findAll(3);
 		assertEquals(
 				5,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 
 	
@@ -100,10 +100,10 @@ public class LinkedListFindAllTest {
 			node = new Node(3);
 			linkedList.addInTail(node);
 		}
-		ArrayList<Node> foundedNodes = linkedList.findAll(100);
+		ArrayList<Node> foundNodes = linkedList.findAll(100);
 		assertEquals(
 				0,
-				foundedNodes.size());
+				foundNodes.size());
 	}
 
 }
