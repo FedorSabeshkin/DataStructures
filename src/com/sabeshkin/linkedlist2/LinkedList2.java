@@ -2,83 +2,77 @@ package com.sabeshkin.linkedlist2;
 
 import java.util.*;
 
-public class LinkedList2
-{
-     public Node head;
-     public Node tail;
 
-     public LinkedList2()
-     {
-       head = null;
-       tail = null;
-     }
+public class LinkedList2 {
+	public Node head;
+	public Node tail;
 
-     public void addInTail(Node _item)
-     {
-       if (head == null) {
-        this.head = _item;
-        this.head.next = null;
-        this.head.prev = null;
-       } else {
-        this.tail.next = _item;
-        _item.prev = tail;
-       }
-       this.tail = _item;
-     }
+	public LinkedList2() {
+		head = null;
+		tail = null;
+	}
 
-     public Node find(int _value)
-     {
-       // здесь будет ваш код поиска
-       return null;
-     }
+	public void addInTail(Node _item) {
+		if(head == null){
+			this.head = _item;
+			this.head.next = null;
+			this.head.prev = null;
+		} else{
+			this.tail.next = _item;
+			_item.prev = tail;
+		}
+		this.tail = _item;
+	}
 
-     public ArrayList<Node> findAll(int _value)
-     {
-       ArrayList<Node> nodes = new ArrayList<Node>();
-       // здесь будет ваш код поиска всех узлов по заданному значению
-       return nodes;
-     }
+	public Node find(int _value) {
+		Node node = this.head;
+		while(node != null){
+			if(node.value == _value)
+				return node;
+			node = node.next;
+		}
+		return null;
+	}
 
-     public boolean remove(int _value)
-     {
-       // здесь будет ваш код удаления одного узла по заданному значению
-       return true; // если узел был удалён
-     }
+	public ArrayList<Node> findAll(int _value) {
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		// здесь будет ваш код поиска всех узлов по заданному значению
+		return nodes;
+	}
 
-     public void removeAll(int _value)
-     {
-       // здесь будет ваш код удаления всех узлов по заданному значению
-     }
+	public boolean remove(int _value) {
+		// здесь будет ваш код удаления одного узла по заданному значению
+		return true; // если узел был удалён
+	}
 
-     public void clear()
-     {
-       // здесь будет ваш код очистки всего списка
-     }
+	public void removeAll(int _value) {
+		// здесь будет ваш код удаления всех узлов по заданному значению
+	}
 
-     public int count()
-     {
-       return 0; // здесь будет ваш код подсчёта количества элементов в списке
-     }
+	public void clear() {
+		// здесь будет ваш код очистки всего списка
+	}
 
-     public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
-     {
-       // здесь будет ваш код вставки узла после заданного узла
+	public int count() {
+		return 0; // здесь будет ваш код подсчёта количества элементов в списке
+	}
 
-       // если _nodeAfter = null
-       // добавьте новый элемент первым в списке 
-     }
+	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
+		// здесь будет ваш код вставки узла после заданного узла
+
+		// если _nodeAfter = null
+		// добавьте новый элемент первым в списке
+	}
 }
 
-class Node
-{
-     public int value;
-     public Node next;
-     public Node prev;
+class Node {
+	public int value;
+	public Node next;
+	public Node prev;
 
-     public Node(int _value) 
-     { 
-       value = _value; 
-       next = null;
-       prev = null;
-     }
+	public Node(int _value) {
+		value = _value;
+		next = null;
+		prev = null;
+	}
 }
