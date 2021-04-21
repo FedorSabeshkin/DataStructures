@@ -81,13 +81,13 @@ public class LinkedListRemoveTest {
 	public void testRemoveLastValueFromLargeList() {
 		linkedList = new LinkedList();
 		Node node;
-		for (int i = 0; i < 10000000; i++){
+		for (int i = 0; i < 1000000; i++){
 			node = new Node(i);
 			linkedList.addInTail(node);
 		}
-		linkedList.remove(9999999);
+		linkedList.remove(999999);
 		assertEquals(
-				9999999,
+				999999,
 				linkedList.count());
 	}
 	
@@ -95,13 +95,13 @@ public class LinkedListRemoveTest {
 	public void testRemoveMediumValueFromLargeList() {
 		linkedList = new LinkedList();
 		Node node;
-		for (int i = 0; i < 10000000; i++){
+		for (int i = 0; i < 1000000; i++){
 			node = new Node(i);
 			linkedList.addInTail(node);
 		}
-		linkedList.remove(5000000);
+		linkedList.remove(500000);
 		assertEquals(
-				9999999,
+				999999,
 				linkedList.count());
 	}
 	
