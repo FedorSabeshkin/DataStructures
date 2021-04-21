@@ -3,6 +3,8 @@ package com.sabeshkin.linkedlist2;
 import java.util.*;
 
 
+
+
 public class LinkedList2 {
 	public Node head;
 	public Node tail;
@@ -36,13 +38,45 @@ public class LinkedList2 {
 
 	public ArrayList<Node> findAll(int _value) {
 		ArrayList<Node> nodes = new ArrayList<Node>();
-		// здесь будет ваш код поиска всех узлов по заданному значению
+		Node node = this.head;
+		while(node != null){
+			if(node.value == _value){
+				nodes.add(node);
+			}
+			node = node.next;
+		}
 		return nodes;
 	}
 
 	public boolean remove(int _value) {
-		// здесь будет ваш код удаления одного узла по заданному значению
-		return true; // если узел был удалён
+		Node node = this.head;
+		while(node != null){
+			if(node.value == _value){
+				this.head = node.next;
+				if(isTail(node)){
+					this.tail = null;
+				}else{
+					this.head.prev = null;
+				}
+				return true;
+			}
+			if(node.next != null){
+				if(node.next.value == _value){
+					Node removedNode = node.next;
+					Node prevRemovedNode = node;
+					Node nextRemovedNode = removedNode.next;
+					if(isTail(removedNode)){
+						this.tail = prevRemovedNode;
+					}else{
+						nextRemovedNode.prev = prevRemovedNode;
+					}
+					prevRemovedNode.next = nextRemovedNode;
+					return true;
+				}
+			}
+			node = node.next;
+		}
+		return false;
 	}
 
 	public void removeAll(int _value) {
@@ -54,7 +88,16 @@ public class LinkedList2 {
 	}
 
 	public int count() {
-		return 0; // здесь будет ваш код подсчёта количества элементов в списке
+		int count = 0;
+		Node node = this.head;
+		if(this.head != null){
+			count = 1;
+			while(node.next != null){
+				node = node.next;
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
@@ -62,6 +105,22 @@ public class LinkedList2 {
 
 		// если _nodeAfter = null
 		// добавьте новый элемент первым в списке
+	}
+	
+	public boolean isTail(Node node) {
+		if(node == this.tail){
+			return true;
+		} else{
+			return false;
+		}
+	}
+
+	public boolean isHead(Node node) {
+		if(node == this.head){
+			return true;
+		} else{
+			return false;
+		}
 	}
 }
 
