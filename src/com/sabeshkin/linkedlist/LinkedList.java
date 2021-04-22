@@ -46,10 +46,10 @@ public class LinkedList {
 		Node node = this.head;
 		while(node != null){
 			if(node.value == _value){
+				this.head = node.next;
 				if(isTail(node)){
 					this.tail = null;
 				}
-				this.head = node.next;
 				return true;
 			}
 			if(node.next != null){
@@ -119,8 +119,8 @@ public class LinkedList {
 			this.tail = _nodeToInsert;
 		}
 		if(_nodeAfter != null){
-			Node nodeAfter = _nodeAfter.next;
-			_nodeToInsert.next = nodeAfter;
+			Node nodeAfterNext = _nodeAfter.next;
+			_nodeToInsert.next = nodeAfterNext;
 			_nodeAfter.next = _nodeToInsert;
 		} else{
 			this.head = _nodeToInsert;
