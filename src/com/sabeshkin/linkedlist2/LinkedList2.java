@@ -2,9 +2,6 @@ package com.sabeshkin.linkedlist2;
 
 import java.util.*;
 
-
-
-
 public class LinkedList2 {
 	public Node head;
 	public Node tail;
@@ -80,11 +77,39 @@ public class LinkedList2 {
 	}
 
 	public void removeAll(int _value) {
-		// здесь будет ваш код удаления всех узлов по заданному значению
+		Node node = this.head;
+		while(node != null){
+			if(node.value == _value){
+				this.head = node.next;
+				if(isTail(node)){
+					this.tail = null;
+				}else{
+					this.head.prev = null;
+				}
+				node = this.head;
+				continue;
+			}
+			if(node.next != null){
+				if(node.next.value == _value){
+					Node removedNode = node.next;
+					Node prevRemovedNode = node;
+					Node nextRemovedNode = removedNode.next;
+					if(isTail(removedNode)){
+						this.tail = prevRemovedNode;
+					}else{
+						nextRemovedNode.prev = prevRemovedNode;
+					}
+					prevRemovedNode.next = nextRemovedNode;
+					continue;
+				}
+			}
+			node = node.next;
+		}
 	}
 
 	public void clear() {
-		// здесь будет ваш код очистки всего списка
+		this.head = null;
+		this.tail = null;
 	}
 
 	public int count() {
@@ -101,11 +126,25 @@ public class LinkedList2 {
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
-		// здесь будет ваш код вставки узла после заданного узла
-
-		// если _nodeAfter = null
-		// добавьте новый элемент первым в списке
+		if(isTail(_nodeAfter)){
+			Node oldTail = this.tail;
+			this.tail = _nodeToInsert;
+			this.tail.prev = oldTail;
+		}
+		if(_nodeAfter != null){
+			Node nodeAfterNext = _nodeAfter.next;
+			if(nodeAfterNext != null){
+				nodeAfterNext.prev = _nodeToInsert;	
+			}
+			_nodeToInsert.next = nodeAfterNext;
+			_nodeToInsert.prev = _nodeAfter;
+			_nodeAfter.next = _nodeToInsert;
+		} else{
+			this.head = _nodeToInsert;
+		}
 	}
+	
+	
 	
 	public boolean isTail(Node node) {
 		if(node == this.tail){
