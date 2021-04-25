@@ -1,52 +1,53 @@
-package com.sabeshkin.linkedlist;
+package com.sabeshkin.DLinkedList;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import com.sabeshkin.DLinkedList.*;
 
-public class LinkedListClearTest {
-	LinkedList linkedList;
+public class DLinkedList_ClearTest {
+	DLinkedList linkedList2;
 	
 	@Test
 	public void testClear() {
-		linkedList = new LinkedList();
+		linkedList2 = new DLinkedList();
 		Node node;
 		for (int i = 0; i < 10; i++){
 			node = new Node(i);
-			linkedList.addInTail(node);
+			linkedList2.addInTail(node);
 		}
-		linkedList.clear();
+		linkedList2.clear();
 		assertEquals(
 				0,
-				linkedList.count());
+				linkedList2.count);
 	}
 	
 	@Test
 	public void testClearHeadIsNull() {
-		linkedList = new LinkedList();
+		linkedList2 = new DLinkedList();
 		Node node;
 		for (int i = 0; i < 10; i++){
 			node = new Node(i);
-			linkedList.addInTail(node);
+			linkedList2.addInTail(node);
 		}
-		linkedList.clear();
+		linkedList2.clear();
 		assertEquals(
 				null,
-				linkedList.head);
+				linkedList2.getHead());
 	}
 	
 	@Test
 	public void testClearTailIsNull() {
-		linkedList = new LinkedList();
+		linkedList2 = new DLinkedList();
 		Node node;
 		for (int i = 0; i < 10; i++){
 			node = new Node(i);
-			linkedList.addInTail(node);
+			linkedList2.addInTail(node);
 		}
-		linkedList.clear();
+		linkedList2.clear();
 		assertEquals(
 				null,
-				linkedList.tail);
+				linkedList2.getTail());
 	}
 
 }
