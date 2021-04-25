@@ -1,36 +1,50 @@
 package com.sabeshkin.DLinkedList;
 
 public class DLinkedList {
-
-	private Node head;
-	private Node tail;
+	private Node dummyHead;
+	private Node dummyTail;
 
 	public DLinkedList() {
-		tail = new Node(null);
-		head = new Node(null);
-		head.next = tail;
-		tail.prev = head;
+		dummyHead = new Node(null);
+		dummyTail = new Node(null);
+		dummyHead.next = dummyTail;
+		dummyTail.prev = dummyHead;
 	}
 
 	public Node getHead() {
-		return head.next;
+		if(this.dummyHead.next.value == null){
+			return null;
+		}else{
+			return this.dummyHead.next;
+		}
 	}
 
 	public Node getTail() {
-		return tail.prev;
+		if(this.dummyTail.prev.value == null){
+			return null;
+		}else{
+			return this.dummyTail.prev;
+		}
 	}
 
 	
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
-		_nodeToInsert.next = _nodeAfter.next;
+		if(_nodeAfter == null){
+			throw new IllegalArgumentException("_nodeAfter can't be a null");
+		}
+		Node oldNext = _nodeAfter.next;
+		oldNext.prev =  _nodeToInsert;
+		_nodeToInsert.next = oldNext;
 		_nodeToInsert.prev = _nodeAfter;
+		_nodeAfter.next = _nodeToInsert;
 	}
 	
 	public void addInTail(Node _item) {
-		
-		_item.next = tail;
-		_item.prev = tail.prev;
-		tail.prev = _item;
+		Node oldPrev = this.dummyTail.prev;
+		oldPrev.next = _item;
+		_item.prev = oldPrev;
+		_item.next = this.dummyTail;
+		this.dummyTail.prev = _item; 
 	}
 
 	public Node find(int _value) {
@@ -57,34 +71,7 @@ public class DLinkedList {
 		return false;
 	}
 
-	public int count() {
-		int count = 0;
-		Node node = this.head;
-		if(this.head != null){
-			count = 1;
-			while(node.next.value != null){
-				node = node.next;
-				count++;
-			}
-		}
-		return count;
-	}
 
-	public boolean isTail(Node node) {
-		if((node == this.tail.prev) && (node.value != null)){
-			return true;
-		} else{
-			return false;
-		}
-	}
-
-	public boolean isHead(Node node) {
-		if((node == this.head.next) && (node.value != null)){
-			return true;
-		} else{
-			return false;
-		}
-	}
 }
 
 class Node {
