@@ -8,6 +8,52 @@ public class LinkedList2InsertAfterTest {
 	LinkedList2 linkedList2;
 	
 	@Test
+	public void testInsertAfter_InsertBeforeHead_HeadNextNextIsOne() {
+		linkedList2 = new LinkedList2();
+		Node node;
+		for (int i = 0; i < 10; i++){
+			node = new Node(i);
+			linkedList2.addInTail(node);
+		}
+		Node nodeToInsert = new Node(10);
+		linkedList2.insertAfter(null, nodeToInsert);
+		Node oldHead = linkedList2.head.next;
+		assertEquals(
+				1,
+				oldHead.next.value);
+	}
+	
+	@Test
+	public void testInsertAfter_InsertBeforeHead_HeadIsTen() {
+		linkedList2 = new LinkedList2();
+		Node node;
+		for (int i = 0; i < 10; i++){
+			node = new Node(i);
+			linkedList2.addInTail(node);
+		}
+		Node nodeToInsert = new Node(10);
+		linkedList2.insertAfter(null, nodeToInsert);
+		assertEquals(
+				10,
+				linkedList2.head.value);
+	}
+	
+	@Test
+	public void testInsertAfter_InsertBeforeHead_HeadNextIsZero() {
+		linkedList2 = new LinkedList2();
+		Node node;
+		for (int i = 0; i < 10; i++){
+			node = new Node(i);
+			linkedList2.addInTail(node);
+		}
+		Node nodeToInsert = new Node(10);
+		linkedList2.insertAfter(null, nodeToInsert);
+		assertEquals(
+				0,
+				linkedList2.head.next.value);
+	}
+	
+	@Test
 	public void testInsertAfter_NextNewNode_IsSix() {
 		linkedList2 = new LinkedList2();
 		Node node;

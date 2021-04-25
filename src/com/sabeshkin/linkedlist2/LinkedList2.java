@@ -107,22 +107,33 @@ public class LinkedList2 {
 	}
 
 	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
-		if(isTail(_nodeAfter)){
-			Node oldTail = this.tail;
-			this.tail = _nodeToInsert;
-			this.tail.prev = oldTail;
-		}
-		if(_nodeAfter != null){
-			Node nodeAfterNext = _nodeAfter.next;
-			if(nodeAfterNext != null){
-				nodeAfterNext.prev = _nodeToInsert;
+		if(this.count()>0){
+			if(isTail(_nodeAfter)){
+				Node oldTail = this.tail;
+				this.tail = _nodeToInsert;
+				this.tail.prev = oldTail;
 			}
-			_nodeToInsert.next = nodeAfterNext;
-			_nodeToInsert.prev = _nodeAfter;
-			_nodeAfter.next = _nodeToInsert;
-		} else{
-			this.head = _nodeToInsert;
+			if(_nodeAfter != null){
+				Node nodeAfterNext = _nodeAfter.next;
+				if(nodeAfterNext != null){
+					nodeAfterNext.prev = _nodeToInsert;
+				}
+				_nodeToInsert.next = nodeAfterNext;
+				_nodeToInsert.prev = _nodeAfter;
+				_nodeAfter.next = _nodeToInsert;
+			} else{
+				Node oldHead = this.head;
+				_nodeToInsert.next = oldHead;
+				oldHead.prev = _nodeToInsert;
+				this.head = _nodeToInsert;
+			}	
+		}else{
+			addInTail(_nodeToInsert);
 		}
+	}
+	
+	public void insertBeforeHead(Node nodeToInsert){
+		this.insertAfter(null, nodeToInsert);
 	}
 
 	public boolean isTail(Node node) {
