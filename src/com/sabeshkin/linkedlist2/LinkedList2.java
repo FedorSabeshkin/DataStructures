@@ -44,66 +44,47 @@ public class LinkedList2 {
 		}
 		return nodes;
 	}
+	
+	private void removeNode(Node node){
+		if(node.prev != null){
+			node.prev.next = node.next;
+		}
+		if(node.next != null){
+			node.next.prev = node.prev;
+		}
+		// check head case
+		if(isHead(node)){
+			if(node.next != null){
+				this.head = node.next;
+				this.head.prev = null;
+			} else{
+				this.head = null;
+			}
+		}
+		// check tail case
+		if(isTail(node)){
+			if(node.prev != null){
+				this.tail = node.prev;
+				this.tail.next = null;
+			} else{
+				this.tail = null;
+			}
+		}
+	}
 
 	public boolean remove(int _value) {
-		Node node = this.head;
-		while(node != null){
-			if(node.value == _value){
-				this.head = node.next;
-				if(isTail(node)){
-					this.tail = null;
-				}else{
-					this.head.prev = null;
-				}
-				return true;
-			}
-			if(node.next != null){
-				if(node.next.value == _value){
-					Node removedNode = node.next;
-					Node prevRemovedNode = node;
-					Node nextRemovedNode = removedNode.next;
-					if(isTail(removedNode)){
-						this.tail = prevRemovedNode;
-					}else{
-						nextRemovedNode.prev = prevRemovedNode;
-					}
-					prevRemovedNode.next = nextRemovedNode;
-					return true;
-				}
-			}
-			node = node.next;
+		Node node = this.find(_value);
+		if(node != null){
+			removeNode(node);
+			return true;
 		}
 		return false;
 	}
 
 	public void removeAll(int _value) {
-		Node node = this.head;
-		while(node != null){
-			if(node.value == _value){
-				this.head = node.next;
-				if(isTail(node)){
-					this.tail = null;
-				}else{
-					this.head.prev = null;
-				}
-				node = this.head;
-				continue;
-			}
-			if(node.next != null){
-				if(node.next.value == _value){
-					Node removedNode = node.next;
-					Node prevRemovedNode = node;
-					Node nextRemovedNode = removedNode.next;
-					if(isTail(removedNode)){
-						this.tail = prevRemovedNode;
-					}else{
-						nextRemovedNode.prev = prevRemovedNode;
-					}
-					prevRemovedNode.next = nextRemovedNode;
-					continue;
-				}
-			}
-			node = node.next;
+		ArrayList<Node> foundNodes = this.findAll(_value);
+		for (Node node : foundNodes){
+				removeNode(node);
 		}
 	}
 
@@ -134,7 +115,7 @@ public class LinkedList2 {
 		if(_nodeAfter != null){
 			Node nodeAfterNext = _nodeAfter.next;
 			if(nodeAfterNext != null){
-				nodeAfterNext.prev = _nodeToInsert;	
+				nodeAfterNext.prev = _nodeToInsert;
 			}
 			_nodeToInsert.next = nodeAfterNext;
 			_nodeToInsert.prev = _nodeAfter;
@@ -143,9 +124,7 @@ public class LinkedList2 {
 			this.head = _nodeToInsert;
 		}
 	}
-	
-	
-	
+
 	public boolean isTail(Node node) {
 		if(node == this.tail){
 			return true;

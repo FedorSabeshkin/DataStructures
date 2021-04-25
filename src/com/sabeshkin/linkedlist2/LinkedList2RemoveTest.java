@@ -11,7 +11,7 @@ public class LinkedList2RemoveTest {
 	LinkedList2 linkedList2;
 	
 	@Test
-	public void testRemoveHeadNewHeadPrevIsNull() {
+	public void testRemoveHead_NewHeadPrevIsNull() {
 		linkedList2 = new LinkedList2();
 		Node node;
 		for (int i = 0; i < 5; i++){
@@ -26,7 +26,7 @@ public class LinkedList2RemoveTest {
 	
 	
 	@Test
-	public void testRemoveTailNewTailPrevIsNull() {
+	public void testRemoveTail_NewTailPrevIsNull() {
 		linkedList2 = new LinkedList2();
 		Node node;
 		for (int i = 0; i < 5; i++){
@@ -115,7 +115,7 @@ public class LinkedList2RemoveTest {
 	}
 	
 	@Test
-	public void testRemoveValueFromeListTailIsOneHundred() {
+	public void testRemoveValueFromeList_TailIsOneHundred() {
 		linkedList2 = new LinkedList2();
 		Node node;
 		for (int i = 0; i < 100; i++){
@@ -133,7 +133,7 @@ public class LinkedList2RemoveTest {
 	}
 	
 	@Test
-	public void testRemoveValueFromeListHeadIsOne() {
+	public void testRemoveValueFromeList_HeadIsOne() {
 		linkedList2 = new LinkedList2();
 		Node node;
 		for (int i = 0; i < 100; i++){

@@ -19,6 +19,42 @@ public class LinkedList2FindAllTest {
 			largeLinkedList2.addInTail(node);
 		}	
 	}
+	
+	@Test
+	public void testFindAll_CheckLink_LastFoundElementIsTail() {
+		linkedList2 = new LinkedList2();
+		Node node;
+		for (int i = 0; i < 5; i++){
+			if(i<3){
+				node = new Node(0);
+			}else{
+				node = new Node(i);	
+			}
+			linkedList2.addInTail(node);
+		}
+		ArrayList<Node> foundNodes = linkedList2.findAll(4);
+		assertEquals(
+				true,
+				linkedList2.isTail(foundNodes.get(0)));
+	}
+	
+	@Test
+	public void testFindAll_CheckLink_FirstFoundElementIsHead() {
+		linkedList2 = new LinkedList2();
+		Node node;
+		for (int i = 0; i < 5; i++){
+			if(i<3){
+				node = new Node(0);
+			}else{
+				node = new Node(i);	
+			}
+			linkedList2.addInTail(node);
+		}
+		ArrayList<Node> foundNodes = linkedList2.findAll(0);
+		assertEquals(
+				true,
+				linkedList2.isHead(foundNodes.get(0)));
+	}
 
 	@Test
 	public void testFindAllEmptyList() {
