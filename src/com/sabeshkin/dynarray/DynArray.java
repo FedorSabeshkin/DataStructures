@@ -7,6 +7,9 @@ public class DynArray<T> {
 	public int count;
 	// какая его максимальная емкость
 	public int capacity;
+	/* Нужен для внутренней работы, что бы мы после инициалищации объекта 
+	 * не смогли добавлять эллементы другого типа
+	 */
 	Class clazz;
 
 	public DynArray(Class clz) {
@@ -26,15 +29,16 @@ public class DynArray<T> {
 		// ваш код
 		int oldCapacity = this.capacity;
 		if(count == 0){
-			this.array = (T[]) new Class[new_capacity];
+			this.array = (T[]) new Object[new_capacity];
 		} else{
-			T[] newArray = (T[]) new Class[new_capacity];
+			T[] newArray = (T[]) new Object[new_capacity];
 			if(oldCapacity < new_capacity){
 				System.arraycopy(this.array, 0, newArray, 0, this.array.length);
 			}
 			if(oldCapacity > new_capacity){
 				System.arraycopy(this.array, 0, newArray, 0, newArray.length);
 			}
+			array = newArray;
 		}
 		this.capacity = new_capacity;
 	}
