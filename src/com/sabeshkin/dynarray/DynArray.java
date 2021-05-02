@@ -3,12 +3,13 @@ package com.sabeshkin.dynarray;
 public class DynArray<T> {
 	// наша базовая структура данных
 	public T[] array;
-	// сколько эллементов у нас в массиве
+	// сколько элементов у нас в массиве
 	public int count;
 	// какая его максимальная емкость
 	public int capacity;
-	/* Нужен для внутренней работы, что бы мы после инициалищации объекта 
-	 * не смогли добавлять эллементы другого типа
+	/*
+	 * Нужен для внутренней работы, что бы мы после инициалищации объекта не
+	 * смогли добавлять элементы другого типа
 	 */
 	Class clazz;
 
@@ -66,7 +67,26 @@ public class DynArray<T> {
 	}
 
 	public void insert(T itm, int index) {
-		// ваш код
+		if(index < 0){
+			throw new IllegalArgumentException("The passed index out of possible range");
+		}
+		if(index == count){
+			append(itm);
+		}
+		else{
+			int sizeOfResultArr = (count - index-1 >= 16) ? count - index-1 : 16;
+			T[] resultArr = (T[]) new Object[sizeOfResultArr];
+			// создание копии элементов, которые будут сдвигаться
+			int sizeOfThePart = this.count - index;
+			T[] copyPartOfArray = (T[]) new Object[sizeOfThePart];
+			System.arraycopy(this.array, index, copyPartOfArray, 0, this.array.length);
+			// склеивание значений из части исходного массива + новый элемент
+			// и массива в котором хранил копии элементов из исходного
+			System.arraycopy(this.array, 0, resultArr, 0, index);
+			System.arraycopy(copyPartOfArray, 0, resultArr, 0, sizeOfThePart);
+			this.array = resultArr;
+		}
+
 	}
 
 	public void remove(int index) {
