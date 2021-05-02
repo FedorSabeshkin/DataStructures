@@ -79,11 +79,12 @@ public class DynArray<T> {
 			// создание копии элементов, которые будут сдвигаться
 			int sizeOfThePart = this.count - index;
 			T[] copyPartOfArray = (T[]) new Object[sizeOfThePart];
-			System.arraycopy(this.array, index, copyPartOfArray, 0, this.array.length);
+			System.arraycopy(this.array, index, copyPartOfArray, 0, sizeOfThePart);
+			array[index] = itm;
 			// склеивание значений из части исходного массива + новый элемент
 			// и массива в котором хранил копии элементов из исходного
-			System.arraycopy(this.array, 0, resultArr, 0, index);
-			System.arraycopy(copyPartOfArray, 0, resultArr, 0, sizeOfThePart);
+			System.arraycopy(this.array, 0, resultArr, 0, index+1);
+			System.arraycopy(copyPartOfArray, 0, resultArr, index+1, sizeOfThePart);
 			this.array = resultArr;
 		}
 
