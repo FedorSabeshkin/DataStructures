@@ -62,30 +62,34 @@ public class DynArray<T> {
 		if((count + 1) > this.capacity){
 			makeArray(this.capacity * 2);
 		}
-		array[count] = itm;
-		count++;
+		this.array[count] = itm;
+		this.count++;
 	}
 
 	public void insert(T itm, int index) {
 		if(index < 0){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
-		if(index == count){
-			append(itm);
+		if((count + 1) > this.capacity){
+			makeArray(this.capacity * 2);
 		}
-		else{
-			int sizeOfResultArr = (count - index-1 >= 16) ? count - index-1 : 16;
-			T[] resultArr = (T[]) new Object[sizeOfResultArr];
+		if(index == (count - 1)){
+			append(itm);
+		} else{
 			// создание копии элементов, которые будут сдвигаться
 			int sizeOfThePart = this.count - index;
 			T[] copyPartOfArray = (T[]) new Object[sizeOfThePart];
 			System.arraycopy(this.array, index, copyPartOfArray, 0, sizeOfThePart);
-			array[index] = itm;
+			// создание resultArr
+			int sizeOfResultArr = ((count + 1) > this.capacity) ? this.capacity * 2 : this.capacity;
+			T[] resultArr = (T[]) new Object[sizeOfResultArr];
+			this.array[index] = itm;
 			// склеивание значений из части исходного массива + новый элемент
 			// и массива в котором хранил копии элементов из исходного
-			System.arraycopy(this.array, 0, resultArr, 0, index+1);
-			System.arraycopy(copyPartOfArray, 0, resultArr, index+1, sizeOfThePart);
+			System.arraycopy(this.array, 0, resultArr, 0, index + 1);
+			System.arraycopy(copyPartOfArray, 0, resultArr, index + 1, sizeOfThePart);
 			this.array = resultArr;
+			this.count++;
 		}
 
 	}
