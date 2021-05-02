@@ -20,6 +20,7 @@ public class DynArray<T> {
 		makeArray(16);
 	}
 
+	//O(n)
 	/**
 	 * Update capacity value and copy
 	 * 
@@ -64,7 +65,7 @@ public class DynArray<T> {
 		this.array[count] = itm;
 		this.count++;
 	}
-
+	//O(n)
 	public void insert(T itm, int index) {
 		if(index < 0 || index >= (capacity + 2)){
 			throw new IllegalArgumentException("The passed index out of possible range");
@@ -80,25 +81,28 @@ public class DynArray<T> {
 			T[] copyPartOfArray = (T[]) new Object[sizeOfThePart];
 			System.arraycopy(this.array, index, copyPartOfArray, 0, sizeOfThePart);
 			// создание resultArr
-			int sizeOfResultArr = ((count + 1) > this.capacity) ? this.capacity * 2 : this.capacity;
-			T[] resultArr = (T[]) new Object[sizeOfResultArr];
+			int newCapacity = ((count + 1) > this.capacity) ? this.capacity * 2 : this.capacity;
+			//O(n)
+			makeArray(newCapacity);
 			this.array[index] = itm;
 			// склеивание значений из части исходного массива + новый элемент
 			// и массива в котором хранил копии элементов из исходного
-			System.arraycopy(this.array, 0, resultArr, 0, index + 1);
-			System.arraycopy(copyPartOfArray, 0, resultArr, index + 1, sizeOfThePart);
-			this.array = resultArr;
+			System.arraycopy(copyPartOfArray, 0, this.array, index + 1, sizeOfThePart);
 			this.count++;
 		}
 	}
 
+	// O(n)
 	public void remove(int index) {
+		//O(1)
 		if(index < 0 || index >= capacity){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
-		// проверь услови при котором смогу сюда заходить
+		//O(1)
 		if(count - 1 < (this.capacity / 2)){
+			// O(1)
 			int newCapacity = (int) ((this.capacity / 1.5 < 16) ? 16 : this.capacity / 1.5);
+			//O(n)
 			makeArray(newCapacity);
 		}
 		this.array[index] = null;
