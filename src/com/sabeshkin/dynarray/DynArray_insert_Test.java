@@ -92,4 +92,28 @@ public class DynArray_insert_Test {
 				new Integer(10),
 				dynArray.getItem(6));
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void test_Insert_negativeIndex_illegalArgumentException() {
+		for (int i = 0; i < 16; i++){
+			item = new Integer(i);
+			dynArray.append(item);
+		}
+		dynArray.insert(new Integer(10), -1);
+		assertEquals(
+				new Integer(10),
+				dynArray.getItem(6));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void test_Insert_oneHundredIndex_illegalArgumentException() {
+		for (int i = 0; i < 16; i++){
+			item = new Integer(i);
+			dynArray.append(item);
+		}
+		dynArray.insert(new Integer(10), 100);
+		assertEquals(
+				new Integer(10),
+				dynArray.getItem(6));
+	}
 }
