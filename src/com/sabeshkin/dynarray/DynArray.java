@@ -27,7 +27,6 @@ public class DynArray<T> {
 	 */
 	public void makeArray(int new_capacity) {
 		// array = (T[]) Array.newInstance(this.clazz, new_capacity);
-		// ваш код
 		int oldCapacity = this.capacity;
 		if(count == 0){
 			this.array = (T[]) new Object[new_capacity];
@@ -67,7 +66,7 @@ public class DynArray<T> {
 	}
 
 	public void insert(T itm, int index) {
-		if(index < 0){
+		if(index < 0 || index >= (capacity + 2)){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
 		if((count + 1) > this.capacity){
@@ -95,7 +94,17 @@ public class DynArray<T> {
 	}
 
 	public void remove(int index) {
-		// ваш код
+		if(index < 0 || index >= capacity){
+			throw new IllegalArgumentException("The passed index out of possible range");
+		}
+		if(count < (this.capacity / 2) && (this.capacity / 2 >= 16)){
+			int sizeOfResultArr = this.capacity / 2;
+			T[] resultArr = (T[]) new Object[sizeOfResultArr];
+			this.array[index] = null;
+			this.count--;
+			System.arraycopy(this.array, 0, resultArr, 0, this.count);
+			this.array = resultArr;
+		}
 	}
 
 }
