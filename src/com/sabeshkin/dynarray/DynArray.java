@@ -90,21 +90,20 @@ public class DynArray<T> {
 			this.array = resultArr;
 			this.count++;
 		}
-
 	}
 
 	public void remove(int index) {
 		if(index < 0 || index >= capacity){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
-		if(count < (this.capacity / 2) && (this.capacity / 2 >= 16)){
-			int sizeOfResultArr = this.capacity / 2;
-			T[] resultArr = (T[]) new Object[sizeOfResultArr];
-			this.array[index] = null;
-			this.count--;
-			System.arraycopy(this.array, 0, resultArr, 0, this.count);
-			this.array = resultArr;
+		// проверь услови при котором смогу сюда заходить
+		if(count - 1 < (this.capacity / 2)){
+			int newCapacity = (int) ((this.capacity / 1.5 < 16) ? 16 : this.capacity / 1.5);
+			makeArray(newCapacity);
 		}
+		this.array[index] = null;
+		this.count--;
+
 	}
 
 }
