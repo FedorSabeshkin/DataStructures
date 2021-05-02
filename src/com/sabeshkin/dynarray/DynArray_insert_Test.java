@@ -67,5 +67,29 @@ public class DynArray_insert_Test {
 				16,
 				dynArray.capacity);
 	}
+	
+	@Test
+	public void test_Insert_fifthElementIsTen() {
+		for (int i = 0; i < 10; i++){
+			item = new Integer(i);
+			dynArray.append(item);
+		}
+		dynArray.insert(new Integer(10), 5);
+		assertEquals(
+				new Integer(10),
+				dynArray.getItem(5));
+	}
 
+	
+	@Test
+	public void test_Insert_sixthElementIsTen() {
+		for (int i = 0; i < 16; i++){
+			item = new Integer(i);
+			dynArray.append(item);
+		}
+		dynArray.insert(new Integer(10), 6);
+		assertEquals(
+				new Integer(10),
+				dynArray.getItem(6));
+	}
 }
