@@ -26,13 +26,14 @@ public class DynArray<T> {
 	 * 
 	 * @param new_capacity
 	 */
+	@SuppressWarnings("unchecked")
 	public void makeArray(int new_capacity) {
 		// array = (T[]) Array.newInstance(this.clazz, new_capacity);
 		int oldCapacity = this.capacity;
 		if(count == 0){
-			this.array = (T[]) new Object[new_capacity];
+			this.array = (T[]) java.lang.reflect.Array.newInstance(this.clazz, new_capacity);
 		} else{
-			T[] newArray = (T[]) new Object[new_capacity];
+			T[] newArray = (T[]) java.lang.reflect.Array.newInstance(this.clazz, new_capacity);
 			if(oldCapacity < new_capacity){
 				System.arraycopy(this.array, 0, newArray, 0, this.array.length);
 			}
@@ -78,7 +79,8 @@ public class DynArray<T> {
 		} else{
 			// создание копии элементов, которые будут сдвигаться
 			int sizeOfThePart = this.count - index;
-			T[] copyPartOfArray = (T[]) new Object[sizeOfThePart];
+			@SuppressWarnings("unchecked")
+			T[] copyPartOfArray = (T[]) java.lang.reflect.Array.newInstance(this.clazz, sizeOfThePart);
 			System.arraycopy(this.array, index, copyPartOfArray, 0, sizeOfThePart);
 			// создание resultArr
 			int newCapacity = ((count + 1) > this.capacity) ? this.capacity * 2 : this.capacity;
