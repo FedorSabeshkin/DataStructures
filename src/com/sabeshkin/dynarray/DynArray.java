@@ -40,7 +40,7 @@ public class DynArray<T> {
 			if(oldCapacity > new_capacity){
 				System.arraycopy(this.array, 0, newArray, 0, newArray.length);
 			}
-			array = newArray;
+			this.array = newArray;
 		}
 		this.capacity = new_capacity;
 	}
@@ -49,7 +49,7 @@ public class DynArray<T> {
 		if(index < 0 || index >= capacity){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		} else{
-			return array[index];
+			return this.array[index];
 		}
 	}
 
@@ -60,7 +60,7 @@ public class DynArray<T> {
 	 * @param itm
 	 */
 	public void append(T itm) {
-		if((count + 1) > this.capacity){
+		if((this.count + 1) > this.capacity){
 			makeArray(this.capacity * 2);
 		}
 		this.array[count] = itm;
@@ -71,10 +71,10 @@ public class DynArray<T> {
 		if(index < 0 || index >= (capacity + 2)){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
-		if((count + 1) > this.capacity){
+		if((this.count + 1) > this.capacity){
 			makeArray(this.capacity * 2);
 		}
-		if(index == (count - 1)){
+		if(index == (this.count - 1)){
 			append(itm);
 		} else{
 			// создание копии элементов, которые будут сдвигаться
@@ -83,7 +83,7 @@ public class DynArray<T> {
 			T[] copyPartOfArray = (T[]) java.lang.reflect.Array.newInstance(this.clazz, sizeOfThePart);
 			System.arraycopy(this.array, index, copyPartOfArray, 0, sizeOfThePart);
 			// создание resultArr
-			int newCapacity = ((count + 1) > this.capacity) ? this.capacity * 2 : this.capacity;
+			int newCapacity = ((this.count + 1) > this.capacity) ? this.capacity * 2 : this.capacity;
 			//O(n)
 			makeArray(newCapacity);
 			this.array[index] = itm;
@@ -97,17 +97,17 @@ public class DynArray<T> {
 	// O(n)
 	public void remove(int index) {
 		//O(1)
-		if(index < 0 || index >= capacity){
+		if(index < 0 || index >= this.capacity){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
+		this.array[index] = null;
 		//O(1)
-		if(count - 1 < (this.capacity / 2)){
+		if(this.count - 1 < (this.capacity / 2)){
 			// O(1)
 			int newCapacity = (int) ((this.capacity / 1.5 < 16) ? 16 : this.capacity / 1.5);
 			//O(n)
 			makeArray(newCapacity);
 		}
-		this.array[index] = null;
 		this.count--;
 
 	}
