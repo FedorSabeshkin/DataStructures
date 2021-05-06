@@ -103,32 +103,31 @@ public class DynArray<T> {
 	// O(n)
 	public void remove(int index) {
 		// O(1)
-		if(index < 0 || index >= this.capacity){
+		if(index < 0 || index >= this.capacity || index >= this.count){
 			throw new IllegalArgumentException("The passed index out of possible range");
 		}
 
 		// создание копии элементов, которые будут сдвигаться
-		int sizeOfThePart = this.count - index -1;
+		int sizeOfThePart = this.count - index - 1;
 		if(sizeOfThePart < 1){
 			sizeOfThePart = this.capacity - this.count;
 		}
 		@SuppressWarnings("unchecked")
 		T[] copyPartOfArray = (T[]) java.lang.reflect.Array.newInstance(this.clazz, sizeOfThePart);
 		System.arraycopy(this.array, index + 1, copyPartOfArray, 0, sizeOfThePart);
-		this.array[index] = null;
 		// склеивание значений из части исходного массива, с окошком на месте
 		// удаленного
 		// и массива в котором хранил копии элементов из исходного
 		System.arraycopy(copyPartOfArray, 0, this.array, index, sizeOfThePart);
 		// O(1)
-		if(this.count - 1 < (this.capacity / 2)){
+		if(this.count - 1 < (this.capacity / 2) && (this.capacity != 16)){
 			// O(1)
 			int newCapacity = (int) ((this.capacity / 1.5 < 16) ? 16 : this.capacity / 1.5);
 			// O(n)
 			makeArray(newCapacity);
 		}
 		this.count--;
-
+		this.array[this.count] = null;
 	}
 
 }
