@@ -1,4 +1,4 @@
-package stack;
+package com.sabeshkin.stack;
 
 import java.util.*;
 
