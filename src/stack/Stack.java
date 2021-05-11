@@ -13,7 +13,7 @@ public class Stack<T> {
 	public int size() {
 		
 		// размер текущего стека
-		return linkedList.size();
+		return linkedList.size()-1;
 	}
 
 	public T pop() {
