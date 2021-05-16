@@ -29,7 +29,7 @@ public class Stack<T> {
 		return linkedList.peek();
 	}
 
-	public static boolean parenthesisValidator(String inString, Stack stack) {
+	public static boolean parenthesisValidator(String inString) {
 		int i = 0;
 		Stack openParenthesisStack = new Stack();
 		Stack closeParenthesisStack = new Stack();

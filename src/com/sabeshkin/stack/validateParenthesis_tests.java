@@ -8,65 +8,58 @@ public class validateParenthesis_tests {
 	
 	@Test
 	public void test_sixth_isFalse() {
-		Stack stack = new Stack();
-		String string = new String("())(");
+		String string = new String("())(()");
 		assertEquals(
 				false,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 
 	@Test
 	public void test_isFalse() {
-		Stack stack = new Stack();
 		String string = new String("())(");
 		assertEquals(
 				false,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 	
 	@Test
 	public void test_second_isFalse() {
-		Stack stack = new Stack();
 		String string = new String("))((");
 		assertEquals(
 				false,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 	
 	@Test
 	public void test_third_isFalse() {
-		Stack stack = new Stack();
 		String string = new String("((())");
 		assertEquals(
 				false,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 	
 	@Test
 	public void test_fourth_isTrue() {
-		Stack stack = new Stack();
 		String string = new String("(()((())()))");
 		assertEquals(
 				true,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 	
 	@Test
 	public void test_fifth_isTrue() {
-		Stack stack = new Stack();
 		String string = new String("()");
 		assertEquals(
 				true,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 	
 	@Test
 	public void test_together_isTrue() {
-		Stack stack = new Stack();
 		String string = new String("()()");
 		assertEquals(
 				true,
-				stack.parenthesisValidator(string, stack));
+				Stack.parenthesisValidator(string));
 	}
 
 
