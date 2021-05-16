@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Stack<T> {
 	LinkedList<T> linkedList;
-	Class clazz;
 	public Stack() {
 		linkedList = new LinkedList<>();
 		// инициализация внутреннего хранилища стека
@@ -13,7 +12,7 @@ public class Stack<T> {
 	public int size() {
 		
 		// размер текущего стека
-		return linkedList.size()-1;
+		return linkedList.size();
 	}
 
 	public T pop() {
