@@ -5,6 +5,15 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class validateParenthesis_tests {
+	
+	@Test
+	public void test_sixth_isFalse() {
+		Stack stack = new Stack();
+		String string = new String("())(");
+		assertEquals(
+				false,
+				stack.parenthesisValidator(string, stack));
+	}
 
 	@Test
 	public void test_isFalse() {

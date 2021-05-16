@@ -33,26 +33,31 @@ public class Stack<T> {
 		int i = 0;
 		Stack openParenthesisStack = new Stack();
 		Stack closeParenthesisStack = new Stack();
-		// Character openParenthesis = new Character('(');
-		boolean isOpenParenthesis = false;
+		char openParenthesis = '(';
+		char closeParenthesis = ')';
+		Stack isOpenParenthesisStack = new Stack();
 		while(i < inString.length()){
-			char openParenthesis = '(';
-			char closeParenthesis = ')';
-			while(inString.charAt(i) == openParenthesis){
-				openParenthesisStack.push(inString.charAt(i));
-				isOpenParenthesis = true;
-				i++;
-			}
-			while(isOpenParenthesis){
+			try{
+				while(inString.charAt(i) == openParenthesis){
+					openParenthesisStack.push(inString.charAt(i));
+					isOpenParenthesisStack.push(1);
+					i = i + 1;
+				}
+			} catch (StringIndexOutOfBoundsException e){
 
 			}
-			while(inString.charAt(i) == closeParenthesis){
-				closeParenthesisStack.push(inString.charAt(i));
-				i++;
+			try{
+				while(inString.charAt(i) == closeParenthesis){
+					closeParenthesisStack.push(inString.charAt(i));
+					isOpenParenthesisStack.pop();
+					i = i + 1;
+				}
+			} catch (StringIndexOutOfBoundsException e){
+
 			}
-			stack.push(inString.charAt(i));
 		}
-		return (!isOpenParenthesis && (closeParenthesisStack.size() == openParenthesisStack.size()));
+		boolean isEqualStackSize = (closeParenthesisStack.size() == openParenthesisStack.size());
+		return (isOpenParenthesisStack.peek()==null && isEqualStackSize);
 	}
 
 }
