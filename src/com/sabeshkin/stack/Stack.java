@@ -5,13 +5,11 @@ import java.util.*;
 public class Stack<T> {
 	LinkedList<T> linkedList;
 	public Stack() {
-		linkedList = new LinkedList<>();
 		// инициализация внутреннего хранилища стека
+		linkedList = new LinkedList<>();
 	}
-
+	
 	public int size() {
-		
-		// размер текущего стека
 		return linkedList.size();
 	}
 
@@ -21,7 +19,6 @@ public class Stack<T> {
 		}catch(NoSuchElementException exception){
 			return null;
 		}
-		// ваш код
 		// return null; // если стек пустой
 	}
 
@@ -31,7 +28,6 @@ public class Stack<T> {
 	}
 
 	public T peek() {
-		// ваш код
 		return linkedList.peek();
 		// return null; // если стек пустой
 	}
