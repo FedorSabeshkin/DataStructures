@@ -29,10 +29,6 @@ public class Stack<T> {
 		return linkedList.peek();
 	}
 
-	/**
-	 * TODO: ПЕРЕПИШИ МЕНЯ СО switch case!
-	 * 
-	 */
 	public static boolean parenthesisValidator(String inString) {
 		int i = 0;
 		Stack stack = new Stack();
