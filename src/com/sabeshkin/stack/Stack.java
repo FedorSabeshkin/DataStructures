@@ -35,10 +35,6 @@ public class Stack<T> {
 	 */
 	public static boolean parenthesisValidator(String inString) {
 		int i = 0;
-		Stack openParenthesisStack = new Stack();
-		Stack closeParenthesisStack = new Stack();
-		char openParenthesis = '(';
-		char closeParenthesis = ')';
 		Stack stack = new Stack();
 		while(i < inString.length()){
 			switch (inString.charAt(i)) {
