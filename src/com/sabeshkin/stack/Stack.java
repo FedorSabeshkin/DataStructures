@@ -29,35 +29,31 @@ public class Stack<T> {
 		return linkedList.peek();
 	}
 
+	/**
+	 * TODO: ПЕРЕПИШИ МЕНЯ СО switch case!
+	 * 
+	 */
 	public static boolean parenthesisValidator(String inString) {
 		int i = 0;
 		Stack openParenthesisStack = new Stack();
 		Stack closeParenthesisStack = new Stack();
 		char openParenthesis = '(';
 		char closeParenthesis = ')';
-		Stack isOpenParenthesisStack = new Stack();
+		Stack stack = new Stack();
 		while(i < inString.length()){
-			try{
-				while(inString.charAt(i) == openParenthesis){
-					openParenthesisStack.push(inString.charAt(i));
-					isOpenParenthesisStack.push(1);
-					i = i + 1;
-				}
-			} catch (StringIndexOutOfBoundsException e){
-
+			switch (inString.charAt(i)) {
+			case '(':
+				stack.push(inString.charAt(i));
+				break;
+			case ')':
+				stack.pop();
+				break;
+			default:
+				break;
 			}
-			try{
-				while(inString.charAt(i) == closeParenthesis){
-					closeParenthesisStack.push(inString.charAt(i));
-					isOpenParenthesisStack.pop();
-					i = i + 1;
-				}
-			} catch (StringIndexOutOfBoundsException e){
-
-			}
+			i++;
 		}
-		boolean isEqualStackSize = (closeParenthesisStack.size() == openParenthesisStack.size());
-		return (isOpenParenthesisStack.peek() == null && isEqualStackSize);
+		return (stack.peek() == null);
 	}
 
 	public static int postfixCalculation(String inString) {
