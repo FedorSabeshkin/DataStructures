@@ -35,5 +35,13 @@ public class Queue<T> {
 	public int size() {
 		return queue.size(); 
 	}
+	
+	public void queueCycle(int n) {
+		int i = 0;
+		while(i < n){
+			queue.add(queue.pollFirst());
+			i++;
+		}
+	}
 
 }
