@@ -4,7 +4,6 @@ public class ReversedStack<T> {
 	LinkedList<T> linkedList;
 	public ReversedStack() {
 		linkedList = new LinkedList<>();
-		// инициализация внутреннего хранилища стека
 	}
 
 	public int size() {
