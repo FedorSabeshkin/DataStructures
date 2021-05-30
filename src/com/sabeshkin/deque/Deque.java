@@ -6,6 +6,7 @@ public class Deque<T> {
 	LinkedList<T> linkedList;
 	T element;
 	int count;
+
 	public Deque() {
 		linkedList = new LinkedList<>();
 		count = 0;
@@ -26,8 +27,7 @@ public class Deque<T> {
 			element = linkedList.removeFirst();
 			count--;
 			return element;
-		}
-		catch(NoSuchElementException exception){
+		} catch (NoSuchElementException exception){
 			return null;
 		}
 	}
@@ -37,13 +37,28 @@ public class Deque<T> {
 			element = linkedList.removeLast();
 			count--;
 			return element;
-		}
-		catch(NoSuchElementException exception){
+		} catch (NoSuchElementException exception){
 			return null;
 		}
 	}
 
 	public int size() {
-		return count; 
+		return count;
+	}
+
+	public static boolean isPalindrom(String str) {
+		Deque<String> deque = new Deque<>();
+		str = str.toLowerCase();
+		String[] stringArr = str.split("");
+		for (int i = 0; i < str.length(); i++){
+			deque.addTail(stringArr[i]);
+		}
+		while((deque.removeTail().equals(deque.removeFront())) && deque.size() > 0){
+			continue;
+		}
+		if(deque.size() == 0 || deque.size() == 1)
+			return true;
+
+		return false;
 	}
 }
