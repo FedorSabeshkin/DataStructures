@@ -33,7 +33,6 @@ public class Deque<T> {
 	}
 
 	public T removeTail() {
-		// удаление из хвоста
 		try{
 			element = linkedList.removeLast();
 			count--;
@@ -45,6 +44,6 @@ public class Deque<T> {
 	}
 
 	public int size() {
-		return count; // размер очереди
+		return count; 
 	}
 }
