@@ -25,7 +25,7 @@ public class OrderedList<T> {
 
 	public int compare(T v1, T v2) {
 		if(v1.getClass() == Integer.class){
-			compareInt(v1, v2);
+			//compareInt(v1, v2);
 		}
 		return 0;
 	}
@@ -49,20 +49,20 @@ public class OrderedList<T> {
 			Node<T> node = head;
 			while(node != null){
 				int result = compare(node.value, value);
-				switch(result){
-				0: 
-					break;
-				-1:
-					Node<T> oldNext = node.next;
-					node.next = new Node(value);
-					node.next.next = oldNext;
-					oldNext.prev = node.next;
-					break;
-				1: 
-					break;
-				
-				}
-				node = node.next;
+//				switch(result){
+//				0: 
+//					break;
+//				-1:
+//					Node<T> oldNext = node.next;
+//					node.next = new Node(value);
+//					node.next.next = oldNext;
+//					oldNext.prev = node.next;
+//					break;
+//				1: 
+//					break;
+//				
+//				}
+//				node = node.next;
 			}
 		}
 	}
