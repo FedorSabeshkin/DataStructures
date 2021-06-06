@@ -24,32 +24,65 @@ public class OrderedList<T> {
 	}
 
 	public int compare(T v1, T v2) {
+		if(v1.getClass() == Integer.class){
+			compareInt(v1, v2);
+		}
 		return 0;
-		// -1 если v1 < v2
-		// 0 если v1 == v2
-		// +1 если v1 > v2
+	}
+
+	public int compareInt(Integer v1, Integer v2) {
+		if(v1 < v2){
+			return -1;
+		} else if(v1 > v2){
+			return 1;
+		}
+		return 0;
 	}
 
 	public void add(T value) {
-		// автоматическая вставка value
-		// в нужную позицию
+		if(head == null){
+			head = new Node(value);
+			tail = new Node(value);
+			head.next = tail;
+			tail.prev = head;
+		} else{
+			Node<T> node = head;
+			while(node != null){
+				int result = compare(node.value, value);
+				switch(result){
+				0: 
+					break;
+				-1:
+					Node<T> oldNext = node.next;
+					node.next = new Node(value);
+					node.next.next = oldNext;
+					oldNext.prev = node.next;
+					break;
+				1: 
+					break;
+				
+				}
+				node = node.next;
+			}
+		}
 	}
 
 	public Node<T> find(T val) {
-		return null; // здесь будет ваш код
+		return null; 
 	}
 
 	public void delete(T val) {
-		// здесь будет ваш код
+		
 	}
 
 	public void clear(boolean asc) {
 		_ascending = asc;
-		// здесь будет ваш код
+		this.head = null;
+		this.tail = null;
 	}
 
 	public int count() {
-		return 0; // здесь будет ваш код подсчёта количества элементов в списке
+		return 0; 
 	}
 
 	ArrayList<Node<T>> getAll() {
