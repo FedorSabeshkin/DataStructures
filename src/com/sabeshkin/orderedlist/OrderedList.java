@@ -63,6 +63,7 @@ public class OrderedList<T> {
 				node = node.next;
 			}
 		}
+		size++;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -162,7 +163,7 @@ public class OrderedList<T> {
 	}
 
 	public int count() {
-		return 0;
+		return size;
 	}
 
 	ArrayList<Node<T>> getAll() {
