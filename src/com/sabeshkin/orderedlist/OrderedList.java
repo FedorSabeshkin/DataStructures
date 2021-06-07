@@ -16,27 +16,21 @@ class Node<T> {
 public class OrderedList<T> {
 	public Node<T> head, tail;
 	private boolean _ascending;
+	private int size;
 
 	public OrderedList(boolean asc) {
 		head = null;
 		tail = null;
 		_ascending = asc;
+		size = 0;
 	}
 
 	public int compare(T v1, T v2) {
+		int compareResult = 0;
 		if(v1.getClass() == Integer.class){
-			//compareInt(v1, v2);
+			compareResult = ((Integer) v1).compareTo((Integer) v2);
 		}
-		return 0;
-	}
-
-	public int compareInt(Integer v1, Integer v2) {
-		if(v1 < v2){
-			return -1;
-		} else if(v1 > v2){
-			return 1;
-		}
-		return 0;
+		return compareResult;
 	}
 
 	public void add(T value) {
