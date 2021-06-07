@@ -47,20 +47,22 @@ public class OrderedList<T> {
 					// when value equal actual node.value
 					addedNode = new Node(value);
 					insertAfter(node, addedNode);
+					node = node.next.next;
 					break;
 				case (-1):
 					// when value less, than actual node.value
 					addedNode = new Node(value);
 					insertAfter(node, addedNode);
+					node = node.next.next;
 					break;
 				case 1:
 					// when value bigger, than actual node.value
 					addedNode = new Node(value);
 					insertBefore(node,addedNode);
+					node = node.next;
 					break;
 
 				}
-				node = node.next;
 			}
 		}
 		size++;
