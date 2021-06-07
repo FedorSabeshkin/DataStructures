@@ -33,12 +33,10 @@ public class OrderedList<T> {
 		return compareResult;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void add(T value) {
-		if(head == null){
-			head = new Node(value);
-			tail = new Node(value);
-			head.next = tail;
-			tail.prev = head;
+		if(tail == null){
+			addInTail(new Node(value));
 		} else{
 			Node<T> node = head;
 			Node<T> addedNode;
@@ -46,29 +44,106 @@ public class OrderedList<T> {
 				int compareResult = compare(value, node.value);
 				switch (compareResult) {
 				case 0:
+					// when value equal actual node.value
+					addedNode = new Node(value);
+					insertAfter(node, addedNode);
 					break;
 				case (-1):
-					// when value less, than actual node
-					Node<T> oldNext = node.next;
+					// when value less, than actual node.value
 					addedNode = new Node(value);
-					node.next = addedNode;
-					addedNode.next = oldNext;
-					addedNode.prev = node;
-					oldNext.prev = addedNode;
+					insertAfter(node, addedNode);
 					break;
 				case 1:
-					// when value bigger, than actual node
-					Node<T> oldPrev = node.prev;
+					// when value bigger, than actual node.value
 					addedNode = new Node(value);
-					node.prev = addedNode;
-					addedNode.next = node;
-					addedNode.prev = oldPrev;
-					oldPrev.next = addedNode;
+					insertBefore(node,addedNode);
 					break;
 
 				}
 				node = node.next;
 			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void insertBefore(Node existingNode, Node _nodeToInsert) {
+		if(this.count() > 0){
+			if(isHead(existingNode)){
+				insertBeforeHead(_nodeToInsert);
+			} else{
+				Node oldPrev = existingNode.prev;
+				if(oldPrev != null){
+					oldPrev.next = _nodeToInsert;
+				}
+				_nodeToInsert.prev = oldPrev;
+				_nodeToInsert.next = existingNode;
+				existingNode.prev = _nodeToInsert;
+			}
+		} else{
+			addInTail(_nodeToInsert);
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
+		if(this.count() > 0){
+			if(isTail(_nodeAfter)){
+				Node oldTail = this.tail;
+				this.tail = _nodeToInsert;
+				this.tail.prev = oldTail;
+			}
+			if(_nodeAfter != null){
+				Node nodeAfterNext = _nodeAfter.next;
+				if(nodeAfterNext != null){
+					nodeAfterNext.prev = _nodeToInsert;
+				}
+				_nodeToInsert.next = nodeAfterNext;
+				_nodeToInsert.prev = _nodeAfter;
+				_nodeAfter.next = _nodeToInsert;
+			} else{
+				Node oldHead = this.head;
+				_nodeToInsert.next = oldHead;
+				oldHead.prev = _nodeToInsert;
+				this.head = _nodeToInsert;
+			}
+		} else{
+			addInTail(_nodeToInsert);
+		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void addInTail(Node _item) {
+		if(head == null){
+			this.head = _item;
+			this.head.next = null;
+			this.head.prev = null;
+		} else{
+			this.tail.next = _item;
+			_item.prev = tail;
+		}
+		this.tail = _item;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void insertBeforeHead(Node nodeToInsert) {
+		this.insertAfter(null, nodeToInsert);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public boolean isTail(Node node) {
+		if(node == this.tail){
+			return true;
+		} else{
+			return false;
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public boolean isHead(Node node) {
+		if(node == this.head){
+			return true;
+		} else{
+			return false;
 		}
 	}
 

@@ -6,18 +6,21 @@ import org.junit.Test;
 
 
 public class OrderedList_compare_tests {
+	@SuppressWarnings("rawtypes")
 	OrderedList orderedList;
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void test() {
-		orderedList = new OrderedList();
+		orderedList = new OrderedList(true);
 		Node node;
 		for (int i = 0; i < 10; i++){
 			node = new Node(i);
-			orderedList.addInTail(node);
+			orderedList.add(node);
 		}
 		assertEquals(
 				0,
-				orderedList.count());
+				orderedList.head.value);
 	}
 
 }
