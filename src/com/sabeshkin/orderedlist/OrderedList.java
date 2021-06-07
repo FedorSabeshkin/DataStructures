@@ -41,32 +41,43 @@ public class OrderedList<T> {
 			tail.prev = head;
 		} else{
 			Node<T> node = head;
+			Node<T> addedNode;
 			while(node != null){
-				int result = compare(node.value, value);
-//				switch(result){
-//				0: 
-//					break;
-//				-1:
-//					Node<T> oldNext = node.next;
-//					node.next = new Node(value);
-//					node.next.next = oldNext;
-//					oldNext.prev = node.next;
-//					break;
-//				1: 
-//					break;
-//				
-//				}
-//				node = node.next;
+				int compareResult = compare(value, node.value);
+				switch (compareResult) {
+				case 0:
+					break;
+				case (-1):
+					// when value less, than actual node
+					Node<T> oldNext = node.next;
+					addedNode = new Node(value);
+					node.next = addedNode;
+					addedNode.next = oldNext;
+					addedNode.prev = node;
+					oldNext.prev = addedNode;
+					break;
+				case 1:
+					// when value bigger, than actual node
+					Node<T> oldPrev = node.prev;
+					addedNode = new Node(value);
+					node.prev = addedNode;
+					addedNode.next = node;
+					addedNode.prev = oldPrev;
+					oldPrev.next = addedNode;
+					break;
+
+				}
+				node = node.next;
 			}
 		}
 	}
 
 	public Node<T> find(T val) {
-		return null; 
+		return null;
 	}
 
 	public void delete(T val) {
-		
+
 	}
 
 	public void clear(boolean asc) {
@@ -76,7 +87,7 @@ public class OrderedList<T> {
 	}
 
 	public int count() {
-		return 0; 
+		return 0;
 	}
 
 	ArrayList<Node<T>> getAll() {
