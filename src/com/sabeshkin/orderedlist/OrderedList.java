@@ -39,29 +39,26 @@ public class OrderedList<T> {
 			addInTail(new Node(value));
 		} else{
 			Node<T> node = head;
-			Node<T> addedNode;
 			while(node != null){
-				int compareResult = compare(value, node.value);
-				switch (compareResult) {
-				case 0:
-					// when value equal actual node.value
-					addedNode = new Node(value);
+				Node<T> addedNode;
+				Integer compareResultPrev = compare(node.value, value);
+				Integer compareResultNext = 0;
+				addedNode = new Node(value);
+				try{
+					 compareResultNext = compare(node.next.value, value);
+				} catch (NullPointerException exception){
+					
+				}
+				if(compareResultPrev <= 0 && compareResultNext >= 0){
 					insertAfter(node, addedNode);
-					node = node.next.next;
 					break;
-				case (-1):
-					// when value less, than actual node.value
-					addedNode = new Node(value);
-					insertAfter(node, addedNode);
-					node = node.next.next;
+				}else if(compareResultPrev == 1){
+					insertBefore(node ,addedNode);
 					break;
-				case 1:
-					// when value bigger, than actual node.value
-					addedNode = new Node(value);
-					insertBefore(node,addedNode);
+				}
+				
+				else{
 					node = node.next;
-					break;
-
 				}
 			}
 		}

@@ -20,38 +20,38 @@ public class OrderedList_compare_tests {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void test_addDescendingOrder_TwoElements_tailIsOne() {
+	public void test_addDescendingOrder_TwoElements_tailIsTwo() {
 		orderedList = new OrderedList(false);
 		for (int i = 2; i > 0; i--){
 			orderedList.add(new Integer(i));
 		}
 		assertEquals(
-				1,
+				2,
 				orderedList.tail.value);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void test_addDescendingOrder_TenElements_headIsTen() {
+	public void test_addDescendingOrder_TenElements_headIsOne() {
 		orderedList = new OrderedList(false);
 		for (int i = 10; i > 0; i--){
 			orderedList.add(new Integer(i));
 		}
 		assertEquals(
-				10,
+				1,
 				orderedList.head.value);
 	}
 
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void test_addAscendingOrder_TenElements_headIsTen() {
+	public void test_addAscendingOrder_TenElements_headIsZero() {
 		orderedList = new OrderedList(false);
 		for (int i = 0; i < 10; i++){
 			orderedList.add(new Integer(i));
 		}
 		assertEquals(
-				9,
+				0,
 				orderedList.head.value);
 	}
 	
@@ -98,7 +98,7 @@ public class OrderedList_compare_tests {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void test_addRandomOrder_TenElements_headIsTen() {
+	public void test_addRandomOrder_TenElements_headIsZero() {
 		orderedList = new OrderedList(false);
 		for (int i = 3; i < 10; i=i+2){
 			orderedList.add(new Integer(i));
@@ -107,13 +107,13 @@ public class OrderedList_compare_tests {
 			orderedList.add(new Integer(i));
 		}
 		assertEquals(
-				10,
+				0,
 				orderedList.head.value);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
-	public void test_addRandomOrder_TenElements_tailIsZero() {
+	public void test_addRandomOrder_TenElements_tailIsTen() {
 		orderedList = new OrderedList(false);
 		for (int i = 3; i < 10; i=i+2){
 			orderedList.add(new Integer(i));
@@ -123,7 +123,7 @@ public class OrderedList_compare_tests {
 		}
 		assertEquals(
 				10,
-				orderedList.head.value);
+				orderedList.tail.value);
 	}
 	
 	
