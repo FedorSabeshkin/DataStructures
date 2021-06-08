@@ -38,27 +38,49 @@ public class OrderedList<T> {
 		if(tail == null){
 			addInTail(new Node(value));
 		} else{
-			Node<T> node = head;
-			while(node != null){
-				Node<T> addedNode;
-				Integer compareResultPrev = compare(node.value, value);
-				Integer compareResultNext = 0;
-				addedNode = new Node(value);
-				try{
-					 compareResultNext = compare(node.next.value, value);
-				} catch (NullPointerException exception){
-					
+			if(_ascending){
+				Node<T> node = head;
+				while(node != null){
+					Node<T> addedNode;
+					Integer compareResultPrev = compare(node.value, value);
+					Integer compareResultNext = 0;
+					addedNode = new Node(value);
+					try{
+						compareResultNext = compare(node.next.value, value);
+					} catch (NullPointerException exception){
+					}
+					// ascendent case
+					if(compareResultPrev <= 0 && compareResultNext >= 0){
+						insertAfter(node, addedNode);
+						break;
+					} else if(compareResultPrev == 1){
+						insertBefore(node, addedNode);
+						break;
+					} else{
+						node = node.next;
+					}
+
 				}
-				if(compareResultPrev <= 0 && compareResultNext >= 0){
-					insertAfter(node, addedNode);
-					break;
-				}else if(compareResultPrev == 1){
-					insertBefore(node ,addedNode);
-					break;
-				}
-				
-				else{
-					node = node.next;
+			} else{
+				Node<T> node = tail;
+				while(node != null){
+					Node<T> addedNode;
+					Integer compareResultPrev = compare(node.value, value);
+					Integer compareResultNext = 0;
+					addedNode = new Node(value);
+					try{
+						compareResultNext = compare(node.next.value, value);
+					} catch (NullPointerException exception){
+					}
+					if(compareResultPrev <= 0 && compareResultNext >= 0){
+						insertBefore(node, addedNode);
+						break;
+					} else if(compareResultPrev == 1){
+						insertAfter(node, addedNode);
+						break;
+					} else{
+						node = node.prev;
+					}
 				}
 			}
 		}
