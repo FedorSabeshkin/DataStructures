@@ -54,4 +54,90 @@ public class OrderedList_compare_tests {
 				9,
 				orderedList.head.value);
 	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void test_addAscendingOrder_TenElements_tailIsNotEqualPrePreTailElement() {
+		orderedList = new OrderedList(false);
+		for (int i = 0; i < 10; i++){
+			orderedList.add(new Integer(i));
+		}
+		Node prePreTail = orderedList.tail.prev.prev;
+		assertNotEquals(
+				prePreTail.value,
+				orderedList.tail.value);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void test_addAscendingOrder_TenElements_tailIsNotEqualPreTailElement() {
+		orderedList = new OrderedList(false);
+		for (int i = 0; i < 10; i++){
+			orderedList.add(new Integer(i));
+		}
+		Node preTail = orderedList.tail.prev;
+		assertNotEquals(
+				preTail.value,
+				orderedList.tail.value);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void test_addAscendingOrder_TenElements_evenElementsIsNotEqual() {
+		orderedList = new OrderedList(false);
+		for (int i = 0; i < 10; i++){
+			orderedList.add(new Integer(i));
+		}
+		Node secondElement = orderedList.head.next;
+		Node fourthElement = secondElement.next.next;
+		assertNotEquals(
+				secondElement.value,
+				fourthElement.value);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void test_addRandomOrder_TenElements_headIsTen() {
+		orderedList = new OrderedList(false);
+		for (int i = 3; i < 10; i=i+2){
+			orderedList.add(new Integer(i));
+		}
+		for (int i = 0; i <= 10; i=i+2){
+			orderedList.add(new Integer(i));
+		}
+		assertEquals(
+				10,
+				orderedList.head.value);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void test_addRandomOrder_TenElements_tailIsZero() {
+		orderedList = new OrderedList(false);
+		for (int i = 3; i < 10; i=i+2){
+			orderedList.add(new Integer(i));
+		}
+		for (int i = 0; i <= 10; i=i+2){
+			orderedList.add(new Integer(i));
+		}
+		assertEquals(
+				10,
+				orderedList.head.value);
+	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void test_addAscendingOrder_TenElements_oddElementsIsNotEqual() {
+		orderedList = new OrderedList(false);
+		for (int i = 0; i < 10; i++){
+			orderedList.add(new Integer(i));
+		}
+		Node firstElement = orderedList.head;
+		Node thirdElement = firstElement.next.next;
+		assertNotEquals(
+				firstElement.value,
+				thirdElement.value);
+	}
 }
