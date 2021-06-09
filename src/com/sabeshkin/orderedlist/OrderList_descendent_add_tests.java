@@ -103,9 +103,11 @@ public class OrderList_descendent_add_tests {
 		orderedList = new OrderedList(false);
 		for (int i = 3; i < 10; i=i+2){
 			orderedList.add(new Integer(i));
+			System.out.println(orderedList);
 		}
 		for (int i = 0; i <= 10; i=i+2){
 			orderedList.add(new Integer(i));
+			System.out.println(orderedList);
 		}
 		assertEquals(
 				10,
