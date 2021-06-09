@@ -30,6 +30,11 @@ public class OrderedList<T> {
 		if(v1.getClass() == Integer.class){
 			compareResult = ((Integer) v1).compareTo((Integer) v2);
 		}
+		if(v1.getClass() == String.class){
+			String trimedSpacesV1 = ((String) v1).trim();
+			String trimedSpacesV2 = ((String) v2).trim();
+			compareResult = trimedSpacesV1.compareTo(trimedSpacesV2);
+		}
 		return compareResult;
 	}
 
