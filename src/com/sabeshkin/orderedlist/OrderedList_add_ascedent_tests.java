@@ -113,6 +113,21 @@ public class OrderedList_add_ascedent_tests {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
+	public void test_addMoreRandomOrder_TenElements_headIsZero() {
+		orderedList = new OrderedList(true);
+		for (int i = 3; i < 10; i=i+2){
+			orderedList.add(new Integer(i));
+		}
+		for (int i = 10; i >= 0; i=i-2){
+			orderedList.add(new Integer(i));
+		}
+		assertEquals(
+				0,
+				orderedList.head.value);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
 	public void test_addRandomOrder_TenElements_tailIsTen() {
 		orderedList = new OrderedList(true);
 		for (int i = 3; i < 10; i=i+2){
