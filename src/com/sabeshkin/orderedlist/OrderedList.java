@@ -45,9 +45,8 @@ public class OrderedList<T> {
 					Integer compareResultPrev = compare(node.value, value);
 					Integer compareResultNext = 0;
 					addedNode = new Node(value);
-					try{
-						compareResultNext = compare(node.next.value, value);
-					} catch (NullPointerException exception){
+					if(!isTail(node)){
+						compareResultNext = compare(node.next.value, value);	
 					}
 					// ascendent case
 					if(compareResultPrev <= 0 && compareResultNext >= 0){
@@ -59,7 +58,6 @@ public class OrderedList<T> {
 					} else{
 						node = node.next;
 					}
-
 				}
 			} else{
 				Node<T> node = tail;
@@ -68,15 +66,25 @@ public class OrderedList<T> {
 					Integer compareResultPrev = compare(node.value, value);
 					Integer compareResultNext = 0;
 					addedNode = new Node(value);
-					try{
-						compareResultNext = compare(node.next.value, value);
-					} catch (NullPointerException exception){
+					if(!isTail(node)){
+						compareResultNext = compare(node.next.value, value);	
 					}
-					if(compareResultPrev <= 0 && compareResultNext >= 0){
-						insertBefore(node, addedNode);
-						break;
-					} else if(compareResultPrev == 1){
+					// descendent case
+					if(compareResultPrev >= 0 && compareResultNext <= 0){
 						insertAfter(node, addedNode);
+						break;
+					} else if(compareResultPrev == -1){
+						/* 
+						 * нужно применить рекурсию, т.к. я не знаю, 
+						 * будет ли элемент node.prev.prev - больше чем тот, 
+						 * который я хочу добавить.
+						 * 
+						 * Но, т.к. список отсортированный, я знаю, что 
+						 * перед элементом, который оказался больше, чем тот, который я хочу добавить
+						 * будет стоять элемент, который больше чем node.prev, 
+						 * т.к. при добавлении тех элементов - сортировка так же проходила
+						*/
+						insertBefore(node, addedNode);
 						break;
 					} else{
 						node = node.prev;
