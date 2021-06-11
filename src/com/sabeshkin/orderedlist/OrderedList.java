@@ -35,6 +35,12 @@ public class OrderedList<T> {
 			String trimedSpacesV2 = ((String) v2).trim();
 			compareResult = trimedSpacesV1.compareTo(trimedSpacesV2);
 		}
+		if(compareResult > 0){
+			compareResult = 1;
+		} else if(compareResult < 0){
+			compareResult = -1;
+		}
+
 		return compareResult;
 	}
 
@@ -43,7 +49,7 @@ public class OrderedList<T> {
 			Node<T> addedNode;
 			Integer compareResultPrev = compare(node.value, value);
 			Integer compareResultNext = 0;
-			addedNode = new Node(value);
+			addedNode = new Node<T>(value);
 			if(!isTail(node)){
 				compareResultNext = compare(node.next.value, value);
 			}
@@ -64,7 +70,7 @@ public class OrderedList<T> {
 			Node<T> addedNode;
 			Integer compareResultPrev = compare(node.value, value);
 			Integer compareResultNext = 0;
-			addedNode = new Node(value);
+			addedNode = new Node<T>(value);
 			if(!isTail(node)){
 				compareResultNext = compare(node.next.value, value);
 			}
@@ -74,8 +80,8 @@ public class OrderedList<T> {
 			} else if(compareResultPrev == -1){
 				if(!isHead(node)){
 					addDescendent(node.prev, value);
-				}else{
-					insertBefore(node, addedNode);	
+				} else{
+					insertBefore(node, addedNode);
 				}
 				break;
 			} else{
