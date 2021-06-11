@@ -39,6 +39,20 @@ public class OrderedList_delete_test {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
+	public void testRemoveTail_descandentOrder_headIsThree() {
+		orderedList = new OrderedList(false);
+		for (int i = 0; i < 5; i++){
+			orderedList.add(new Integer(i));
+		}
+		orderedList.delete(4);
+		System.out.println(orderedList);
+		assertEquals(
+				3,
+				orderedList.head.value);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
 	public void testRemove_RemoveNodeFromMidle_PrevForThreeIsOne() {
 		orderedList = new OrderedList(true);
 		for (int i = 0; i < 5; i++){
