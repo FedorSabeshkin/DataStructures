@@ -95,15 +95,15 @@ public class OrderedList_add_strings_test {
 	public void test_addRandomOrderWithDoubles_TenElements_headIsZero() {
 		System.out.println("test_addRandomOrderWithDoubles_TenElements_headIsZero");
 		orderedList = new OrderedList(true);
+		orderedList.add(new String("   HOllo  "));
+		orderedList.add(new String("HOllo"));
 		for (int i = 3; i < 10; i=i+2){
 			orderedList.add(new String( i+ "Hello"));
 			System.out.println(orderedList);
 		}
-		orderedList.add(new String("HOllo"));
-		orderedList.add(new String("HOllo"));
-		orderedList.add(new String( 3+ "  Hello   "));
 		orderedList.add(new String(3+ "  Hello"));
-		orderedList.add(new String(22+ "    Hello"));
+		orderedList.add(new String(3+ "  Hello"));
+		orderedList.add(new String(22+ "Hello"));
 		orderedList.add(new String(22+ "Hello"));
 		for (int i = 10; i >= 0; i=i-2){
 			orderedList.add(new String( i+ "Hello"));
