@@ -3,6 +3,7 @@ package com.sabeshkin.orderedlist;
 import java.util.*;
 
 
+
 class Node<T> {
 	public T value;
 	public Node<T> next, prev;
@@ -26,6 +27,8 @@ public class OrderedList<T> {
 		size = 0;
 	}
 	
+	// worst O(n)
+	// if we work with array, we can use binary search O(log(n)) 
 	public Node<T> find(T val) {
 		Node<T> node = this.head;
 		while(node != null){
@@ -46,7 +49,38 @@ public class OrderedList<T> {
 	}
 
 	public void delete(T val) {
-
+		Node<T> node = find(val);
+		if(node != null){
+			removeNode(node);
+			size--;
+		}
+	}
+	
+	private void removeNode(Node<T> node){
+		if(node.prev != null){
+			node.prev.next = node.next;
+		}
+		if(node.next != null){
+			node.next.prev = node.prev;
+		}
+		// check head case
+		if(isHead(node)){
+			if(node.next != null){
+				this.head = node.next;
+				this.head.prev = null;
+			} else{
+				this.head = null;
+			}
+		}
+		// check tail case
+		if(isTail(node)){
+			if(node.prev != null){
+				this.tail = node.prev;
+				this.tail.next = null;
+			} else{
+				this.tail = null;
+			}
+		}
 	}
 
 	public void clear(boolean asc) {
