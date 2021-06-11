@@ -2,6 +2,7 @@ package com.sabeshkin.orderedlist;
 
 import java.util.*;
 
+
 class Node<T> {
 	public T value;
 	public Node<T> next, prev;
@@ -23,6 +24,49 @@ public class OrderedList<T> {
 		tail = null;
 		_ascending = asc;
 		size = 0;
+	}
+	
+	public Node<T> find(T val) {
+		Node<T> node = this.head;
+		while(node != null){
+			Integer compareResult = compare(node.value, val);
+			Integer compareResultNext = 0;
+			if(!isTail(node)){
+				compareResultNext = compare(node.next.value, val);
+			}
+			if(compareResult < 0 && compareResultNext > 0){
+				// found nothing 
+				return null;
+			} else if(compareResult == 0){
+				return node;
+			}
+			node = node.next;
+		}
+		return null;
+	}
+
+	public void delete(T val) {
+
+	}
+
+	public void clear(boolean asc) {
+		_ascending = asc;
+		this.head = null;
+		this.tail = null;
+	}
+
+	public int count() {
+		return size;
+	}
+
+	ArrayList<Node<T>> getAll() {
+		ArrayList<Node<T>> r = new ArrayList<Node<T>>();
+		Node<T> node = head;
+		while(node != null){
+			r.add(node);
+			node = node.next;
+		}
+		return r;
 	}
 
 	public int compare(T v1, T v2) {
@@ -47,9 +91,9 @@ public class OrderedList<T> {
 	public void addAscendent(Node<T> node, T value) {
 		while(node != null){
 			Node<T> addedNode;
+			addedNode = new Node<T>(value);
 			Integer compareResultPrev = compare(node.value, value);
 			Integer compareResultNext = 0;
-			addedNode = new Node<T>(value);
 			if(!isTail(node)){
 				compareResultNext = compare(node.next.value, value);
 			}
@@ -104,6 +148,8 @@ public class OrderedList<T> {
 		}
 		size++;
 	}
+	
+
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void insertBefore(Node existingNode, Node _nodeToInsert) {
@@ -185,34 +231,6 @@ public class OrderedList<T> {
 		} else{
 			return false;
 		}
-	}
-
-	public Node<T> find(T val) {
-		return null;
-	}
-
-	public void delete(T val) {
-
-	}
-
-	public void clear(boolean asc) {
-		_ascending = asc;
-		this.head = null;
-		this.tail = null;
-	}
-
-	public int count() {
-		return size;
-	}
-
-	ArrayList<Node<T>> getAll() {
-		ArrayList<Node<T>> r = new ArrayList<Node<T>>();
-		Node<T> node = head;
-		while(node != null){
-			r.add(node);
-			node = node.next;
-		}
-		return r;
 	}
 
 	@Override
