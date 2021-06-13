@@ -87,6 +87,7 @@ public class OrderedList<T> {
 		_ascending = asc;
 		this.head = null;
 		this.tail = null;
+		size=0;
 	}
 
 	public int count() {
