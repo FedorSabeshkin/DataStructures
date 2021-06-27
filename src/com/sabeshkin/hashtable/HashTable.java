@@ -17,11 +17,12 @@ public class HashTable {
 	 * return index of value
 	 */
 	public int hashFun(String value) {
-		char[] a = new char[value.length()];
+		char[] charArr = new char[value.length()];
 		int sum = 0;
 		for (int i = 0; i < value.length(); i++){
-			a[i] = value.charAt(i);
-			sum += a[i] - '0';
+			charArr[i] = value.charAt(i);
+			// cast char to int
+			sum += charArr[i] - '0';
 		}
 		return (sum % size);
 	}
@@ -32,9 +33,11 @@ public class HashTable {
 	public int seekSlot(String value) {
 		int i;
 		i = hashFun(value);
+		// check slot by step
 		while(i < size && slots[i] != null){
 			i += step;
 		}
+		// check each slot
 		if(i >= size){
 			i = 0;
 			while(i < size && slots[i] != null)
@@ -59,19 +62,19 @@ public class HashTable {
 
 	/**
 	 * 
-	 * @param value - for search
+	 * @param value
+	 *            for search
 	 * @return index of found value
 	 */
 	public int find(String value) {
 		int i = hashFun(value);
-        if (value == slots[i])
-            return i;
-        else
-        {
-            for (i = 0; i < size; i++)
-                if (slots[i] == value)
-                    return i;
-            return -1;
-        }
+		if(value == slots[i])
+			return i;
+		else{
+			for (i = 0; i < size; i++)
+				if(slots[i] == value)
+					return i;
+			return -1;
+		}
 	}
 }
