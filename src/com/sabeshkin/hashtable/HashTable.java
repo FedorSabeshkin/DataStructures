@@ -13,26 +13,65 @@ public class HashTable {
 			slots[i] = null;
 	}
 
+	/*
+	 * return index of value
+	 */
 	public int hashFun(String value) {
-		// всегда возвращает корректный индекс слота
-		return 0;
+		char[] a = new char[value.length()];
+		int sum = 0;
+		for (int i = 0; i < value.length(); i++){
+			a[i] = value.charAt(i);
+			sum += a[i] - '0';
+		}
+		return (sum % size);
 	}
 
+	/*
+	 * return index after check collisions
+	 */
 	public int seekSlot(String value) {
-		// находит индекс пустого слота для значения, или -1
-		return -1;
+		int i;
+		i = hashFun(value);
+		while(i < size && slots[i] != null){
+			i += step;
+		}
+		if(i >= size){
+			i = 0;
+			while(i < size && slots[i] != null)
+				i++;
+		}
+		if(i >= size)
+			return -1;
+		return i;
 	}
 
+	/*
+	 * put value to hash table
+	 */
 	public int put(String value) {
-		// записываем значение по хэш-функции
-
-		// возвращается индекс слота или -1
-		// если из-за коллизий элемент не удаётся разместить
-		return -1;
+		int i;
+		i = seekSlot(value);
+		if(i != -1){
+			slots[i] = value;
+		}
+		return i;
 	}
 
+	/**
+	 * 
+	 * @param value - for search
+	 * @return index of found value
+	 */
 	public int find(String value) {
-		// находит индекс слота со значением, или -1
-		return -1;
+		int i = hashFun(value);
+        if (value == slots[i])
+            return i;
+        else
+        {
+            for (i = 0; i < size; i++)
+                if (slots[i] == value)
+                    return i;
+            return -1;
+        }
 	}
 }
