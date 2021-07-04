@@ -13,25 +13,39 @@ class NativeDictionary<T> {
 		values = (T[]) Array.newInstance(clazz, this.size);
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @return index of slots
+	 */
 	public int hashFun(String key) {
-		// всегда возвращает корректный индекс слота
+		
 		return 0;
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @return check key is exist 
+ 	 */
 	public boolean isKey(String key) {
-		// возвращает true если ключ имеется,
-		// иначе false
 		return false;
 	}
 
+	/**
+	 * Set value by key
+	 * @param key
+	 * @param value
+	 */
 	public void put(String key, T value) {
-		// гарантированно записываем
-		// значение value по ключу key
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @return value by key or null if key don't exit
+	 */
 	public T get(String key) {
-		// возвращает value для key,
-		// или null если ключ не найден
 		return null;
 	}
 }
