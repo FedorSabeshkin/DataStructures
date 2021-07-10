@@ -32,8 +32,10 @@ class NativeDictionary<T> {
 		return (sum % size);
 	}
 
-	/*
-	 * return index after check collisions
+	/**
+	 * 
+	 * @param key
+	 * @return index after check collisions
 	 */
 	public int generateIndex(String key) {
 		int i;
