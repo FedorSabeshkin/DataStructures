@@ -9,14 +9,65 @@ import com.sabeshkin.hashtable.HashTable;
 public class NativeDictionaryTests {
 
 	@Test
-	public void test_get_field_value() {
+	public void test_getFieldValue_isHello() {
 		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
-		nativeDictionary.put("phrase","hello");
+		nativeDictionary.put("phrase","Hello");
 		nativeDictionary.put("part", "World");
 		String valueByKey = (String) nativeDictionary.get("phrase");
 		assertEquals(
-				"hello",
+				"Hello",
 				valueByKey);
+	}
+	
+	@Test
+	public void test_checkCollision_isCat() {
+		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
+		nativeDictionary.put("phrase","Hello");
+		nativeDictionary.put("part", "World");
+		nativeDictionary.put("phrase", "Cat");
+		String valueByKey = (String) nativeDictionary.get("phrase");
+		assertEquals(
+				"Cat",
+				valueByKey);
+	}
+	
+	@Test
+	public void test_checkCollision_isNotHello() {
+		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
+		nativeDictionary.put("phrase","Hello");
+		nativeDictionary.put("part", "World");
+		nativeDictionary.put("phrase", "Cat");
+		String valueByKey = (String) nativeDictionary.get("phrase");
+		assertNotEquals(
+				"Hello",
+				valueByKey);
+	}
+	
+	
+	@Test
+	public void test_checkCollision_isHello5() {
+		NativeDictionary nativeDictionary = new NativeDictionary(11, String.class);
+		for(int i = 0; i<11; i++){
+			if(i==10){
+				int kek = 0;
+			}
+			nativeDictionary.put("phrase"+i,"Hello"+i);
+		}
+		String valueByKey = (String) nativeDictionary.get("phrase4");
+		assertEquals(
+				"Hello4",
+				valueByKey);
+	}
+	
+	@Test
+	public void test_isKey_phrase_isTrue() {
+		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
+		for(int i = 0; i<17; i++)
+			nativeDictionary.put("phrase"+i,"Hello"+i);
+		Boolean isKey = (Boolean) nativeDictionary.isKey("phrase5");
+		assertEquals(
+				true,
+				isKey);
 	}
 
 }

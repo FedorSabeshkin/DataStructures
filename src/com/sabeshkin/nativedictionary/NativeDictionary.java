@@ -27,12 +27,39 @@ class NativeDictionary<T> {
 		for (int i = 0; i < key.length(); i++){
 			charArr[i] = key.charAt(i);
 			// cast char to int
-			sum += charArr[i] - '0';
+			sum += (int) charArr[i] - '0';
 		}
 		return (sum % size);
 	}
 
-
+	/*
+	 * return index after check collisions
+	 */
+	public int generateIndex(String key) {
+		int i;
+		i = hashFun(key);
+		// check slot by step
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i += step;
+		}
+		// check each slot
+		if(i >= size){
+			i = 0;
+			while(i < size && slots[i] != null){
+				if(slots[i].equals(key))
+					break;
+				i++;
+			}
+		}
+		/**
+		 * if have't free slot or already have this key
+		 */
+		if(i >= size)
+			return -1;
+		return i;
+	}
 
 	/**
 	 * 
@@ -45,9 +72,12 @@ class NativeDictionary<T> {
 		if(slots[index] == key){
 			return true;
 		} else{
-			return false;
+			for (int i = 0; i < slots.length; i++)
+				if(slots[index].equals(key)){
+					return true;
+				}
 		}
-		
+		return false;
 	}
 
 	/**
@@ -58,9 +88,11 @@ class NativeDictionary<T> {
 	 */
 	public void put(String key, T value) {
 		int index = 0;
-		index = hashFun(key);
-		slots[index] = key;
-		values[index] = value;
+		index = generateIndex(key);
+		if(index != -1){
+			slots[index] = key;
+			values[index] = value;
+		}
 	}
 
 	/**
@@ -69,11 +101,14 @@ class NativeDictionary<T> {
 	 *            for search
 	 * @return index of found value
 	 */
-	public int find(String value) {
-		int i = hashFun(value);
-		if(value == slots[i])
+	public int find(String key) {
+		int i = hashFun(key);
+		if(key.equals(slots[i]))
 			return i;
 		else{
+			for (i = 0; i < size; i++)
+				if(slots[i] != null && slots[i].equals(key))
+					return i;
 			return -1;
 		}
 	}
