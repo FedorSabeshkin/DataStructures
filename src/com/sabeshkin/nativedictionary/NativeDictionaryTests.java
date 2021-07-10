@@ -69,5 +69,16 @@ public class NativeDictionaryTests {
 				true,
 				isKey);
 	}
+	
+	@Test
+	public void test_isKey_capWord_isFalse() {
+		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
+		for(int i = 0; i<17; i++)
+			nativeDictionary.put("phrase"+i,"Hello"+i);
+		Boolean isKey = (Boolean) nativeDictionary.isKey("capWord");
+		assertEquals(
+				false,
+				isKey);
+	}
 
 }
