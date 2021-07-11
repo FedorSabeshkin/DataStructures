@@ -64,7 +64,7 @@ public class NativeDictionaryTests {
 		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
 		for(int i = 0; i<17; i++)
 			nativeDictionary.put("phrase"+i,"Hello"+i);
-		Boolean isKey = (Boolean) nativeDictionary.isKey("phrase5");
+		boolean isKey = nativeDictionary.isKey("phrase5");
 		assertEquals(
 				true,
 				isKey);
@@ -75,9 +75,20 @@ public class NativeDictionaryTests {
 		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
 		for(int i = 0; i<17; i++)
 			nativeDictionary.put("phrase"+i,"Hello"+i);
-		Boolean isKey = (Boolean) nativeDictionary.isKey("capWord");
+		boolean  isKey = nativeDictionary.isKey("capWord");
 		assertEquals(
 				false,
+				isKey);
+	}
+	
+	@Test
+	public void test_isKey_phrase16_isTrue() {
+		NativeDictionary nativeDictionary = new NativeDictionary(17, String.class);
+		for(int i = 0; i<17; i++)
+			nativeDictionary.put("phrase"+i,"Hello"+i);
+		boolean  isKey = nativeDictionary.isKey("phrase16");
+		assertEquals(
+				true,
 				isKey);
 	}
 

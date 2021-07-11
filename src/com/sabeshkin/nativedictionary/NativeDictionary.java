@@ -12,8 +12,9 @@ class NativeDictionary<T> {
 		size = sz;
 		slots = new String[size];
 		values = (T[]) Array.newInstance(clazz, this.size);
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++){
 			slots[i] = null;
+		}
 	}
 
 	/**
@@ -71,13 +72,14 @@ class NativeDictionary<T> {
 	public boolean isKey(String key) {
 		int index = 0;
 		index = hashFun(key);
-		if(slots[index] == key){
+		if(slots[index] != null && slots[index].equals(key)){
 			return true;
 		} else{
-			for (int i = 0; i < slots.length; i++)
-				if(slots[index].equals(key)){
+			for (index = 0; index < slots.length; index++){
+				if(slots[index] != null && slots[index].equals(key)){
 					return true;
 				}
+			}
 		}
 		return false;
 	}
@@ -108,9 +110,10 @@ class NativeDictionary<T> {
 		if(key.equals(slots[i]))
 			return i;
 		else{
-			for (i = 0; i < size; i++)
+			for (i = 0; i < size; i++){
 				if(slots[i] != null && slots[i].equals(key))
 					return i;
+			}
 			return -1;
 		}
 	}
