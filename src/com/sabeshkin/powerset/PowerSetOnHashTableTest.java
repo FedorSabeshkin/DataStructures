@@ -50,7 +50,68 @@ public class PowerSetOnHashTableTest {
 		powerSetUnion = powerSetOnHashTableOne.union(powerSetOnHashTableSecond);
 		assertEquals(
 				true,
-				powerSetUnion.remove("World"));
+				powerSetUnion.get("World"));
+	}
+	
+	@Test
+	public void test_intersection_twoPowerSet() {
+		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetOnHashTableSecond= new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetUnion= new PowerSetOnHashTable();
+		powerSetOnHashTableOne.put("Hello");
+		powerSetOnHashTableOne.put("Apple");
+		powerSetOnHashTableOne.put("Orange");
+		powerSetOnHashTableSecond.put("World");
+		powerSetOnHashTableSecond.put("Orange");
+		powerSetUnion = powerSetOnHashTableOne.intersection(powerSetOnHashTableSecond);
+		assertEquals(
+				true,
+				powerSetUnion.get("Orange"));
+	}
+	
+	@Test
+	public void test_difference_twoPowerSet() {
+		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetOnHashTableSecond= new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetUnion= new PowerSetOnHashTable();
+		powerSetOnHashTableOne.put("Hello");
+		powerSetOnHashTableOne.put("Apple");
+		powerSetOnHashTableOne.put("Orange");
+		powerSetOnHashTableSecond.put("World");
+		powerSetOnHashTableSecond.put("Orange");
+		powerSetUnion = powerSetOnHashTableOne.difference(powerSetOnHashTableSecond);
+		assertEquals(
+				false,
+				powerSetUnion.get("Orange"));
+	}
+	
+	@Test
+	public void test_isSubset_twoPowerSet_isFalse() {
+		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetOnHashTableSecond= new PowerSetOnHashTable();
+		powerSetOnHashTableOne.put("Hello");
+		powerSetOnHashTableOne.put("Apple");
+		powerSetOnHashTableOne.put("Orange");
+		powerSetOnHashTableSecond.put("World");
+		powerSetOnHashTableSecond.put("Orange");
+		assertEquals(
+				false,
+				powerSetOnHashTableOne.isSubset(powerSetOnHashTableSecond));
+	}
+	
+	@Test
+	public void test_isSubset_twoPowerSet_isTrue() {
+		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetOnHashTableSecond= new PowerSetOnHashTable();
+		powerSetOnHashTableOne.put("Hello");
+		powerSetOnHashTableOne.put("Apple");
+		powerSetOnHashTableOne.put("Orange");
+		powerSetOnHashTableOne.put("World");
+		powerSetOnHashTableSecond.put("Apple");
+		powerSetOnHashTableSecond.put("Orange");
+		assertEquals(
+				true,
+				powerSetOnHashTableOne.isSubset(powerSetOnHashTableSecond));
 	}
 	
 }

@@ -156,8 +156,17 @@ public class PowerSetOnHashTable {
 	}
 
 	public PowerSetOnHashTable intersection(PowerSetOnHashTable set2) {
-		// пересечение текущего множества и set2
-		return null;
+		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(20_000);
+		String[] slotsForInsert = getSlots();
+		String[] slotsForInsert2 = set2.getSlots();
+		for (int i = 0; i < 20_000; i++){
+			if(slotsForInsert[i] != null && slotsForInsert2[i] != null){
+				if(set2.get(slotsForInsert[i])){
+					powerSet.put(slotsForInsert[i]);		
+				}
+			}
+		}
+		return powerSet;
 	}
 
 	public PowerSetOnHashTable union(PowerSetOnHashTable set2) {
@@ -178,14 +187,33 @@ public class PowerSetOnHashTable {
 	}
 
 	public PowerSetOnHashTable difference(PowerSetOnHashTable set2) {
-		// разница текущего множества и set2
-		return null;
+		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(20_000);
+		String[] slotsForInsert = getSlots();
+		String[] slotsForInsert2 = set2.getSlots();
+		for (int i = 0; i < 20_000; i++){
+			if(slotsForInsert[i] != null && slotsForInsert2[i] != null){
+				if(!get(slotsForInsert2[i])){
+					powerSet.put(slotsForInsert[i]);		
+				}
+			}
+		}
+		return powerSet;
 	}
 
 	public boolean isSubset(PowerSetOnHashTable set2) {
 		// возвращает true, если set2 есть
 		// подмножество текущего множества,
 		// иначе false
-		return false;
+		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(20_000);
+		String[] slotsForInsert = getSlots();
+		String[] slotsForInsert2 = set2.getSlots();
+		for (int i = 0; i < 20_000; i++){
+			if(slotsForInsert2[i] != null){
+				if(!get(slotsForInsert2[i])){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
