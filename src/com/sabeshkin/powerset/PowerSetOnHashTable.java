@@ -150,6 +150,7 @@ public class PowerSetOnHashTable {
 		int index = find(value);
 		if(index != (-1)){
 			slots[index] = null;
+			count--;
 			return true;
 		} else{
 			return false;

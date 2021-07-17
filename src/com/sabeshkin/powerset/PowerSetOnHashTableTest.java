@@ -26,6 +26,17 @@ public class PowerSetOnHashTableTest {
 				true,
 				powerSetOnHashTable.remove("Hello"));
 	}
+	
+	@Test
+	public void test_removeInsertedValue_contIsOne() {
+		PowerSetOnHashTable powerSetOnHashTable = new PowerSetOnHashTable();
+		powerSetOnHashTable.put("Hello");
+		powerSetOnHashTable.put("World");
+		powerSetOnHashTable.remove("Hello");
+		assertEquals(
+				1,
+				powerSetOnHashTable.size());
+	}
 
 	@Test
 	public void test_removeInsertedValue_from_20_000_list_isTrue() {
@@ -60,6 +71,24 @@ public class PowerSetOnHashTableTest {
 		powerSetUnion = powerSetOnHashTableOne.union(powerSetOnHashTableSecond);
 		assertEquals(
 				1,
+				powerSetUnion.size());
+	}
+
+	@Test
+	public void test_union_twoPowerSet_20_000() {
+		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		for (int i = 0; i < 10_000; i++){
+			powerSetOnHashTableOne.put("World" + i);
+		}
+		for (int i = 10_000; i < 20_000; i++){
+			powerSetOnHashTableOne.put("World" + i);
+		}
+		powerSetOnHashTableOne.put("Hello");
+		powerSetUnion = powerSetOnHashTableOne.union(powerSetOnHashTableSecond);
+		assertEquals(
+				20000,
 				powerSetUnion.size());
 	}
 
@@ -104,7 +133,6 @@ public class PowerSetOnHashTableTest {
 				false,
 				powerSetOnHashTableSecond.get("Orange"));
 	}
-	
 
 	@Test
 	public void test_get_isTrue() {
@@ -148,7 +176,7 @@ public class PowerSetOnHashTableTest {
 	}
 
 	@Test
-	public void test_isSubset_twoPowerSet_isFalse() {
+	public void test_isSubset_notAllElementsOfParameterIncludesInPoserSet() {
 		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
 		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
 		powerSetOnHashTableOne.put("Hello");
@@ -162,7 +190,7 @@ public class PowerSetOnHashTableTest {
 	}
 
 	@Test
-	public void test_isSubset_twoPowerSet_isTrue() {
+	public void test_isSubset_allElementsOfParameterIncludesInPoserSet() {
 		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
 		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
 		powerSetOnHashTableOne.put("Hello");
