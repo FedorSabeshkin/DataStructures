@@ -128,6 +128,7 @@ public class PowerSetOnHashTable {
 		index = generateIndex(value);
 		if(index != -1){
 			slots[index] = value;
+			count++;
 		}
 	}
 
@@ -191,8 +192,10 @@ public class PowerSetOnHashTable {
 		String[] slotsForInsert = getSlots();
 		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
-			if(slotsForInsert[i] != null && slotsForInsert2[i] != null){
-				if(!get(slotsForInsert2[i])){
+			if(slotsForInsert[i] != null) {
+				String value = slotsForInsert[i];
+				boolean isExist = set2.get(value);
+				if(!isExist){
 					powerSet.put(slotsForInsert[i]);		
 				}
 			}
@@ -201,11 +204,6 @@ public class PowerSetOnHashTable {
 	}
 
 	public boolean isSubset(PowerSetOnHashTable set2) {
-		// возвращает true, если set2 есть
-		// подмножество текущего множества,
-		// иначе false
-		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(20_000);
-		String[] slotsForInsert = getSlots();
 		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
 			if(slotsForInsert2[i] != null){
