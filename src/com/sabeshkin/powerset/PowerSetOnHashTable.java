@@ -2,7 +2,7 @@ package com.sabeshkin.powerset;
 
 public class PowerSetOnHashTable {
 	public int storeSize;
-	public String[] slots;
+	private String[] slots;
 	private int step = 3;
 	private int count;
 
@@ -13,6 +13,19 @@ public class PowerSetOnHashTable {
 		for (int i = 0; i < storeSize; i++){
 			slots[i] = null;
 		}
+	}
+	
+	public PowerSetOnHashTable(int sizeOfStore) {
+		storeSize = sizeOfStore;
+		slots = new String[storeSize];
+		count = 0;
+		for (int i = 0; i < storeSize; i++){
+			slots[i] = null;
+		}
+	}
+	
+	public String[] getSlots(){
+		return slots;
 	}
 
 	public int size() {
@@ -148,8 +161,20 @@ public class PowerSetOnHashTable {
 	}
 
 	public PowerSetOnHashTable union(PowerSetOnHashTable set2) {
-		// объединение текущего множества и set2
-		return null;
+		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(40_000);
+		String[] slotsForInsert = getSlots();
+		String[] slotsForInsert2 = set2.getSlots();
+		for (int i = 0; i < 20_000; i++){
+			if(slotsForInsert[i] != null){
+				powerSet.put(slotsForInsert[i]);	
+			}
+		}
+		for (int i = 0; i < 20_000; i++){
+			if(slotsForInsert2[i] != null){
+				powerSet.put(slotsForInsert2[i]);
+			}
+		}
+		return powerSet;
 	}
 
 	public PowerSetOnHashTable difference(PowerSetOnHashTable set2) {

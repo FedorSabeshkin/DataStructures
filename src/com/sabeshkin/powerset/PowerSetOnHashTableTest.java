@@ -39,4 +39,18 @@ public class PowerSetOnHashTableTest {
 				powerSetOnHashTable.remove("World10000"));
 	}
 	
+	
+	@Test
+	public void test_union_twoPowerSet() {
+		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetOnHashTableSecond= new PowerSetOnHashTable();
+		PowerSetOnHashTable powerSetUnion= new PowerSetOnHashTable();
+		powerSetOnHashTableOne.put("Hello");
+		powerSetOnHashTableSecond.put("World");
+		powerSetUnion = powerSetOnHashTableOne.union(powerSetOnHashTableSecond);
+		assertEquals(
+				true,
+				powerSetUnion.remove("World"));
+	}
+	
 }
