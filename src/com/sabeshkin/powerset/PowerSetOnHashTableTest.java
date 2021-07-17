@@ -8,7 +8,7 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_removeTwiceSameValue_SecondCallIsFalse() {
-		PowerSetOnHashTable powerSetOnHashTable = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTable = new PowerSet();
 		powerSetOnHashTable.put("Hello");
 		powerSetOnHashTable.put("World");
 		powerSetOnHashTable.remove("Hello");
@@ -19,7 +19,7 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_removeInsertedValue_isTrue() {
-		PowerSetOnHashTable powerSetOnHashTable = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTable = new PowerSet();
 		powerSetOnHashTable.put("Hello");
 		powerSetOnHashTable.put("World");
 		assertEquals(
@@ -29,7 +29,7 @@ public class PowerSetOnHashTableTest {
 	
 	@Test
 	public void test_removeInsertedValue_contIsOne() {
-		PowerSetOnHashTable powerSetOnHashTable = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTable = new PowerSet();
 		powerSetOnHashTable.put("Hello");
 		powerSetOnHashTable.put("World");
 		powerSetOnHashTable.remove("Hello");
@@ -40,7 +40,7 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_removeInsertedValue_from_20_000_list_isTrue() {
-		PowerSetOnHashTable powerSetOnHashTable = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTable = new PowerSet();
 		for (int i = 0; i < 20_000; i++){
 			powerSetOnHashTable.put("World" + i);
 		}
@@ -51,9 +51,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_union_twoPowerSet_twiceIsNotEmpty() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableSecond.put("World");
 		powerSetUnion = powerSetOnHashTableOne.union(powerSetOnHashTableSecond);
@@ -64,9 +64,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_union_twoPowerSet_oneIsEmpty() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetUnion = powerSetOnHashTableOne.union(powerSetOnHashTableSecond);
 		assertEquals(
@@ -76,9 +76,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_union_twoPowerSet_20_000() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
 		for (int i = 0; i < 10_000; i++){
 			powerSetOnHashTableOne.put("World" + i);
 		}
@@ -94,9 +94,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_intersection_twoPowerSet_notEmpty() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableOne.put("Apple");
 		powerSetOnHashTableOne.put("Orange");
@@ -110,9 +110,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_intersection_twoPowerSet_isEmpty() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableOne.put("Apple");
 		powerSetOnHashTableOne.put("Orange");
@@ -126,7 +126,7 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_get_isFalse() {
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
 		powerSetOnHashTableSecond.put("World");
 		powerSetOnHashTableSecond.put("Flower");
 		assertEquals(
@@ -136,7 +136,7 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_get_isTrue() {
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
 		powerSetOnHashTableSecond.put("World");
 		powerSetOnHashTableSecond.put("Flower");
 		assertEquals(
@@ -146,9 +146,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_difference_twoPowerSet() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetDifference = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetDifference = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableOne.put("Apple");
 		powerSetOnHashTableOne.put("Orange");
@@ -162,9 +162,9 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_difference_twoPowerSet_isEmpty() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetUnion = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
 		powerSetOnHashTableOne.put("World");
 		powerSetOnHashTableOne.put("Orange");
 		powerSetOnHashTableSecond.put("World");
@@ -177,8 +177,8 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_isSubset_notAllElementsOfParameterIncludesInPoserSet() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableOne.put("Apple");
 		powerSetOnHashTableOne.put("Orange");
@@ -191,8 +191,8 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_isSubset_allElementsOfParameterIncludesInPoserSet() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableOne.put("Apple");
 		powerSetOnHashTableOne.put("Orange");
@@ -206,8 +206,8 @@ public class PowerSetOnHashTableTest {
 
 	@Test
 	public void test_isSubset_twoPowerSet_allElementsOfPowerSetIncludesInParameter() {
-		PowerSetOnHashTable powerSetOnHashTableOne = new PowerSetOnHashTable();
-		PowerSetOnHashTable powerSetOnHashTableSecond = new PowerSetOnHashTable();
+		PowerSet powerSetOnHashTableOne = new PowerSet();
+		PowerSet powerSetOnHashTableSecond = new PowerSet();
 		powerSetOnHashTableOne.put("Hello");
 		powerSetOnHashTableOne.put("Apple");
 		powerSetOnHashTableOne.put("Orange");

@@ -1,12 +1,12 @@
 package com.sabeshkin.powerset;
 
-public class PowerSetOnHashTable {
+public class PowerSet {
 	public int storeSize;
 	private String[] slots;
 	private int step = 3;
 	private int count;
 
-	public PowerSetOnHashTable() {
+	public PowerSet() {
 		storeSize = 20000;
 		slots = new String[storeSize];
 		count = 0;
@@ -15,7 +15,7 @@ public class PowerSetOnHashTable {
 		}
 	}
 	
-	public PowerSetOnHashTable(int sizeOfStore) {
+	public PowerSet(int sizeOfStore) {
 		storeSize = sizeOfStore;
 		slots = new String[storeSize];
 		count = 0;
@@ -157,8 +157,8 @@ public class PowerSetOnHashTable {
 		}
 	}
 
-	public PowerSetOnHashTable intersection(PowerSetOnHashTable set2) {
-		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(20_000);
+	public PowerSet intersection(PowerSet set2) {
+		PowerSet powerSet = new PowerSet(20_000);
 		String[] slotsForInsert = getSlots();
 		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
@@ -171,8 +171,8 @@ public class PowerSetOnHashTable {
 		return powerSet;
 	}
 
-	public PowerSetOnHashTable union(PowerSetOnHashTable set2) {
-		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(40_000);
+	public PowerSet union(PowerSet set2) {
+		PowerSet powerSet = new PowerSet(40_000);
 		String[] slotsForInsert = getSlots();
 		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
@@ -188,8 +188,8 @@ public class PowerSetOnHashTable {
 		return powerSet;
 	}
 
-	public PowerSetOnHashTable difference(PowerSetOnHashTable set2) {
-		PowerSetOnHashTable powerSet = new PowerSetOnHashTable(20_000);
+	public PowerSet difference(PowerSet set2) {
+		PowerSet powerSet = new PowerSet(20_000);
 		String[] slotsForInsert = getSlots();
 		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
@@ -204,7 +204,7 @@ public class PowerSetOnHashTable {
 		return powerSet;
 	}
 
-	public boolean isSubset(PowerSetOnHashTable set2) {
+	public boolean isSubset(PowerSet set2) {
 		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
 			if(slotsForInsert2[i] != null){
