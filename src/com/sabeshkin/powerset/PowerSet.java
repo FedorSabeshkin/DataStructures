@@ -160,9 +160,8 @@ public class PowerSet {
 	public PowerSet intersection(PowerSet set2) {
 		PowerSet powerSet = new PowerSet(20_000);
 		String[] slotsForInsert = getSlots();
-		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
-			if(slotsForInsert[i] != null && slotsForInsert2[i] != null){
+			if(slotsForInsert[i] != null){
 				if(set2.get(slotsForInsert[i])){
 					powerSet.put(slotsForInsert[i]);		
 				}
@@ -191,12 +190,9 @@ public class PowerSet {
 	public PowerSet difference(PowerSet set2) {
 		PowerSet powerSet = new PowerSet(20_000);
 		String[] slotsForInsert = getSlots();
-		String[] slotsForInsert2 = set2.getSlots();
 		for (int i = 0; i < 20_000; i++){
 			if(slotsForInsert[i] != null) {
-				String value = slotsForInsert[i];
-				boolean isExist = set2.get(value);
-				if(!isExist){
+				if(!set2.get(slotsForInsert[i])){
 					powerSet.put(slotsForInsert[i]);		
 				}
 			}
