@@ -5,7 +5,32 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class PowerSetOnHashTableTest {
+	
+	@Test
+	public void test_put_countIs_2() {
+		PowerSet powerSet = new PowerSet();
+		powerSet.put("Hello");
+		powerSet.put("World");
+		powerSet.put("Hello");
+		assertEquals(
+				2,
+				powerSet.size());
+	}
 
+	@Test
+	public void test_put_countIs_10_000() {
+		PowerSet powerSetOne = new PowerSet();
+		for (int i = 0; i < 10_000; i++){
+			powerSetOne.put("World" + i);
+		}
+		for (int i = 5_000; i < 10_000; i++){
+			powerSetOne.put("World" + i);
+		}
+		assertEquals(
+				10_000,
+				powerSetOne.size());
+	}
+	
 	@Test
 	public void test_removeTwiceSameValue_SecondCallIsFalse() {
 		PowerSet powerSet = new PowerSet();
@@ -83,12 +108,29 @@ public class PowerSetOnHashTableTest {
 			powerSetOne.put("World" + i);
 		}
 		for (int i = 10_000; i < 20_000; i++){
-			powerSetOne.put("World" + i);
+			powerSetSecond.put("World" + i);
 		}
 		powerSetOne.put("Hello");
 		powerSetUnion = powerSetOne.union(powerSetSecond);
 		assertEquals(
-				20000,
+				20_000,
+				powerSetUnion.size());
+	}
+	
+	@Test
+	public void test_union_20_000_partOneIsSubsetAnother_countIs_10_000() {
+		PowerSet powerSetOne = new PowerSet();
+		PowerSet powerSetSecond = new PowerSet();
+		PowerSet powerSetUnion = new PowerSet();
+		for (int i = 0; i < 10_000; i++){
+			powerSetOne.put("World" + i);
+		}
+		for (int i = 5_000; i < 10_000; i++){
+			powerSetSecond.put("World" + i);
+		}
+		powerSetUnion = powerSetOne.union(powerSetSecond);
+		assertEquals(
+				10_000,
 				powerSetUnion.size());
 	}
 

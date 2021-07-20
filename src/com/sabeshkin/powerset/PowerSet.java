@@ -50,24 +50,26 @@ public class PowerSet {
 
 	/**
 	 * 
-	 * @param key
+	 * @param value
 	 * @return index after check collisions
 	 */
-	public int generateIndex(String key) {
+	public int generateIndex(String value) {
 		int i;
-		i = hashFun(key);
+		i = hashFun(value);
 		// check slot by step
 		while(i < storeSize && slots[i] != null){
-			if(slots[i].equals(key))
-				break;
+			if(slots[i].equals(value)){
+				return -1;
+			}
 			i += step;
 		}
 		// check each slot
 		if(i >= storeSize){
 			i = 0;
 			while(i < storeSize && slots[i] != null){
-				if(slots[i].equals(key))
-					break;
+				if(slots[i].equals(value)){
+					return -1;
+				}
 				i++;
 			}
 		}
