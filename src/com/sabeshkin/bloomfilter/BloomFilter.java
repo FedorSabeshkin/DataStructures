@@ -28,7 +28,6 @@ public class BloomFilter {
 		int sum = 0;
 		for (int i = 0; i < value.length(); i++){
 			charArr[i] = value.charAt(i);
-			// cast char to int
 			sum = ((sum*entropy) + charArr[i] - '0') % filter_len;
 		}
 		return sum;
