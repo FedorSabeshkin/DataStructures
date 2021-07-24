@@ -6,7 +6,6 @@ public class BloomFilter {
 	public BloomFilter(int f_len) {
 		filter_len = f_len;
 		filter = new int[filter_len];
-		// создаём битовый массив длиной f_len ...
 	}
 
 	public int hash1(String str1) {
@@ -38,11 +37,9 @@ public class BloomFilter {
 		int indexSecond = hash2(str1);
 		filter[indexFirst] = 1;
 		filter[indexSecond] = 1;
-		// добавляем строку str1 в фильтр
 	}
 
 	public boolean isValue(String str1) {
-		// проверка, имеется ли строка str1 в фильтре
 		int indexFirst = hash1(str1);
 		int indexSecond = hash2(str1);
 		if(filter[indexFirst]==1 && filter[indexSecond] == 1){
