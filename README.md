@@ -10,6 +10,6 @@
 - Ordered List
 - Queue
 - HashTable
-- NativeDictionary
+- Dictionary
 - PowerSet
 - Bloom Filter
