@@ -4,8 +4,12 @@
 - LinkedList
 - DoublyLinkedList
 - DoublyLinkedList with dummy nodes(head and tail)
-- DynamicArray
+- Dynamic Array
 - Deque
 - Stack
-- OrderedList
+- Ordered List
 - Queue
+- HashTable
+- NativeDictionary
+- PowerSet
+- Bloom Filter
