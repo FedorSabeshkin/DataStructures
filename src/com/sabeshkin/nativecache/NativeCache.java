@@ -40,9 +40,13 @@ public class NativeCache<T> {
 	public int generateIndex(String key) {
 		int i;
 		i = hashFun(key);
+		i = checkIndex(i, key);
+		return i;
+	}
+
+	public int checkIndex(int i, String key) {
 		// check slot by step
 		i = checkWithStep(i, key);
-
 		// check each slot
 		if(i >= size){
 			i = checkEachElement(i, key);
@@ -126,12 +130,7 @@ public class NativeCache<T> {
 		if(key.equals(slots[i]))
 			return i;
 		else{
-			i = checkWithStep(i, key);
-			if(i >= size){
-				i = checkEachElement(i, key);
-			}
-			if(i >= size)
-				return -1;
+			i = checkIndex(i, key);
 			return i;
 		}
 	}
