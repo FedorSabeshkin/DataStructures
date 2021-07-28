@@ -42,25 +42,36 @@ public class NativeCache<T> {
 		int i;
 		i = hashFun(key);
 		// check slot by step
-		while(i < size && slots[i] != null){
-			if(slots[i].equals(key))
-				break;
-			i += step;
-		}
+		i = checkWithStep(i, key);
+
 		// check each slot
 		if(i >= size){
-			i = 0;
-			while(i < size && slots[i] != null){
-				if(slots[i].equals(key))
-					break;
-				i++;
-			}
+			i = checkEachElement(i, key);
 		}
 		/**
 		 * if have't free slot or already have this key
 		 */
 		if(i >= size)
 			return -1;
+		return i;
+	}
+
+	public int checkWithStep(int i, String key) {
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i += step;
+		}
+		return i;
+	}
+
+	public int checkEachElement(int i, String key) {
+		i = 0;
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i++;
+		}
 		return i;
 	}
 
@@ -85,8 +96,9 @@ public class NativeCache<T> {
 	}
 
 	/**
-	 * Set value by key
-	 * If dictinary is full - replace most underutilized value by new value
+	 * Set value by key If dictinary is full - replace most underutilized value
+	 * by new value
+	 * 
 	 * @param key
 	 * @param value
 	 */
@@ -96,7 +108,7 @@ public class NativeCache<T> {
 		if(index != -1){
 			slots[index] = key;
 			values[index] = value;
-		}else{
+		} else{
 			int minIndex = getIndexOfMinValue(hits);
 			slots[minIndex] = key;
 			values[minIndex] = value;
@@ -115,11 +127,13 @@ public class NativeCache<T> {
 		if(key.equals(slots[i]))
 			return i;
 		else{
-			for (i = 0; i < size; i++){
-				if(slots[i] != null && slots[i].equals(key))
-					return i;
+			i = checkWithStep(i, key);
+			if(i >= size){
+				i = checkEachElement(i, key);
 			}
-			return -1;
+			if(i >= size)
+				return -1;
+			return i;
 		}
 	}
 
@@ -138,6 +152,11 @@ public class NativeCache<T> {
 		}
 	}
 
+	/**
+	 * 
+	 * @param numbers
+	 * @return index of min value in int array
+	 */
 	public static int getIndexOfMinValue(int[] numbers) {
 		int min = numbers[0];
 		int indexOfMin = 0;
