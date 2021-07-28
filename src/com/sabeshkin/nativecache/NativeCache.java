@@ -27,7 +27,6 @@ public class NativeCache<T> {
 		int sum = 0;
 		for (int i = 0; i < key.length(); i++){
 			charArr[i] = key.charAt(i);
-			// cast char to int
 			sum += (int) charArr[i] - '0';
 		}
 		return (sum % size);
