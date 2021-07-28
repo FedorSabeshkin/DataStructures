@@ -49,9 +49,11 @@ public class NativeDictionaryTests {
 		NativeDictionary nativeDictionary = new NativeDictionary(11, String.class);
 		for(int i = 0; i<11; i++){
 			if(i==10){
-				int kek = 0;
+				int k = 4;
+				nativeDictionary.put("phrase"+k,"Hello"+k);
+			}else{
+				nativeDictionary.put("phrase"+i,"Hello"+ i);
 			}
-			nativeDictionary.put("phrase"+i,"Hello"+i);
 		}
 		String valueByKey = (String) nativeDictionary.get("phrase4");
 		assertEquals(
