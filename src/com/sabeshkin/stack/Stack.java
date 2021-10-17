@@ -29,13 +29,13 @@ public class Stack<T> {
 		return linkedList.peek();
 	}
 
-	public static boolean parenthesisValidator(String inString) {
+	public static boolean parenthesisValidator(String sequenceOfParenthesis) {
 		int i = 0;
 		Stack stack = new Stack();
-		while(i < inString.length()){
-			switch (inString.charAt(i)) {
+		while(i < sequenceOfParenthesis.length()){
+			switch (sequenceOfParenthesis.charAt(i)) {
 			case '(':
-				stack.push(inString.charAt(i));
+				stack.push(sequenceOfParenthesis.charAt(i));
 				break;
 			case ')':
 				stack.pop();
@@ -48,36 +48,36 @@ public class Stack<T> {
 		return (stack.peek() == null);
 	}
 
-	public static int postfixCalculation(String inString) {
-		int beginIndex = 0;
-		int endIndex = 0;
-		int first;
-		int second;
-		Stack<Comparable> numbers = new Stack();
-		while(beginIndex < inString.length() - 1){
-			endIndex = inString.indexOf(" ", beginIndex);
-			String symbol = inString.substring(beginIndex, endIndex);
+	public static int postfixCalculation(String postfixArithmeticExpression) {
+		int positionOfSymbolStart = 0;
+		int positionOfSymbolEnd = 0;
+		int firstNumber;
+		int secondNumber;
+		Stack<Comparable> numbersForExpression = new Stack();
+		while(positionOfSymbolStart < postfixArithmeticExpression.length() - 1){
+			positionOfSymbolEnd = postfixArithmeticExpression.indexOf(" ", positionOfSymbolStart);
+			String symbol = postfixArithmeticExpression.substring(positionOfSymbolStart, positionOfSymbolEnd);
 			switch (symbol) {
 			case "+":
-				first = (int) numbers.pop();
-				second = (int) numbers.pop();
-				first = first + second;
-				numbers.push(first);
+				firstNumber = (int) numbersForExpression.pop();
+				secondNumber = (int) numbersForExpression.pop();
+				firstNumber = firstNumber + secondNumber;
+				numbersForExpression.push(firstNumber);
 				break;
 			case "*":
-				first = (int) numbers.pop();
-				second = (int) numbers.pop();
-				first = first * second;
-				numbers.push(first);
+				firstNumber = (int) numbersForExpression.pop();
+				secondNumber = (int) numbersForExpression.pop();
+				firstNumber = firstNumber * secondNumber;
+				numbersForExpression.push(firstNumber);
 				break;
 			case "=":
 				break;
 			default:
-				numbers.push(Integer.parseInt(symbol));
+				numbersForExpression.push(Integer.parseInt(symbol));
 			}
-			beginIndex = endIndex + 1;
+			positionOfSymbolStart = positionOfSymbolEnd + 1;
 		}
-		return (int) numbers.pop();
+		return (int) numbersForExpression.pop();
 	}
 
 }
