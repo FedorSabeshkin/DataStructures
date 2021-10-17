@@ -8,6 +8,7 @@ class NativeDictionary<T> {
 	public T[] values;
 	public int step = 3;
 
+	@SuppressWarnings("unchecked")
 	public NativeDictionary(int sz, Class clazz) {
 		size = sz;
 		slots = new String[size];
@@ -27,8 +28,7 @@ class NativeDictionary<T> {
 		int sum = 0;
 		for (int i = 0; i < key.length(); i++){
 			charArr[i] = key.charAt(i);
-			// cast char to int
-			sum += (int) charArr[i] - '0';
+			sum += charArr[i] - '0';
 		}
 		return (sum % size);
 	}
@@ -41,26 +41,41 @@ class NativeDictionary<T> {
 	public int generateIndex(String key) {
 		int i;
 		i = hashFun(key);
+		i = checkIndex(i, key);
+		return i;
+	}
+	
+	public int checkIndex(int i, String key) {
 		// check slot by step
-		while(i < size && slots[i] != null){
-			if(slots[i].equals(key))
-				break;
-			i += step;
-		}
+		i = checkWithStep(i, key);
 		// check each slot
 		if(i >= size){
-			i = 0;
-			while(i < size && slots[i] != null){
-				if(slots[i].equals(key))
-					break;
-				i++;
-			}
+			i = checkEachElement(i, key);
 		}
 		/**
 		 * if have't free slot or already have this key
 		 */
 		if(i >= size)
 			return -1;
+		return i;
+	}
+	
+	public int checkWithStep(int i, String key) {
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i += step;
+		}
+		return i;
+	}
+
+	public int checkEachElement(int i, String key) {
+		i = 0;
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i++;
+		}
 		return i;
 	}
 
@@ -110,11 +125,8 @@ class NativeDictionary<T> {
 		if(key.equals(slots[i]))
 			return i;
 		else{
-			for (i = 0; i < size; i++){
-				if(slots[i] != null && slots[i].equals(key))
-					return i;
-			}
-			return -1;
+			i = checkIndex(i, key);
+			return i;
 		}
 	}
 
