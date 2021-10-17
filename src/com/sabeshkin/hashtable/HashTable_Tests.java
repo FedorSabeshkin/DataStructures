@@ -14,6 +14,7 @@ public class HashTable_Tests {
 	
 	@Test(expected = Test.None.class)
 	public void test_constructor_without_exception() {
+		@SuppressWarnings("unused")
 		HashTable hashTable = new HashTable(17, 3);
 	}
 	
@@ -35,16 +36,27 @@ public class HashTable_Tests {
 				indexPut,
 				indexFound);
 	}
-
+	
 	@Test
 	public void test_put_collisians_putIndexIsNegativeOne() {
 		HashTable hashTable = new HashTable(17, 3);
-		
+		for(int i = 0; i<18; i++)
+			hashTable.put("hello"+i);
+		hashTable.put("World");
+		int indexPut = hashTable.put("hello");
+		assertEquals(
+				-1,
+				indexPut);
+	}
+	
+	@Test
+	public void test_put_collisians_putIndexIsNotNegativeOne() {
+		HashTable hashTable = new HashTable(17, 3);
 		for(int i = 0; i<18; i++)
 			hashTable.put("hello");
 		hashTable.put("World");
 		int indexPut = hashTable.put("hello");
-		assertEquals(
+		assertNotEquals(
 				-1,
 				indexPut);
 	}
@@ -54,7 +66,7 @@ public class HashTable_Tests {
 		HashTable hashTable = new HashTable(173, 3);
 		
 		for(int i = 0; i<174; i++)
-			hashTable.put("hello");
+			hashTable.put("hello"+i);
 		hashTable.put("World");
 		int indexPut = hashTable.put("hello");
 		assertEquals(

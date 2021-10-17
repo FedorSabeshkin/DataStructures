@@ -33,18 +33,42 @@ public class HashTable {
 	public int seekSlot(String value) {
 		int i;
 		i = hashFun(value);
+		i = checkIndex(i, value);
+		return i;
+	}
+	
+	public int checkIndex(int i, String key) {
 		// check slot by step
-		while(i < size && slots[i] != null){
-			i += step;
-		}
+		i = checkWithStep(i, key);
 		// check each slot
 		if(i >= size){
-			i = 0;
-			while(i < size && slots[i] != null)
-				i++;
+			i = checkEachElement(i, key);
 		}
+		/**
+		 * if have't free slot or already have this key
+		 */
 		if(i >= size)
 			return -1;
+		return i;
+	}
+	
+	public int checkWithStep(int i, String key) {
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i += step;
+		}
+		return i;
+		
+	}
+
+	public int checkEachElement(int i, String key) {
+		i = 0;
+		while(i < size && slots[i] != null){
+			if(slots[i].equals(key))
+				break;
+			i++;
+		}
 		return i;
 	}
 
