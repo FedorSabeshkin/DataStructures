@@ -31,7 +31,7 @@ public class HashTable_Tests {
 		HashTable hashTable = new HashTable(17, 3);
 		int indexPut = hashTable.put("hello");
 		hashTable.put("World");
-		int indexFound = hashTable.find("hello");
+		int indexFound = hashTable.find(new String("hello"));
 		assertEquals(
 				indexPut,
 				indexFound);

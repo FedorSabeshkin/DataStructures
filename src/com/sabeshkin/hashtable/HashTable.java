@@ -92,11 +92,11 @@ public class HashTable {
 	 */
 	public int find(String value) {
 		int i = hashFun(value);
-		if(value == slots[i])
+		if(value.equals(slots[i]))
 			return i;
 		else{
 			for (i = 0; i < size; i++)
-				if(slots[i] == value)
+				if(value.equals(slots[i]))
 					return i;
 			return -1;
 		}
