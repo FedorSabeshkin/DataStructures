@@ -7,6 +7,7 @@ public class NativeCache<T> {
 	public int[] hits;
 	public int step = 3;
 
+	@SuppressWarnings("unchecked")
 	public NativeCache(int sz, Class clazz) {
 		size = sz;
 		slots = new String[size];
@@ -27,7 +28,7 @@ public class NativeCache<T> {
 		int sum = 0;
 		for (int i = 0; i < key.length(); i++){
 			charArr[i] = key.charAt(i);
-			sum += (int) charArr[i] - '0';
+			sum += charArr[i] - '0';
 		}
 		return (sum % size);
 	}
