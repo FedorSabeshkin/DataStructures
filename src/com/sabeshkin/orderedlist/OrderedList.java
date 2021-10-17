@@ -32,15 +32,15 @@ public class OrderedList<T> {
 	public Node<T> find(T val) {
 		Node<T> node = this.head;
 		while(node != null){
-			Integer compareResult = compare(node.value, val);
+			Integer resultOfCompare = compare(node.value, val);
 			Integer compareResultNext = 0;
 			if(!isTail(node)){
 				compareResultNext = compare(node.next.value, val);
 			}
-			if(compareResult < 0 && compareResultNext > 0){
+			if(resultOfCompare < 0 && compareResultNext > 0){
 				// found nothing 
 				return null;
-			} else if(compareResult == 0){
+			} else if(resultOfCompare == 0){
 				return node;
 			}
 			node = node.next;
@@ -105,22 +105,22 @@ public class OrderedList<T> {
 	}
 
 	public int compare(T v1, T v2) {
-		int compareResult = 0;
+		int resultOfCompare = 0;
 		if(v1.getClass() == Integer.class){
-			compareResult = ((Integer) v1).compareTo((Integer) v2);
+			resultOfCompare = ((Integer) v1).compareTo((Integer) v2);
 		}
 		if(v1.getClass() == String.class){
 			String trimedSpacesV1 = ((String) v1).trim();
 			String trimedSpacesV2 = ((String) v2).trim();
-			compareResult = trimedSpacesV1.compareTo(trimedSpacesV2);
+			resultOfCompare = trimedSpacesV1.compareTo(trimedSpacesV2);
 		}
-		if(compareResult > 0){
-			compareResult = 1;
-		} else if(compareResult < 0){
-			compareResult = -1;
+		if(resultOfCompare > 0){
+			resultOfCompare = 1;
+		} else if(resultOfCompare < 0){
+			resultOfCompare = -1;
 		}
 
-		return compareResult;
+		return resultOfCompare;
 	}
 
 	public void addAscendent(Node<T> node, T value) {
