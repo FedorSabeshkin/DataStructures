@@ -5,11 +5,12 @@
 - DoublyLinkedList
 - DoublyLinkedList with dummy nodes(head and tail)
 - Dynamic Array
+- Queue
 - Deque
 - Stack
 - Ordered List
-- Queue
 - HashTable
 - Dictionary
 - PowerSet
 - Bloom Filter
+- Cache
