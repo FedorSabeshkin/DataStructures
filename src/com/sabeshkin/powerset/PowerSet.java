@@ -160,46 +160,47 @@ public class PowerSet {
 	}
 
 	public PowerSet intersection(PowerSet set2) {
-		PowerSet powerSet = new PowerSet(20_000);
+		PowerSet setOfIntersection = new PowerSet(storeSize);
 		String[] slotsForInsert = getSlots();
-		for (int i = 0; i < 20_000; i++){
+		for (int i = 0; i < storeSize; i++){
 			if(slotsForInsert[i] != null){
 				if(set2.get(slotsForInsert[i])){
-					powerSet.put(slotsForInsert[i]);		
+					setOfIntersection.put(slotsForInsert[i]);		
 				}
 			}
 		}
-		return powerSet;
+		return setOfIntersection;
 	}
 
 	public PowerSet union(PowerSet set2) {
-		PowerSet powerSet = new PowerSet(40_000);
+		int maxUnionedSize = 2*storeSize;
+		PowerSet unionedSet = new PowerSet(maxUnionedSize);
 		String[] slotsForInsert = getSlots();
 		String[] slotsForInsert2 = set2.getSlots();
-		for (int i = 0; i < 20_000; i++){
+		for (int i = 0; i < storeSize; i++){
 			if(slotsForInsert[i] != null){
-				powerSet.put(slotsForInsert[i]);	
+				unionedSet.put(slotsForInsert[i]);	
 			}
 		}
-		for (int i = 0; i < 20_000; i++){
+		for (int i = 0; i < storeSize; i++){
 			if(slotsForInsert2[i] != null){
-				powerSet.put(slotsForInsert2[i]);
+				unionedSet.put(slotsForInsert2[i]);
 			}
 		}
-		return powerSet;
+		return unionedSet;
 	}
 
 	public PowerSet difference(PowerSet set2) {
-		PowerSet powerSet = new PowerSet(20_000);
+		PowerSet setOfDifference = new PowerSet(storeSize);
 		String[] slotsForInsert = getSlots();
-		for (int i = 0; i < 20_000; i++){
+		for (int i = 0; i < storeSize; i++){
 			if(slotsForInsert[i] != null) {
 				if(!set2.get(slotsForInsert[i])){
-					powerSet.put(slotsForInsert[i]);		
+					setOfDifference.put(slotsForInsert[i]);		
 				}
 			}
 		}
-		return powerSet;
+		return setOfDifference;
 	}
 
 	public boolean isSubset(PowerSet set2) {

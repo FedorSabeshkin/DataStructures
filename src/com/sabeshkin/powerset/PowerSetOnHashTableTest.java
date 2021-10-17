@@ -113,7 +113,7 @@ public class PowerSetOnHashTableTest {
 		powerSetOne.put("Hello");
 		powerSetUnion = powerSetOne.union(powerSetSecond);
 		assertEquals(
-				20_000,
+				20_001,
 				powerSetUnion.size());
 	}
 	
