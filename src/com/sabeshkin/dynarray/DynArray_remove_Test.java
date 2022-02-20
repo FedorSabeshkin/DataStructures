@@ -1,8 +1,9 @@
 package com.sabeshkin.dynarray;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DynArray_remove_Test {
 
@@ -54,18 +55,20 @@ public class DynArray_remove_Test {
 				dynArray.array[0]);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Remove_unexistElementIndex_isIllegalArgumentException() {
-		dynArray = new DynArray<Integer>(Integer.class);
-		for (int i = 0; i < 17; i++){
-			item = new Integer(i);
-			dynArray.append(item);
-		}
-		dynArray.remove(6);
-		dynArray.remove(5);
-		assertEquals(
-				new Integer(23),
-				dynArray.getItem(23));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			dynArray = new DynArray<Integer>(Integer.class);
+			for (int i = 0; i < 17; i++) {
+				item = new Integer(i);
+				dynArray.append(item);
+			}
+			dynArray.remove(6);
+			dynArray.remove(5);
+			assertEquals(
+					new Integer(23),
+					dynArray.getItem(23));
+		});
 	}
 
 	@Test
@@ -115,12 +118,14 @@ public class DynArray_remove_Test {
 
 	DynArray<Integer> dynArrayEmpty = new DynArray<Integer>(Integer.class);
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Remove_fromEmptyArr_fifthElementIsNull() {
-		dynArrayEmpty.remove(5);
-		assertEquals(
-				null,
-				dynArrayEmpty.getItem(5));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			dynArrayEmpty.remove(5);
+			assertEquals(
+					null,
+					dynArrayEmpty.getItem(5));
+		});
 	}
 
 	@Test
@@ -190,43 +195,49 @@ public class DynArray_remove_Test {
 				dynArray.capacity);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Remove_negativeIndex_illegalArgumentException() {
-		dynArray = new DynArray<Integer>(Integer.class);
-		for (int i = 0; i < 16; i++){
-			item = new Integer(i);
-			dynArray.append(item);
-		}
-		dynArray.remove(-1);
-		assertEquals(
-				new Integer(10),
-				dynArray.getItem(6));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			dynArray = new DynArray<Integer>(Integer.class);
+			for (int i = 0; i < 16; i++) {
+				item = new Integer(i);
+				dynArray.append(item);
+			}
+			dynArray.remove(-1);
+			assertEquals(
+					new Integer(10),
+					dynArray.getItem(6));
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Remove_oneHundredIndex_illegalArgumentException() {
-		dynArray = new DynArray<Integer>(Integer.class);
-		for (int i = 0; i < 16; i++){
-			item = new Integer(i);
-			dynArray.append(item);
-		}
-		dynArray.remove(100);
-		assertEquals(
-				new Integer(10),
-				dynArray.getItem(6));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			dynArray = new DynArray<Integer>(Integer.class);
+			for (int i = 0; i < 16; i++) {
+				item = new Integer(i);
+				dynArray.append(item);
+			}
+			dynArray.remove(100);
+			assertEquals(
+					new Integer(10),
+					dynArray.getItem(6));
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Remove_outOfCapacityIndex_illegalArgumentException() {
-		dynArray = new DynArray<Integer>(Integer.class);
-		for (int i = 0; i < 16; i++){
-			item = new Integer(i);
-			dynArray.append(item);
-		}
-		dynArray.remove(16);
-		assertEquals(
-				new Integer(10),
-				dynArray.getItem(6));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			dynArray = new DynArray<Integer>(Integer.class);
+			for (int i = 0; i < 16; i++) {
+				item = new Integer(i);
+				dynArray.append(item);
+			}
+			dynArray.remove(16);
+			assertEquals(
+					new Integer(10),
+					dynArray.getItem(6));
+		});
 	}
 
 }

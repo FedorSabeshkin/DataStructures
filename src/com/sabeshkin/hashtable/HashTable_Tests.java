@@ -1,29 +1,34 @@
 package com.sabeshkin.hashtable;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class HashTable_Tests {
 
-	@Test(expected = Test.None.class /* no exception expected */)
+	@Test
 	public void test_put_without_exception() {
-		HashTable hashTable = new HashTable(17, 3);
-		hashTable.put("hello");
+		assertDoesNotThrow(() -> {
+			HashTable hashTable = new HashTable(17, 3);
+			hashTable.put("hello");
+		});
 	}
 	
-	@Test(expected = Test.None.class)
+	@Test
 	public void test_constructor_without_exception() {
-		@SuppressWarnings("unused")
-		HashTable hashTable = new HashTable(17, 3);
+		assertDoesNotThrow(() -> {
+			HashTable hashTable = new HashTable(17, 3);
+		});
 	}
 	
-	@Test(expected = Test.None.class)
+	@Test
 	public void test_find_without_exception() {
-		HashTable hashTable = new HashTable(17, 3);
-		hashTable.put("hello");
-		hashTable.put("World");
-		hashTable.find("hello");
+		assertDoesNotThrow(() -> {
+			HashTable hashTable = new HashTable(17, 3);
+			hashTable.put("hello");
+			hashTable.put("World");
+			hashTable.find("hello");
+		});
 	}
 	
 	@Test

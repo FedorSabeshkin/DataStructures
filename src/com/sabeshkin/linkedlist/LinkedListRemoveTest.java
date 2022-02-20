@@ -1,11 +1,8 @@
 package com.sabeshkin.linkedlist;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import com.sabeshkin.linkedlist.*;
+import org.junit.jupiter.api.Test;
 
 public class LinkedListRemoveTest {
 	LinkedList linkedList;

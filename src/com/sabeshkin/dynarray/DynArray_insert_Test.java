@@ -1,8 +1,9 @@
 package com.sabeshkin.dynarray;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class DynArray_insert_Test {
 	DynArray<Integer> dynArray = new DynArray<Integer>(Integer.class);
@@ -93,27 +94,31 @@ public class DynArray_insert_Test {
 				dynArray.getItem(6));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Insert_negativeIndex_illegalArgumentException() {
-		for (int i = 0; i < 16; i++){
-			item = new Integer(i);
-			dynArray.append(item);
-		}
-		dynArray.insert(new Integer(10), -1);
-		assertEquals(
-				new Integer(10),
-				dynArray.getItem(6));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			for (int i = 0; i < 16; i++) {
+				item = new Integer(i);
+				dynArray.append(item);
+			}
+			dynArray.insert(new Integer(10), -1);
+			assertEquals(
+					new Integer(10),
+					dynArray.getItem(6));
+		});
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_Insert_oneHundredIndex_illegalArgumentException() {
-		for (int i = 0; i < 16; i++){
-			item = new Integer(i);
-			dynArray.append(item);
-		}
-		dynArray.insert(new Integer(10), 100);
-		assertEquals(
-				new Integer(10),
-				dynArray.getItem(6));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			for (int i = 0; i < 16; i++){
+				item = new Integer(i);
+				dynArray.append(item);
+			}
+			dynArray.insert(new Integer(10), 100);
+			assertEquals(
+					new Integer(10),
+					dynArray.getItem(6));
+		});
 	}
 }

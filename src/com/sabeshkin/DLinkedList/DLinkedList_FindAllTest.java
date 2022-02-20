@@ -1,17 +1,16 @@
 package com.sabeshkin.DLinkedList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.Test;
-import com.sabeshkin.DLinkedList.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class DLinkedList_FindAllTest {
 	DLinkedList linkedList2;
 	DLinkedList largeDLinkedList;
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		largeDLinkedList = new DLinkedList();
 		Node node;

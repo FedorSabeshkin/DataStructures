@@ -1,10 +1,9 @@
 package com.sabeshkin.nativedictionary;
 
-import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import com.sabeshkin.hashtable.HashTable;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NativeDictionaryTests {
 
@@ -14,7 +13,8 @@ public class NativeDictionaryTests {
 		nativeDictionary.put("phrase","Hello");
 		nativeDictionary.put("part", "World");
 		String valueByKey = (String) nativeDictionary.get("phrase");
-		assertEquals(
+		assertEquals
+				(
 				"Hello",
 				valueByKey);
 	}

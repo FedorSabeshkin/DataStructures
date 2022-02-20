@@ -1,8 +1,8 @@
 package com.sabeshkin.queue;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class QueueOnStacks_Tests {
 

@@ -1,16 +1,16 @@
 package com.sabeshkin.linkedlist2;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LinkedList2FindAllTest {
 	LinkedList2 linkedList2;
 	LinkedList2 largeLinkedList2;
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		largeLinkedList2 = new LinkedList2();
 		Node node;

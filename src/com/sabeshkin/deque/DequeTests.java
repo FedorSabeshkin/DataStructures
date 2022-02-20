@@ -1,10 +1,8 @@
 package com.sabeshkin.deque;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
-
-import com.sabeshkin.queue.QueueOnStacks;
+import org.junit.jupiter.api.Test;
 
 public class DequeTests {
 
