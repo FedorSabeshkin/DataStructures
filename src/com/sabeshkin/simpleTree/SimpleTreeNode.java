@@ -14,6 +14,13 @@ public class SimpleTreeNode<T>
         Parent = parent;
         Children = null;
     }
+
+    /**
+     * Create empty list for children in node
+     */
+    public void createEmptyChildrenList(){
+        Children = new ArrayList<>();
+    }
 }
 
 class SimpleTree<T>
@@ -27,8 +34,17 @@ class SimpleTree<T>
 
     public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
     {
-        // ваш код добавления нового дочернего узла существующему ParentNode
+        if(ParentNode.Children == null){
+            ParentNode.createEmptyChildrenList();
+        }
+        assert ParentNode.Children != null : "You must create children list";
+        ParentNode.Children.add(NewChild);
+        assert ParentNode.Children.contains(NewChild): "Children was't added";
+        NewChild.Parent = ParentNode;
+        assert NewChild.Parent.equals(ParentNode): "Parent was't added";
     }
+
+
 
     public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
     {
