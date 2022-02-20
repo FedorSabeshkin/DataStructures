@@ -32,6 +32,11 @@ class SimpleTree<T>
         Root = root;
     }
 
+    /**
+     * Add child to node
+     * @param ParentNode
+     * @param NewChild
+     */
     public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
     {
         if(ParentNode.Children == null){
@@ -45,10 +50,17 @@ class SimpleTree<T>
     }
 
 
-
+    /**
+     * Remove not root node
+     * @param NodeToDelete
+     */
     public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
     {
-        // ваш код удаления существующего узла NodeToDelete
+        boolean isChildNode = !NodeToDelete.equals(Root);
+        if(isChildNode){
+            assert NodeToDelete.Parent.Children != null : "You must have children list";
+            NodeToDelete.Parent.Children.remove(NodeToDelete);
+        }
     }
 
     public List<SimpleTreeNode<T>> GetAllNodes()
