@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 public class SimpleTreeNode<T> {
     public T NodeValue; // значение в узле
@@ -84,9 +86,23 @@ class SimpleTree<T> {
 
     }
 
+    /**
+     * Find nodes by value
+     * @param val
+     * @return
+     */
     public List<SimpleTreeNode<T>> FindNodesByValue(T val) {
-        // ваш код поиска узлов по значению
-        return null;
+        Predicate<SimpleTreeNode<T>> checkEqualValue = (node) -> node.NodeValue.equals(val);
+        BiConsumer<List<SimpleTreeNode<T>>, SimpleTreeNode<T>> addEqualValueNode = (accumulator, node) -> {
+            boolean isEqualValue = checkEqualValue.test(node);
+            if(isEqualValue){
+                accumulator.add(node);
+            }
+        };
+
+        List<SimpleTreeNode<T>> equalValueNodes = new LinkedList<>();
+        makeOnEachChildren(Root, equalValueNodes, addEqualValueNode);
+        return equalValueNodes;
     }
 
     public void MoveNode(SimpleTreeNode<T> OriginalNode, SimpleTreeNode<T> NewParent) {
@@ -94,9 +110,12 @@ class SimpleTree<T> {
         // в качестве дочернего для узла NewParent
     }
 
+    /**
+     * Count nodes in tree
+     * @return
+     */
     public int Count() {
-        // количество всех узлов в дереве
-        return 0;
+        return GetAllNodes().size();
     }
 
     public int LeafCount() {
