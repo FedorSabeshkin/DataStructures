@@ -33,6 +33,10 @@ public class SimpleTreeNode<T> {
     public boolean isHaveChildren() {
         return Children != null && Children.size() > 0;
     }
+
+    /**
+     * TODO: ?переопределить toString()?
+     */
 }
 
 class SimpleTree<T> {
@@ -40,7 +44,10 @@ class SimpleTree<T> {
 
     public SimpleTree(SimpleTreeNode<T> root) {
         Root = root;
+        size++;
     }
+
+    private int size = 0;
 
     /**
      * Add child to node
@@ -57,6 +64,7 @@ class SimpleTree<T> {
         assert ParentNode.Children.contains(NewChild) : "Children was't added";
         NewChild.Parent = ParentNode;
         assert NewChild.Parent.equals(ParentNode) : "Parent was't added";
+        size++;
     }
 
 
@@ -70,6 +78,7 @@ class SimpleTree<T> {
         if (isChildNode) {
             assert NodeToDelete.Parent.Children != null : "You must have children list";
             NodeToDelete.Parent.Children.remove(NodeToDelete);
+            size--;
         }
     }
 
@@ -88,6 +97,7 @@ class SimpleTree<T> {
 
     /**
      * Find nodes by value
+     *
      * @param val
      * @return
      */
@@ -95,7 +105,7 @@ class SimpleTree<T> {
         Predicate<SimpleTreeNode<T>> checkEqualValue = (node) -> node.NodeValue.equals(val);
         BiConsumer<List<SimpleTreeNode<T>>, SimpleTreeNode<T>> addEqualValueNode = (accumulator, node) -> {
             boolean isEqualValue = checkEqualValue.test(node);
-            if(isEqualValue){
+            if (isEqualValue) {
                 accumulator.add(node);
             }
         };
@@ -112,10 +122,12 @@ class SimpleTree<T> {
 
     /**
      * Count nodes in tree
+     *
      * @return
      */
     public int Count() {
-        return GetAllNodes().size();
+        assert size > -1 : "Can't size less 0(zero)";
+        return size;
     }
 
     public int LeafCount() {
