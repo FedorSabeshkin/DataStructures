@@ -114,9 +114,16 @@ class SimpleTree<T> {
         return equalValueNodes;
     }
 
+    /**
+     * Move node to new parent
+     * and remove it from previous parent
+     * @param OriginalNode
+     * @param NewParent
+     */
     public void MoveNode(SimpleTreeNode<T> OriginalNode, SimpleTreeNode<T> NewParent) {
-        // ваш код перемещения узла вместе с его поддеревом --
-        // в качестве дочернего для узла NewParent
+        SimpleTreeNode<T> previousParent = OriginalNode.Parent;
+        previousParent.Children.remove(OriginalNode);
+        AddChild(NewParent, OriginalNode);
     }
 
     /**
