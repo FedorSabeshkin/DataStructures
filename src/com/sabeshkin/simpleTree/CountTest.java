@@ -42,5 +42,12 @@ class CountTest {
         assertEquals(6, tree.Count());
     }
 
+    @Test
+    public void Count_Only_Root_Is_1() {
+        SimpleTreeNode<Integer> root = new SimpleTreeNode("Hello", null);
+        SimpleTree tree = new SimpleTree(root);
+        assertEquals(1, tree.Count());
+    }
+
 
 }

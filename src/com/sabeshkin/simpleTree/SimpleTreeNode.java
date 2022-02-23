@@ -92,7 +92,6 @@ class SimpleTree<T> {
         List<SimpleTreeNode<T>> allNodes = new LinkedList<>();
         makeOnEachChildren(Root, allNodes, addAnyChildren);
         return allNodes;
-
     }
 
     /**
@@ -130,9 +129,23 @@ class SimpleTree<T> {
         return size;
     }
 
+    /**
+     * Count leaf nodes
+     * @return
+     */
     public int LeafCount() {
-        // количество листьев в дереве
-        return 0;
+        Predicate<SimpleTreeNode<T>> checkLeaf = (node) -> !node.isHaveChildren();
+        BiConsumer<List<SimpleTreeNode<T>>, SimpleTreeNode<T>> addLeaf = (accumulator, node) -> {
+            boolean isLeaf = checkLeaf.test(node);
+            if (isLeaf) {
+                assert node.Children==null || node.Children.size()==0 : "It is't leaf";
+                accumulator.add(node);
+            }
+        };
+
+        List<SimpleTreeNode<T>> leafNodes = new LinkedList<>();
+        makeOnEachChildren(Root, leafNodes, addLeaf);
+        return leafNodes.size();
     }
 
 
