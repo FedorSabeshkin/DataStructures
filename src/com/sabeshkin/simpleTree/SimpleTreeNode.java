@@ -5,12 +5,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class SimpleTreeNode<T> {
     public T NodeValue; // значение в узле
     public SimpleTreeNode<T> Parent; // родитель или null для корня
     public List<SimpleTreeNode<T>> Children; // список дочерних узлов или null
+    public int level = 0;
 
     public SimpleTreeNode(T val, SimpleTreeNode<T> parent) {
         NodeValue = val;
@@ -117,6 +119,7 @@ class SimpleTree<T> {
     /**
      * Move node to new parent
      * and remove it from previous parent
+     *
      * @param OriginalNode
      * @param NewParent
      */
@@ -138,6 +141,7 @@ class SimpleTree<T> {
 
     /**
      * Count leaf nodes
+     *
      * @return
      */
     public int LeafCount() {
@@ -145,7 +149,7 @@ class SimpleTree<T> {
         BiConsumer<List<SimpleTreeNode<T>>, SimpleTreeNode<T>> addLeaf = (accumulator, node) -> {
             boolean isLeaf = checkLeaf.test(node);
             if (isLeaf) {
-                assert node.Children==null || node.Children.size()==0 : "It is't leaf";
+                assert node.Children == null || node.Children.size() == 0 : "It is't leaf";
                 accumulator.add(node);
             }
         };
@@ -172,6 +176,7 @@ class SimpleTree<T> {
         }
     }
 
+
     /**
      * Pass consumer on each children
      * and pass general accumulator
@@ -182,5 +187,45 @@ class SimpleTree<T> {
      */
     public void enumerationOfChildren(List<SimpleTreeNode<T>> children, List<SimpleTreeNode<T>> accumulator, BiConsumer<List<SimpleTreeNode<T>>, SimpleTreeNode<T>> consumer) {
         children.stream().forEach(node -> makeOnEachChildren(node, accumulator, consumer));
+    }
+
+    /**
+     * Calculate and set level for all nodes
+     */
+    public void calculateLevelForNode() {
+        Consumer<SimpleTreeNode<T>> setActualLevel = (node) -> {
+            if (node.Parent != null) {
+                SimpleTreeNode<T> parent = node.Parent;
+                int parentLevel = parent.level;
+                assert parentLevel >= 0 : "Parent have't level";
+                int level = parentLevel + 1;
+                node.level = level;
+            } else {
+                node.level = 0;
+            }
+        };
+        makeOnEach(Root, setActualLevel);
+    }
+
+    /**
+     * Call function from consumer on each node
+     * @param node
+     * @param consumer
+     */
+    public void makeOnEach(SimpleTreeNode<T> node, Consumer<SimpleTreeNode<T>> consumer) {
+        consumer.accept(node);
+        boolean isHaveChildren = node.isHaveChildren();
+        if (isHaveChildren) {
+            enumerationOfEach(node.Children, consumer);
+        }
+    }
+
+    /**
+     * Call makeOnEach(...) on each node child
+     * @param children
+     * @param consumer
+     */
+    public void enumerationOfEach(List<SimpleTreeNode<T>> children, Consumer<SimpleTreeNode<T>> consumer) {
+        children.stream().forEach(node -> makeOnEach(node, consumer));
     }
 }
