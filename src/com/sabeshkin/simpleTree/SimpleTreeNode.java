@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -35,10 +34,6 @@ public class SimpleTreeNode<T> {
     public boolean isHaveChildren() {
         return Children != null && Children.size() > 0;
     }
-
-    /**
-     * TODO: ?переопределить toString()?
-     */
 }
 
 class SimpleTree<T> {
