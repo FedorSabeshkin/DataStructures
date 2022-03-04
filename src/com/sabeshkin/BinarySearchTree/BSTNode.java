@@ -184,10 +184,47 @@ class BST<T>
         }
     }
 
+    /**
+     * Ищем максимальный/минимальный ключ в поддереве
+     * @param FromNode
+     * @param FindMax
+     * @return
+     */
     public BSTNode<T> FinMinMax(BSTNode<T> FromNode, boolean FindMax)
     {
-        // ищем максимальный/минимальный ключ в поддереве
-        return null;
+        if(FindMax){
+            return findMax(FromNode);
+        }else{
+            return findMin(FromNode);
+        }
+    }
+
+
+    /**
+     * Поиск max узла
+     */
+    public BSTNode<T> findMax(BSTNode<T> node)
+    {
+        boolean isHaveRightChild = node.RightChild != null;
+        if(isHaveRightChild){
+            return findMax(node.RightChild);
+        }else{
+            return node;
+        }
+    }
+
+
+    /**
+     * Поиск min узла
+     */
+    public BSTNode<T> findMin(BSTNode<T> node)
+    {
+        boolean isHaveLeftChild = node.LeftChild != null;
+        if(isHaveLeftChild){
+            return findMin(node.LeftChild);
+        }else{
+            return node;
+        }
     }
 
     public boolean DeleteNodeByKey(int key)
@@ -198,7 +235,7 @@ class BST<T>
 
     public int Count()
     {
-        return 0; // количество узлов в дереве
+        return size; // количество узлов в дереве
     }
 
 }
