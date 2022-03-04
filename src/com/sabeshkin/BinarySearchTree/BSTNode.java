@@ -240,7 +240,18 @@ class BST<T>
         if (isNotExistNodeWithKey) {
             return false;
         }
+        DeleteExistNodeByKey(findResult, key);
 
+        size--;
+        return true;
+    }
+
+    /**
+     * Удаление существующего узла из дерева
+     * @param key
+     */
+    public void DeleteExistNodeByKey(BSTFind<T> findResult, int key)
+    {
         BSTNode<T> toDelete = findResult.Node;
         BSTNode<T> toDeleteParent = toDelete.Parent;
 
@@ -249,6 +260,7 @@ class BST<T>
                 : FinMinMax(toDelete.RightChild, false);
 
         if (toReplace != null) {
+
             toReplace.Parent.LeftChild = toReplace.RightChild;
             if (toReplace.RightChild != null) { toReplace.RightChild.Parent = toReplace.Parent; }
             toReplace.Parent = toDeleteParent;
@@ -261,11 +273,13 @@ class BST<T>
         }
 
         if (toDeleteParent != null) {
+
             if (toDeleteParent.LeftChild == toDelete) {
                 toDeleteParent.LeftChild = toReplace;
             } else {
                 toDeleteParent.RightChild = toReplace;
             }
+
         } else {
             Root = toReplace;
         }
@@ -273,9 +287,6 @@ class BST<T>
         toDelete.LeftChild = null;
         toDelete.RightChild = null;
         toDelete.Parent = null;
-
-        size--;
-        return true;
     }
 
     /**
