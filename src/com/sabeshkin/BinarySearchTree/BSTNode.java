@@ -90,11 +90,63 @@ class BST<T>
         Root = node;
     }
 
+    /**
+     Поиск следующего по ключу узла или родителя, к которому его можно добавить
+     */
     public BSTFind<T> FindNodeByKey(int key)
     {
-        // ищем в дереве узел и сопутствующую информацию по ключу
-        return null;
+        return FindNodeByKeyFromNode(Root, key);
     }
+
+    /**
+     Ищем соответствие с определенного узла
+     */
+    public BSTFind<T> FindNodeByKeyFromNode(BSTNode<T> FromNode, int key)
+    {
+        boolean isSameKey = key == FromNode.NodeKey;
+        if(isSameKey){
+            return new BSTFind(FromNode, true, false);
+        }else{
+            return findInChildren(key, FromNode);
+        }
+    }
+
+
+    /**
+     Метод выбора следующего узла потомка, на эквивалентность ключу поиска
+     */
+    private BSTFind<T> findInChildren(int keyForSearch, BSTNode<T> nodeForCheck){
+        if(keyForSearch<nodeForCheck.NodeKey){
+            return checkLeftChild(keyForSearch, nodeForCheck);
+        }else{
+            return checkRightChild(keyForSearch, nodeForCheck);
+        }
+    }
+
+    /**
+     Метод проверки Левого потомка
+     */
+    private BSTFind<T> checkLeftChild(int keyForSearch, BSTNode<T> parentForCheck){
+        boolean isExistLeftChild = parentForCheck.LeftChild != null;
+        if(isExistLeftChild){
+            return FindNodeByKeyFromNode(parentForCheck.LeftChild, keyForSearch);
+        }else{
+            return new BSTFind(parentForCheck.LeftChild, false, true);
+        }
+    }
+
+    /**
+     Метод проверки Правого потомка
+     */
+    private BSTFind<T> checkRightChild(int keyForSearch, BSTNode<T> parentForCheck){
+        boolean isExistRightChild = parentForCheck.RightChild != null;
+        if(isExistRightChild){
+            return FindNodeByKeyFromNode(parentForCheck.RightChild, keyForSearch);
+        }else{
+            return new BSTFind(parentForCheck.RightChild, false, true);
+        }
+    }
+
 
     public boolean AddKeyValue(int key, T val)
     {

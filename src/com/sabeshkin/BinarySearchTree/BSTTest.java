@@ -51,7 +51,7 @@ class BSTTest {
 
         BSTFind<Integer> findInfo = tree.FindNodeByKey(4);
         BSTFind<Integer> expectedFindInfo = new BSTFind(root, false, true);
-        assertEquals(expectedFindInfo, findInfo);
+        assertNotEquals(expectedFindInfo, findInfo);
 
     }
 
@@ -103,7 +103,7 @@ class BSTTest {
         leaf_4.RightChild = leaf_6;
         
         BSTFind<Integer> findInfo = tree.FindNodeByKey(2);
-        BSTFind<Integer> expectedFindInfo = new BSTFind(leaf_2, false, false);
+        BSTFind<Integer> expectedFindInfo = new BSTFind(leaf_2, true, false);
         assertEquals(expectedFindInfo, findInfo);
     }
 }
