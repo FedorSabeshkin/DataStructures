@@ -227,12 +227,61 @@ class BST<T>
         }
     }
 
+    /**
+     * Удаление узла по ключу,
+     * Если он существует в дереве
+     * @param key
+     * @return
+     */
     public boolean DeleteNodeByKey(int key)
     {
-        // удаляем узел по ключу
-        return false; // если узел не найден
+        BSTFind<T> findResult = FindNodeByKey(key);
+        boolean isNotExistNodeWithKey = !findResult.NodeHasKey;
+        if (isNotExistNodeWithKey) {
+            return false;
+        }
+
+        BSTNode<T> toDelete = findResult.Node;
+        BSTNode<T> toDeleteParent = toDelete.Parent;
+
+        BSTNode<T> toReplace = toDelete.RightChild == null
+                ? toDelete.LeftChild
+                : FinMinMax(toDelete.RightChild, false);
+
+        if (toReplace != null) {
+            toReplace.Parent.LeftChild = toReplace.RightChild;
+            if (toReplace.RightChild != null) { toReplace.RightChild.Parent = toReplace.Parent; }
+            toReplace.Parent = toDeleteParent;
+
+            toReplace.RightChild = toDelete.RightChild;
+            if (toDelete.RightChild != null) { toDelete.RightChild.Parent = toReplace;}
+
+            toReplace.LeftChild = toDelete.LeftChild;
+            if (toDelete.LeftChild != null) { toDelete.LeftChild.Parent = toReplace; }
+        }
+
+        if (toDeleteParent != null) {
+            if (toDeleteParent.LeftChild == toDelete) {
+                toDeleteParent.LeftChild = toReplace;
+            } else {
+                toDeleteParent.RightChild = toReplace;
+            }
+        } else {
+            Root = toReplace;
+        }
+
+        toDelete.LeftChild = null;
+        toDelete.RightChild = null;
+        toDelete.Parent = null;
+
+        size--;
+        return true;
     }
 
+    /**
+     * Подсчет кол-ва элементов в дереве
+     * @return
+     */
     public int Count()
     {
         return size; // количество узлов в дереве
