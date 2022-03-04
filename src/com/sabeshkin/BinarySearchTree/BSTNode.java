@@ -43,6 +43,7 @@ class BSTFind<T>
      * @param NodeHasKey
      */
     public BSTFind(BSTNode<T> Node, boolean NodeHasKey, boolean ToLeft) {
+       // assert Node != null :"Нельзя подавать null в объект по найденному узлу";
         this.Node = Node;
         this.NodeHasKey = NodeHasKey;
         this.ToLeft = ToLeft;
@@ -84,10 +85,12 @@ class BSTFind<T>
 class BST<T>
 {
     BSTNode<T> Root; // корень дерева, или null
+    private int size = 0;
 
     public BST(BSTNode<T> node)
     {
         Root = node;
+        size = 1;
     }
 
     /**
@@ -103,6 +106,7 @@ class BST<T>
      */
     public BSTFind<T> FindNodeByKeyFromNode(BSTNode<T> FromNode, int key)
     {
+
         boolean isSameKey = key == FromNode.NodeKey;
         if(isSameKey){
             return new BSTFind(FromNode, true, false);
@@ -116,6 +120,7 @@ class BST<T>
      Метод выбора следующего узла потомка, на эквивалентность ключу поиска
      */
     private BSTFind<T> findInChildren(int keyForSearch, BSTNode<T> nodeForCheck){
+        assert nodeForCheck != null :"Узел у которого будем проверять потомков, не может быть null";
         if(keyForSearch<nodeForCheck.NodeKey){
             return checkLeftChild(keyForSearch, nodeForCheck);
         }else{
@@ -131,7 +136,7 @@ class BST<T>
         if(isExistLeftChild){
             return FindNodeByKeyFromNode(parentForCheck.LeftChild, keyForSearch);
         }else{
-            return new BSTFind(parentForCheck.LeftChild, false, true);
+            return new BSTFind(parentForCheck, false, true);
         }
     }
 
@@ -143,15 +148,40 @@ class BST<T>
         if(isExistRightChild){
             return FindNodeByKeyFromNode(parentForCheck.RightChild, keyForSearch);
         }else{
-            return new BSTFind(parentForCheck.RightChild, false, true);
+            return new BSTFind(parentForCheck, false, false);
         }
     }
 
 
+    /*
+	Добавление нового узла с ключ-значение
+	*/
     public boolean AddKeyValue(int key, T val)
     {
-        // добавляем ключ-значение в дерево
-        return false; // если ключ уже есть
+        BSTFind<T> findNodeInfo = FindNodeByKey(key);
+        boolean isExist = findNodeInfo.NodeHasKey;
+        if(isExist){
+            return false;
+        }else{
+            addNotExistNode(findNodeInfo, key, val);
+            size++;
+            return true;
+        }
+    }
+
+    /**
+     * Добавляем ребенка на вычесленную для него позицию в дереве
+     * @param findNodeInfo
+     * @param key
+     * @param val
+     */
+    private void addNotExistNode(BSTFind<T> findNodeInfo, int key, T val){
+        if(findNodeInfo.ToLeft){
+            assert findNodeInfo.Node != null: "Метод поиска не определил потенциального родителя";
+            findNodeInfo.Node.LeftChild = new BSTNode(key, val, findNodeInfo.Node);
+        }else{
+            findNodeInfo.Node.RightChild = new BSTNode(key, val, findNodeInfo.Node);
+        }
     }
 
     public BSTNode<T> FinMinMax(BSTNode<T> FromNode, boolean FindMax)

@@ -19,7 +19,6 @@ class BSTTest {
         BSTFind<Integer> findInfo = tree.FindNodeByKey(8);
         BSTFind<Integer> expectedFindInfo = new BSTFind(root, true, false);
         assertEquals(expectedFindInfo, findInfo);
-
     }
 
     /*
@@ -50,8 +49,10 @@ class BSTTest {
         BST tree = new BST(root);
 
         BSTFind<Integer> findInfo = tree.FindNodeByKey(4);
+
         BSTFind<Integer> expectedFindInfo = new BSTFind(root, false, true);
-        assertNotEquals(expectedFindInfo, findInfo);
+        assert expectedFindInfo.Node != null: "Метод поиска не определил потенциального родителя";
+        assertEquals(expectedFindInfo, findInfo);
 
     }
 
