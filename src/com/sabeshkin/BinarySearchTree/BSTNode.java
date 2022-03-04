@@ -35,6 +35,50 @@ class BSTFind<T>
     public boolean ToLeft;
 
     public BSTFind() { Node = null; }
+
+    /**
+     * Constructor for tests
+     * @param Node
+     * @param NodeHasKey
+     * @param NodeHasKey
+     */
+    public BSTFind(BSTNode<T> Node, boolean NodeHasKey, boolean ToLeft) {
+        this.Node = Node;
+        this.NodeHasKey = NodeHasKey;
+        this.ToLeft = ToLeft;
+    }
+
+    /**
+     * Create object with found node
+     * @param Node found node
+     * @return
+     */
+    public static BSTFind createFoundNodeInfo(BSTNode Node){
+        return new BSTFind(Node, true, false);
+    }
+    /**
+     * Override equals
+     * We check equals Node, NodeHasKey and NodeHasKey fields
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean isSameObject = obj == this;
+        if (isSameObject) {
+            return true;
+        }
+        boolean isAnotherClassObject = !(obj instanceof BSTFind);
+        if (isAnotherClassObject) {
+            return false;
+        }
+        BSTFind<T> bstFindForCheck  = (BSTFind<T>) obj;
+        boolean isEqualNode = this.Node.equals(bstFindForCheck.Node);
+        boolean isEqualNodeHasKey = this.NodeHasKey == bstFindForCheck.NodeHasKey;
+        boolean isEqualToLeft = this.ToLeft == bstFindForCheck.ToLeft;
+
+        return isEqualNode && isEqualNodeHasKey && isEqualToLeft;
+    }
 }
 
 class BST<T>
