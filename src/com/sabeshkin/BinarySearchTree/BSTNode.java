@@ -90,7 +90,9 @@ class BST<T> {
 
     public BST(BSTNode<T> node) {
         Root = node;
-        size = 1;
+        if(Root!=null){
+            size = 1;
+        }
     }
 
     /**

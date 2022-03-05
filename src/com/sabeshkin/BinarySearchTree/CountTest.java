@@ -18,6 +18,14 @@ class CountTest {
         assertEquals(1, tree.Count());
     }
 
+    @Test
+    public void findNodeByKey_Root_Null() {
+
+
+        BST tree = new BST(null);
+        assertEquals(0, tree.Count());
+    }
+
 
 
     // 4. в Дереве из 5-ти элементов, находит нужный узел как в середине
