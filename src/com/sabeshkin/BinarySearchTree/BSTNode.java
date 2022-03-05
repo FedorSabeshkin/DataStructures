@@ -105,6 +105,12 @@ class BST<T> {
      */
     public BSTFind<T> FindNodeByKeyFromNode(BSTNode<T> FromNode, int key) {
 
+        if (Root == null) {
+            BSTFind<T> result = new BSTFind<>();
+            result.NodeHasKey = false;
+            result.ToLeft = false;
+            return result;
+        }
         boolean isSameKey = key == FromNode.NodeKey;
         if (isSameKey) {
             return new BSTFind(FromNode, true, false);
@@ -165,7 +171,7 @@ class BST<T> {
             Root = new BSTNode<>(key, val, null);
             return true;
         }
-        
+
         boolean isExist = findNodeInfo.NodeHasKey;
         if (isExist) {
             return false;
@@ -200,6 +206,8 @@ class BST<T> {
      * @return
      */
     public BSTNode<T> FinMinMax(BSTNode<T> FromNode, boolean FindMax) {
+        if (FromNode == null) { return null; }
+
         if (FindMax) {
             return findMax(FromNode);
         } else {
