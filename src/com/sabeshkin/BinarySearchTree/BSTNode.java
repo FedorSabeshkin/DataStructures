@@ -256,11 +256,88 @@ class BST<T> {
         if (isNotExistNodeWithKey) {
             return false;
         }
-        DeleteExistNodeByKey(findResult, key);
 
-        size--;
+        BSTNode toDelete = findResult.Node;
+        BSTNode<T> toDeleteParent = toDelete.Parent;
+
+        if(isLeaf(toDelete)){
+            deleteLeaf(toDelete);
+            return true;
+        }
+
+        boolean isHaveOnlyLeftChild = toDelete.LeftChild!=null && toDelete.RightChild == null;
+        if(isHaveOnlyLeftChild){
+            replaceNode(toDelete, toDelete.LeftChild);
+            return true;
+        }
+
+        boolean isHaveOnlyRightChild = toDelete.LeftChild==null && toDelete.RightChild != null;
+        if(isHaveOnlyRightChild){
+            replaceNode(toDelete, toDelete.RightChild);
+            return true;
+        }
+
+
+        deleteNodeWithBothChildren(toDelete);
         return true;
     }
+
+    /**
+     *	Delete node with both - left and right children
+     */
+    public void deleteNodeWithBothChildren(BSTNode<T> toDelete){
+        BSTNode<T> minChild = findMin(toDelete.RightChild);
+        // remove minChild from old place
+        if(isLeaf(minChild)){
+            deleteLeaf(minChild);
+        }else{
+            replaceNode(minChild, minChild.RightChild);
+        }
+
+        // set minChild to place toDelete node
+        if(toDelete.Parent==null){
+            minChild.Parent = null;
+        }else{
+            replaceNode(toDelete, minChild);
+        }
+    }
+
+    /**
+     *	Check node is leaf
+     */
+    public boolean isLeaf(BSTNode<T> node){
+        return node.LeftChild==null && node.RightChild == null;
+    }
+
+    /**
+     *	Replace node
+     */
+    public void replaceNode(BSTNode<T> toReplace, BSTNode<T> replacer){
+        boolean isLeftChild = toReplace.NodeKey < toReplace.Parent.NodeKey;
+        if (isLeftChild) {
+            toReplace.Parent.LeftChild = replacer;
+        } else {
+            toReplace.Parent.RightChild = replacer;
+        }
+        replacer.Parent = toReplace.Parent;
+        toReplace.Parent = null;
+    }
+
+    /**
+     *	delete leaf
+     */
+    public void deleteLeaf(BSTNode<T> toDelete){
+        boolean isLeftChild = toDelete.NodeKey < toDelete.Parent.NodeKey;
+        if (isLeftChild) {
+            toDelete.Parent.LeftChild = null;
+        } else {
+            toDelete.Parent.RightChild = null;
+        }
+        toDelete.Parent = null;
+    }
+
+
+
 
     /**
      * Removing an existing node from the tree
@@ -317,7 +394,19 @@ class BST<T> {
      * @return
      */
     public int Count() {
-        return size; // количество узлов в дереве
+        return countNode(Root,0);
+        //return size; // количество узлов в дереве
     }
 
+    public int countNode(BSTNode<T> node, int stage){
+
+        //base case
+        if(node==null) {
+            return 0;
+        }
+        //recursive call to left child and right child and
+        // add the result of these with 1 ( 1 for counting the root)
+        stage++;
+        return 1 + countNode(node.LeftChild, stage) + countNode(node.RightChild, stage);
+    }
 }
