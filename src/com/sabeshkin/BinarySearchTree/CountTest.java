@@ -43,24 +43,7 @@ class CountTest {
 
     }
 
-    /*	5.  В дереве из 5-ти элементов, находит нужный узел в листе
-     */
-    @Test
-    public void findNodeByKey_Found_In_Leaf() {
 
-        // 5 узлов
-        BSTNode<Integer> root = new BSTNode(8, 8, null);
-        BST tree = new BST(root);
-
-        tree.AddKeyValue(4, 4);
-        tree.AddKeyValue(12, 12);
-        tree.AddKeyValue(2, 2);
-        tree.AddKeyValue(6, 6);
-
-        tree.DeleteNodeByKey(4);
-        tree.DeleteNodeByKey(12);
-        assertEquals(3, tree.Count());
-    }
 
     @Test
     public void Count_Classical_Way_To_Add_Child() {
@@ -83,25 +66,5 @@ class CountTest {
         assertEquals(5, tree.Count());
     }
 
-    @Test
-    public void Count_Classical_Way_To_Add_Child_After_Delete_One_Child() {
-        // 5 узлов
-        BSTNode<Integer> root = new BSTNode(8, 8, null);
-        BST tree = new BST(root);
 
-        //first
-        BSTNode leaf_4 = new BSTNode(4, 4, root);
-        root.LeftChild = leaf_4;
-        BSTNode leaf_12 = new BSTNode(12, 12, root);
-        root.RightChild = leaf_12;
-
-        //second left
-        BSTNode leaf_2 = new BSTNode(2, 2, leaf_4);
-        leaf_4.LeftChild = leaf_2;
-        BSTNode leaf_6 = new BSTNode(6, 6, leaf_4);
-        leaf_4.RightChild = leaf_6;
-
-        tree.DeleteNodeByKey(4);
-        assertEquals(4, tree.Count());
-    }
 }
