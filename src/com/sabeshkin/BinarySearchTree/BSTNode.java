@@ -159,6 +159,13 @@ class BST<T> {
      */
     public boolean AddKeyValue(int key, T val) {
         BSTFind<T> findNodeInfo = FindNodeByKey(key);
+
+        BSTNode<T> parent = findNodeInfo.Node;
+        if (parent == null) {
+            Root = new BSTNode<>(key, val, null);
+            return true;
+        }
+        
         boolean isExist = findNodeInfo.NodeHasKey;
         if (isExist) {
             return false;
