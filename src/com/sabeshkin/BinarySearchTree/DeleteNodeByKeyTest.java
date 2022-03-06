@@ -217,4 +217,39 @@ class DeleteNodeByKeyTest {
         tree.DeleteNodeByKey(12);
         assertEquals(3, tree.Count());
     }
+
+    @Test
+    public void DeleteNodeByKey_Delete_Last_Node_Root() {
+
+        // 5 узлов
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.print("", tree.Root, false);
+        System.out.println("***************************************");
+        tree.DeleteNodeByKey(8);
+        tree.print("", tree.Root, false);
+        assertEquals(0, tree.Count());
+    }
+
+    @Test
+    public void DeleteNodeByKey_Delete_All_Nodes() {
+
+        // 5 узлов
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(4, 4);
+        tree.AddKeyValue(12, 12);
+        tree.AddKeyValue(2, 2);
+        tree.AddKeyValue(6, 6);
+        tree.print("", tree.Root, false);
+        System.out.println("***************************************");
+
+        tree.DeleteNodeByKey(12);
+        tree.DeleteNodeByKey(2);
+        tree.DeleteNodeByKey(6);
+        tree.DeleteNodeByKey(8);
+        tree.DeleteNodeByKey(4);
+        tree.print("", tree.Root, false);
+        assertEquals(0, tree.Count());
+    }
 }

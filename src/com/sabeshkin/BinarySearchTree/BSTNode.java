@@ -288,6 +288,12 @@ class BST<T> {
         BSTNode toDelete = findResult.Node;
         BSTNode<T> toDeleteParent = toDelete.Parent;
 
+        boolean isRoot = toDelete.Parent==null;
+        if(isRoot){
+            Root = null;
+            return true;
+        }
+
         if(isLeaf(toDelete)){
             deleteLeaf(toDelete);
             return true;
