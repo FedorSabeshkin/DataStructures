@@ -243,13 +243,8 @@ class DeleteNodeByKeyTest {
         tree.AddKeyValue(6, 6);
         tree.print("", tree.Root, false);
         System.out.println("***************************************");
-
-        tree.DeleteNodeByKey(12);
-        tree.DeleteNodeByKey(2);
-        tree.DeleteNodeByKey(6);
         tree.DeleteNodeByKey(8);
-        tree.DeleteNodeByKey(4);
         tree.print("", tree.Root, false);
-        assertEquals(0, tree.Count());
+        assertEquals(4, tree.Count());
     }
 }

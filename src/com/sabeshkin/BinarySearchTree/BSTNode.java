@@ -286,15 +286,15 @@ class BST<T> {
         }
 
         BSTNode toDelete = findResult.Node;
-        BSTNode<T> toDeleteParent = toDelete.Parent;
 
-        boolean isRoot = toDelete.Parent==null;
-        if(isRoot){
-            Root = null;
-            return true;
-        }
 
         if(isLeaf(toDelete)){
+            boolean isRoot = toDelete.Parent==null;
+            if(isRoot){
+                Root = null;
+                return true;
+            }
+
             deleteLeaf(toDelete);
             return true;
         }
@@ -392,57 +392,6 @@ class BST<T> {
         toDelete.Parent = null;
     }
 
-
-
-
-    /**
-     * Removing an existing node from the tree
-     *
-     * @param key
-     */
-    public void DeleteExistNodeByKey(BSTFind<T> findResult, int key) {
-        BSTNode<T> toDelete = findResult.Node;
-        BSTNode<T> toDeleteParent = toDelete.Parent;
-
-        BSTNode<T> toReplace = toDelete.RightChild == null
-                ? toDelete.LeftChild
-                : FinMinMax(toDelete.RightChild, false);
-
-        if (toReplace != null) {
-
-            toReplace.Parent.LeftChild = toReplace.RightChild;
-            if (toReplace.RightChild != null) {
-                toReplace.RightChild.Parent = toReplace.Parent;
-            }
-            toReplace.Parent = toDeleteParent;
-
-            toReplace.RightChild = toDelete.RightChild;
-            if (toDelete.RightChild != null) {
-                toDelete.RightChild.Parent = toReplace;
-            }
-
-            toReplace.LeftChild = toDelete.LeftChild;
-            if (toDelete.LeftChild != null) {
-                toDelete.LeftChild.Parent = toReplace;
-            }
-        }
-
-        if (toDeleteParent != null) {
-
-            if (toDeleteParent.LeftChild == toDelete) {
-                toDeleteParent.LeftChild = toReplace;
-            } else {
-                toDeleteParent.RightChild = toReplace;
-            }
-
-        } else {
-            Root = toReplace;
-        }
-
-        toDelete.LeftChild = null;
-        toDelete.RightChild = null;
-        toDelete.Parent = null;
-    }
 
     /**
      * Counting the number of elements in a tree
