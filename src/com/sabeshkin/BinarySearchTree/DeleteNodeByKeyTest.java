@@ -152,8 +152,9 @@ class DeleteNodeByKeyTest {
         leaf_4.LeftChild = leaf_2;
         BSTNode leaf_6 = new BSTNode(6, 6, leaf_4);
         leaf_4.RightChild = leaf_6;
-
+        tree.printWrapper("", tree.Root, false);
         tree.DeleteNodeByKey(4);
+        tree.printWrapper("", tree.Root, false);
         assertEquals(4, tree.Count());
     }
 
@@ -168,8 +169,9 @@ class DeleteNodeByKeyTest {
         tree.AddKeyValue(6, 6);
         tree.AddKeyValue(5, 5);
         tree.AddKeyValue(7, 7);
-
+        tree.printWrapper("", tree.Root, false);
         tree.DeleteNodeByKey(4);
+        tree.printWrapper("", tree.Root, false);
         assertEquals(6, tree.Count());
     }
 
@@ -191,10 +193,10 @@ class DeleteNodeByKeyTest {
         leaf_4.LeftChild = leaf_2;
         BSTNode leaf_6 = new BSTNode(6, 6, leaf_4);
         leaf_4.RightChild = leaf_6;
-
+        tree.printWrapper("", tree.Root, false);
         tree.DeleteNodeByKey(4);
-
-        assertEquals(8, root.LeftChild.Parent.NodeKey);
+        tree.printWrapper("", tree.Root, false);
+        assertEquals(6, root.LeftChild.NodeKey);
     }
 
     @Test
@@ -208,8 +210,10 @@ class DeleteNodeByKeyTest {
         tree.AddKeyValue(12, 12);
         tree.AddKeyValue(2, 2);
         tree.AddKeyValue(6, 6);
-
+        tree.print("", tree.Root, false);
+        System.out.println("***************************************");
         tree.DeleteNodeByKey(4);
+         tree.print("", tree.Root, false);
         tree.DeleteNodeByKey(12);
         assertEquals(3, tree.Count());
     }

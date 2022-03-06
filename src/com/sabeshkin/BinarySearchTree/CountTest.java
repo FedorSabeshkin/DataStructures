@@ -43,6 +43,20 @@ class CountTest {
 
     }
 
+    @Test
+    public void DeleteNodeByKey_Count_Add_Child_By_Method() {
+        // 5 узлов
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(4, 4);
+        tree.AddKeyValue(12, 12);
+        tree.AddKeyValue(2, 2);
+        tree.AddKeyValue(6, 6);
+        tree.AddKeyValue(5, 5);
+        tree.AddKeyValue(7, 7);
+
+        assertEquals(7, tree.Count());
+    }
 
 
     @Test

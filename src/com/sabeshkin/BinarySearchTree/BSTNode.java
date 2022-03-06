@@ -244,6 +244,34 @@ class BST<T> {
     }
 
     /**
+     * Print tree structure
+     * With line "***.." in bottom
+     * @param prefix
+     * @param n
+     * @param isLeft
+     */
+    public void printWrapper(String prefix, BSTNode<T>  n, boolean isLeft) {
+
+        print(prefix, n, isLeft);
+        System.out.println("***************************************");
+    }
+
+    /**
+     * Print tree structure
+     * @param prefix
+     * @param n
+     * @param isLeft
+     */
+    public void print(String prefix, BSTNode<T>  n, boolean isLeft) {
+        if (n != null) {
+            print(prefix + "     ", n.RightChild, false);
+            System.out.println (prefix + ("|-- ") + n.NodeKey);
+            print(prefix + "     ", n.LeftChild, true);
+        }
+    }
+
+
+    /**
      * Removing a node by key,
      * If it exists in the tree
      *
@@ -288,18 +316,40 @@ class BST<T> {
     public void deleteNodeWithBothChildren(BSTNode<T> toDelete){
         BSTNode<T> minChild = findMin(toDelete.RightChild);
         // remove minChild from old place
+        BSTNode<T> rightChild = toDelete.RightChild;
+        BSTNode<T> leftChild = toDelete.LeftChild;
         if(isLeaf(minChild)){
             deleteLeaf(minChild);
         }else{
             replaceNode(minChild, minChild.RightChild);
         }
-
         // set minChild to place toDelete node
         if(toDelete.Parent==null){
             minChild.Parent = null;
         }else{
             replaceNode(toDelete, minChild);
         }
+
+        setChildren(minChild, leftChild, rightChild);
+    }
+
+    /**
+     * Set children to new parent
+     * @param newParent
+     * @param leftChild
+     * @param rightChild
+     */
+    public  void setChildren(BSTNode<T> newParent, BSTNode<T> leftChild, BSTNode<T> rightChild){
+        boolean isNotRecursiveParentRightChild = !newParent.equals(rightChild);
+        if(isNotRecursiveParentRightChild){
+            newParent.RightChild = rightChild;
+        }
+        boolean isNotRecursiveParentLeftChild = !newParent.equals(leftChild);
+        if(isNotRecursiveParentLeftChild){
+            newParent.LeftChild = leftChild;
+        }
+        rightChild.Parent = newParent;
+        leftChild.Parent = newParent;
     }
 
     /**
@@ -394,19 +444,15 @@ class BST<T> {
      * @return
      */
     public int Count() {
-        return countNode(Root,0);
-        //return size; // количество узлов в дереве
+        return countNode(Root);
     }
 
-    public int countNode(BSTNode<T> node, int stage){
+    public int countNode(BSTNode<T> node){
 
         //base case
         if(node==null) {
             return 0;
         }
-        //recursive call to left child and right child and
-        // add the result of these with 1 ( 1 for counting the root)
-        stage++;
-        return 1 + countNode(node.LeftChild, stage) + countNode(node.RightChild, stage);
+        return 1 + countNode(node.LeftChild) + countNode(node.RightChild);
     }
 }

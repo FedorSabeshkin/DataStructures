@@ -75,4 +75,28 @@ class FinMinMaxTest {
         assertEquals(leaf_6, minNode);
 
     }
+
+    @Test
+    public void FinMinMax_Min_From_Leaf_6_Add_Child() {
+
+        // 5 узлов
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+
+        //first
+        BSTNode leaf_4 = new BSTNode(4, 4, root);
+        root.LeftChild = leaf_4;
+        BSTNode leaf_12 = new BSTNode(12, 12, root);
+        root.RightChild = leaf_12;
+
+        //second left
+        BSTNode leaf_2 = new BSTNode(2, 2, leaf_4);
+        leaf_4.LeftChild = leaf_2;
+        BSTNode leaf_6 = new BSTNode(6, 6, leaf_4);
+        leaf_4.RightChild = leaf_6;
+        tree.printWrapper("", tree.Root, false);
+        BSTNode<Integer> minNode = tree.FinMinMax(leaf_6, false);
+        tree.printWrapper("", tree.Root, false);
+        assertEquals(6, minNode.NodeKey);
+    }
 }
