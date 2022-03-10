@@ -90,7 +90,7 @@ class BST<T> {
 
     public BST(BSTNode<T> node) {
         Root = node;
-        if(Root!=null){
+        if (Root != null) {
             size = 1;
         }
     }
@@ -161,6 +161,7 @@ class BST<T> {
 
     /**
      * Adding a new key-value node
+     *
      * @param key
      * @param val
      * @return
@@ -208,7 +209,9 @@ class BST<T> {
      * @return
      */
     public BSTNode<T> FinMinMax(BSTNode<T> FromNode, boolean FindMax) {
-        if (FromNode == null) { return null; }
+        if (FromNode == null) {
+            return null;
+        }
 
         if (FindMax) {
             return findMax(FromNode);
@@ -246,11 +249,12 @@ class BST<T> {
     /**
      * Print tree structure
      * With line "***.." in bottom
+     *
      * @param prefix
      * @param n
      * @param isLeft
      */
-    public void printWrapper(String prefix, BSTNode<T>  n, boolean isLeft) {
+    public void printWrapper(String prefix, BSTNode<T> n, boolean isLeft) {
 
         print(prefix, n, isLeft);
         System.out.println("***************************************");
@@ -258,14 +262,15 @@ class BST<T> {
 
     /**
      * Print tree structure
+     *
      * @param prefix
      * @param n
      * @param isLeft
      */
-    public void print(String prefix, BSTNode<T>  n, boolean isLeft) {
+    public void print(String prefix, BSTNode<T> n, boolean isLeft) {
         if (n != null) {
             print(prefix + "     ", n.RightChild, false);
-            System.out.println (prefix + ("|-- ") + n.NodeKey);
+            System.out.println(prefix + ("|-- ") + n.NodeKey);
             print(prefix + "     ", n.LeftChild, true);
         }
     }
@@ -288,9 +293,9 @@ class BST<T> {
         BSTNode toDelete = findResult.Node;
 
 
-        if(isLeaf(toDelete)){
-            boolean isRoot = toDelete.Parent==null;
-            if(isRoot){
+        if (isLeaf(toDelete)) {
+            boolean isRoot = toDelete.equals(Root);
+            if (isRoot) {
                 Root = null;
                 return true;
             }
@@ -299,14 +304,14 @@ class BST<T> {
             return true;
         }
 
-        boolean isHaveOnlyLeftChild = toDelete.LeftChild!=null && toDelete.RightChild == null;
-        if(isHaveOnlyLeftChild){
+        boolean isHaveOnlyLeftChild = toDelete.LeftChild != null && toDelete.RightChild == null;
+        if (isHaveOnlyLeftChild) {
             replaceNode(toDelete, toDelete.LeftChild);
             return true;
         }
 
-        boolean isHaveOnlyRightChild = toDelete.LeftChild==null && toDelete.RightChild != null;
-        if(isHaveOnlyRightChild){
+        boolean isHaveOnlyRightChild = toDelete.LeftChild == null && toDelete.RightChild != null;
+        if (isHaveOnlyRightChild) {
             replaceNode(toDelete, toDelete.RightChild);
             return true;
         }
@@ -317,22 +322,22 @@ class BST<T> {
     }
 
     /**
-     *	Delete node with both - left and right children
+     * Delete node with both - left and right children
      */
-    public void deleteNodeWithBothChildren(BSTNode<T> toDelete){
+    public void deleteNodeWithBothChildren(BSTNode<T> toDelete) {
         BSTNode<T> minChild = findMin(toDelete.RightChild);
         // remove minChild from old place
         BSTNode<T> rightChild = toDelete.RightChild;
         BSTNode<T> leftChild = toDelete.LeftChild;
-        if(isLeaf(minChild)){
+        if (isLeaf(minChild)) {
             deleteLeaf(minChild);
-        }else{
+        } else {
             replaceNode(minChild, minChild.RightChild);
         }
         // set minChild to place toDelete node
-        if(toDelete.Parent==null){
+        if (toDelete.Parent == null) {
             minChild.Parent = null;
-        }else{
+        } else {
             replaceNode(toDelete, minChild);
         }
 
@@ -341,17 +346,18 @@ class BST<T> {
 
     /**
      * Set children to new parent
+     *
      * @param newParent
      * @param leftChild
      * @param rightChild
      */
-    public  void setChildren(BSTNode<T> newParent, BSTNode<T> leftChild, BSTNode<T> rightChild){
+    public void setChildren(BSTNode<T> newParent, BSTNode<T> leftChild, BSTNode<T> rightChild) {
         boolean isNotRecursiveParentRightChild = !newParent.equals(rightChild);
-        if(isNotRecursiveParentRightChild){
+        if (isNotRecursiveParentRightChild) {
             newParent.RightChild = rightChild;
         }
         boolean isNotRecursiveParentLeftChild = !newParent.equals(leftChild);
-        if(isNotRecursiveParentLeftChild){
+        if (isNotRecursiveParentLeftChild) {
             newParent.LeftChild = leftChild;
         }
         rightChild.Parent = newParent;
@@ -359,16 +365,17 @@ class BST<T> {
     }
 
     /**
-     *	Check node is leaf
+     * Check node is leaf
      */
-    public boolean isLeaf(BSTNode<T> node){
-        return node.LeftChild==null && node.RightChild == null;
+    public boolean isLeaf(BSTNode<T> node) {
+        return node.LeftChild == null && node.RightChild == null;
     }
 
     /**
-     *	Replace node
+     * Replace node
      */
-    public void replaceNode(BSTNode<T> toReplace, BSTNode<T> replacer){
+    public void replaceNode(BSTNode<T> toReplace, BSTNode<T> replacer) {
+        boolean isRoot = toReplace.equals(Root);
         boolean isLeftChild = toReplace.NodeKey < toReplace.Parent.NodeKey;
         if (isLeftChild) {
             toReplace.Parent.LeftChild = replacer;
@@ -376,13 +383,16 @@ class BST<T> {
             toReplace.Parent.RightChild = replacer;
         }
         replacer.Parent = toReplace.Parent;
+        if(isRoot){
+            Root=replacer;
+        }
         toReplace.Parent = null;
     }
 
     /**
-     *	delete leaf
+     * delete leaf
      */
-    public void deleteLeaf(BSTNode<T> toDelete){
+    public void deleteLeaf(BSTNode<T> toDelete) {
         boolean isLeftChild = toDelete.NodeKey < toDelete.Parent.NodeKey;
         if (isLeftChild) {
             toDelete.Parent.LeftChild = null;
@@ -402,12 +412,104 @@ class BST<T> {
         return countNode(Root);
     }
 
-    public int countNode(BSTNode<T> node){
-
-        //base case
-        if(node==null) {
+    /**
+     * Count node and all children
+     *
+     * @param node
+     * @return
+     */
+    public int countNode(BSTNode<T> node) {
+        if (node == null) {
             return 0;
         }
         return 1 + countNode(node.LeftChild) + countNode(node.RightChild);
+    }
+
+    /**
+     * Breadth-first search - BFS
+     *  We put the root in the queue children
+     *
+     * @return
+     */
+    public ArrayList<BSTNode> WideAllNodes() {
+        Queue<BSTNode> children = new LinkedList<>();
+        Queue<BSTNode> parents = new LinkedList<>();
+        ArrayList<BSTNode> visitedNodes = new ArrayList<>();
+        children.offer(Root);
+        int amountNodesOfTree = Count();
+        while (visitedNodes.size() < amountNodesOfTree) {
+            accumulateParents(children, visitedNodes, parents);
+            accumulateChildren(children, visitedNodes, parents);
+        }
+        return visitedNodes;
+    }
+
+    /**
+     * After that, I run through the parents in turn and call the method on each of the nodes in it,
+     * which adds elements to the children queue
+     */
+    public void accumulateChildren(Queue<BSTNode> children, ArrayList<BSTNode> visitedNodes, Queue<BSTNode> parents) {
+        BSTNode<T> node;
+        while ((node = parents.poll()) != null) {
+            boolean isLeftExist = node.LeftChild != null;
+            if (isLeftExist) {
+                children.offer(node.LeftChild);
+            }
+            boolean isRightExist = node.RightChild != null;
+            if (isRightExist) {
+                children.offer(node.RightChild);
+            }
+        }
+    }
+
+    /**
+     * We take the children queue to which we added children of one level below
+     * * We go through it and add each element to the list
+     * * after adding it to the list
+     * * I add it to the parents queue - elements that I will run through and collect children
+     */
+    public void accumulateParents(Queue<BSTNode> children, ArrayList<BSTNode> visitedNodes, Queue<BSTNode> parents) {
+        BSTNode<T> node;
+        while ((node = children.poll()) != null) {
+            visitedNodes.add(node);
+            parents.offer(node);
+        }
+    }
+
+
+    public static int PRE_ORDER = 2;
+    public static int POST_ORDER = 1;
+    public static int IN_ORDER = 0;
+
+    /**
+     * Depth-first search - DFS
+     *
+     * @return
+     */
+    public ArrayList<BSTNode> DeepAllNodes(int order) {
+        ArrayList<BSTNode> visitedNodes = new ArrayList<BSTNode>();
+        if (order == PRE_ORDER) {
+            return DeepAllNodesPreOrder(Root, visitedNodes);
+        }
+        if (order == POST_ORDER) {
+            return null;
+        }
+        return null;
+    }
+
+
+    /**
+     * Depth-first search - DFS by node in Pre Order by root
+     *
+     * @return
+     */
+    public ArrayList<BSTNode> DeepAllNodesPreOrder(BSTNode<T> node, ArrayList<BSTNode> visitedNodes) {
+        if (node != null) {
+            visitedNodes.add(node);
+            DeepAllNodesPreOrder(node.LeftChild, visitedNodes);
+            DeepAllNodesPreOrder(node.RightChild, visitedNodes);
+        }
+
+        return visitedNodes;
     }
 }
