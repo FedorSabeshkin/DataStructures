@@ -2,7 +2,11 @@ package com.sabeshkin.BinarySearchTree;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class FinMinMaxTest {
 
@@ -98,5 +102,25 @@ class FinMinMaxTest {
         BSTNode<Integer> minNode = tree.FinMinMax(leaf_6, false);
         tree.printWrapper("", tree.Root, false);
         assertEquals(6, minNode.NodeKey);
+    }
+
+    @Test
+    public void WideAllNodes_Inorder() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(4, 4);
+        tree.AddKeyValue(13, 13);
+        tree.AddKeyValue(2, 2);
+        tree.AddKeyValue(6, 6);
+        tree.AddKeyValue(11, 11);
+        tree.AddKeyValue(14, 14);
+        tree.AddKeyValue(1, 1);
+        tree.AddKeyValue(5, 5);
+        tree.AddKeyValue(7, 7);
+        tree.AddKeyValue(9, 9);
+        tree.AddKeyValue(10, 10);
+        tree.AddKeyValue(12, 12);
+
+        assertEquals(14, tree.FinMinMax(root, true).NodeKey);
     }
 }

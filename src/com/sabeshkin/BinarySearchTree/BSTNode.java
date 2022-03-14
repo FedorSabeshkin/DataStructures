@@ -18,6 +18,55 @@ class BSTNode<T> {
         LeftChild = null;
         RightChild = null;
     }
+
+    /**
+     * Constructor
+     * for creation mock nodes
+     * for list of expected tree traverse methods
+     *
+     * @param key
+     */
+    public BSTNode(int key) {
+        NodeKey = key;
+        NodeValue = null;
+        Parent = null;
+        LeftChild = null;
+        RightChild = null;
+    }
+
+    /**
+     * Show NodeKey of node
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return this.NodeKey + "";
+    }
+
+    /**
+     * We compare only  NodeKey
+     * for easy check right traversal order in Unit tests
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean isSameObject = obj == this;
+        if (isSameObject) {
+            return true;
+        }
+
+        boolean isAnotherClassObject = !(obj instanceof BSTNode);
+        if (isAnotherClassObject) {
+            return false;
+        }
+        BSTNode<T> bstNodeForCheck = (BSTNode<T>) obj;
+        boolean isEqualNodeKey = this.NodeKey == bstNodeForCheck.NodeKey;
+
+        return isEqualNodeKey;
+    }
 }
 
 // result of search
@@ -383,8 +432,8 @@ class BST<T> {
             toReplace.Parent.RightChild = replacer;
         }
         replacer.Parent = toReplace.Parent;
-        if(isRoot){
-            Root=replacer;
+        if (isRoot) {
+            Root = replacer;
         }
         toReplace.Parent = null;
     }
@@ -427,7 +476,7 @@ class BST<T> {
 
     /**
      * Breadth-first search - BFS
-     *  We put the root in the queue children
+     * We put the root in the queue children
      *
      * @return
      */
@@ -487,14 +536,92 @@ class BST<T> {
      * @return
      */
     public ArrayList<BSTNode> DeepAllNodes(int order) {
-        ArrayList<BSTNode> visitedNodes = new ArrayList<BSTNode>();
+        ArrayList<BSTNode> visitedNodes = new ArrayList<>();
         if (order == PRE_ORDER) {
             return DeepAllNodesPreOrder(Root, visitedNodes);
         }
         if (order == POST_ORDER) {
             return null;
         }
-        return null;
+        //inorderTraversal(Root, visitedNodes);
+        inOrder(Root, visitedNodes);
+        return visitedNodes;
+    }
+
+    public void postorderTraversal(BSTNode root, ArrayList<BSTNode> visitedNodes) {
+        if (root != null) {
+            inorderTraversal(root.LeftChild, visitedNodes);
+            visitedNodes.add(root);
+            inorderTraversal(root.RightChild, visitedNodes);
+        }
+    }
+
+    public void inorderTraversal(BSTNode root, ArrayList<BSTNode> visitedNodes) {
+        if (root != null) {
+            inorderTraversal(root.LeftChild, visitedNodes);
+            visitedNodes.add(root);
+            inorderTraversal(root.RightChild, visitedNodes);
+        }
+    }
+
+    /**
+     * Add leaf to list
+     * and check subtree
+     * if it exist
+     */
+    public void inOrder(BSTNode node, List<BSTNode> visitedNodes) {
+        if (node != null) {
+            BSTNode leftestChild = FinMinMax(node, false);
+            visitedNodes.add(leftestChild);
+            if (isExistRightChild(leftestChild)) {
+                inOrder(leftestChild.RightChild, visitedNodes);
+                return;
+            }
+
+            boolean isNotExistRightChild = !isExistRightChild(leftestChild);
+            if (isNotExistRightChild) {
+                traverseParent(leftestChild, visitedNodes);
+            }
+        }
+    }
+
+
+    /**
+     * Add parent to list
+     * and check right subtree
+     * if it exist
+     */
+    public void traverseParent(BSTNode node, List<BSTNode> visitedNodes) {
+        BSTNode parent = node.Parent;
+        boolean isExistParent = parent != null;
+        if (isExistParent) {
+            boolean fromLeft = ascendedFromLeft(node, parent);
+            if (fromLeft) {
+                visitedNodes.add(parent);
+            }
+
+            boolean fromRight = !fromLeft;
+
+            if (fromRight || !isExistRightChild(parent)) {
+                traverseParent(parent, visitedNodes);
+            } else {
+                inOrder(parent.RightChild, visitedNodes);
+            }
+        }
+    }
+
+    /**
+     * Check right child is exist
+     */
+    public boolean isExistRightChild(BSTNode node) {
+        return node.RightChild != null;
+    }
+
+    /**
+     * Determine is ascended from the left child
+     */
+    public boolean ascendedFromLeft(BSTNode child, BSTNode parent) {
+        return child.NodeKey < parent.NodeKey;
     }
 
 

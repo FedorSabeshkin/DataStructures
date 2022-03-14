@@ -2,9 +2,13 @@ package com.sabeshkin.BinarySearchTree;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Arrays;
+import java.util.List;
 
-class DeepAllNodesTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+
+class DeepAllNodesPostorderTest {
 
     /* 1. Мне нужно дерево в котором есть один узел
     Поиск этого узла возвращает успех и ссылку на найденный узел
@@ -15,7 +19,7 @@ class DeepAllNodesTest {
 
         BSTNode<Integer> root = new BSTNode(8, 8, null);
         BST tree = new BST(root);
-        assertEquals(1, tree.DeepAllNodes(BST.PRE_ORDER).size());
+        assertEquals(1, tree.DeepAllNodes(BST.POST_ORDER).size());
     }
 
     @Test
@@ -23,7 +27,7 @@ class DeepAllNodesTest {
 
 
         BST tree = new BST(null);
-        assertEquals(0, tree.DeepAllNodes(BST.PRE_ORDER).size());
+        assertEquals(0, tree.DeepAllNodes(BST.POST_ORDER).size());
     }
 
 
@@ -39,7 +43,7 @@ class DeepAllNodesTest {
         tree.AddKeyValue(2, 2);
         tree.AddKeyValue(6, 6);
 
-        assertEquals(5, tree.DeepAllNodes(BST.PRE_ORDER).size());
+        assertEquals(5, tree.DeepAllNodes(BST.POST_ORDER).size());
 
     }
 
@@ -54,7 +58,7 @@ class DeepAllNodesTest {
         tree.AddKeyValue(5, 5);
         tree.AddKeyValue(7, 7);
 
-        assertEquals(7, tree.DeepAllNodes(BST.PRE_ORDER).size());
+        assertEquals(7, tree.DeepAllNodes(BST.POST_ORDER).size());
     }
 
 
@@ -76,7 +80,7 @@ class DeepAllNodesTest {
         BSTNode leaf_6 = new BSTNode(6, 6, leaf_4);
         leaf_4.RightChild = leaf_6;
 
-        assertEquals(5, tree.DeepAllNodes(BST.PRE_ORDER).size());
+        assertEquals(5, tree.DeepAllNodes(BST.POST_ORDER).size());
     }
 
     @Test
@@ -89,7 +93,7 @@ class DeepAllNodesTest {
         tree.AddKeyValue(6, 6);
         tree.AddKeyValue(5, 5);
         tree.AddKeyValue(7, 7);
-        assertEquals(root.NodeKey, ((BSTNode) tree.DeepAllNodes(BST.PRE_ORDER).get(0)).NodeKey);
+        assertEquals(root.NodeKey, ((BSTNode) tree.DeepAllNodes(BST.POST_ORDER).get(0)).NodeKey);
     }
 
     @Test
@@ -102,9 +106,43 @@ class DeepAllNodesTest {
         tree.AddKeyValue(6, 6);
         tree.AddKeyValue(5, 5);
         tree.AddKeyValue(7, 7);
-        int lastIndex = tree.DeepAllNodes(BST.PRE_ORDER).size() - 1;
-        assertEquals(12, ((BSTNode) tree.DeepAllNodes(BST.PRE_ORDER).get(lastIndex)).NodeKey);
+        int lastIndex = tree.DeepAllNodes(BST.POST_ORDER).size() - 1;
+        assertEquals(12, ((BSTNode) tree.DeepAllNodes(BST.POST_ORDER).get(lastIndex)).NodeKey);
     }
+
+    @Test
+    public void WideAllNodes_Postorder_Count_Add_Child_By_Method_Last_Is_12() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(4, 4);
+        tree.AddKeyValue(12, 12);
+        tree.AddKeyValue(2, 2);
+        tree.AddKeyValue(6, 6);
+        tree.AddKeyValue(10, 10);
+        tree.AddKeyValue(14, 14);
+        tree.AddKeyValue(1, 1);
+        tree.AddKeyValue(9, 9);
+        tree.AddKeyValue(11, 11);
+
+        BSTNode leaf_1 = new BSTNode(1);
+        BSTNode leaf_2 = new BSTNode(2);
+        BSTNode leaf_4 = new BSTNode(4);
+        BSTNode leaf_6 = new BSTNode(6);
+        BSTNode leaf_8 = new BSTNode(8);
+        BSTNode leaf_9 = new BSTNode(9);
+        BSTNode leaf_11 = new BSTNode(11);
+        BSTNode leaf_10 = new BSTNode(10);
+        BSTNode leaf_12 = new BSTNode(12);
+        BSTNode leaf_14 = new BSTNode(14);
+
+
+        BSTNode[] array = {leaf_1, leaf_2, leaf_6, leaf_4, leaf_9, leaf_11, leaf_10, leaf_14, leaf_12, leaf_8};
+        List<BSTNode> expectedList = Arrays.asList(array);
+        assertIterableEquals(expectedList, tree.DeepAllNodes(BST.POST_ORDER));
+    }
+
+
+
 
 
 }
