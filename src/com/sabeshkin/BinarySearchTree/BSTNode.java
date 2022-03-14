@@ -2,6 +2,7 @@ package com.sabeshkin.BinarySearchTree;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.BiFunction;
 
 
 class BSTNode<T> {
@@ -541,28 +542,58 @@ class BST<T> {
             return DeepAllNodesPreOrder(Root, visitedNodes);
         }
         if (order == POST_ORDER) {
-            return null;
+            //postOrder(Root, visitedNodes);
+            postorderTraversal(Root, visitedNodes);
+            return visitedNodes;
         }
-        //inorderTraversal(Root, visitedNodes);
         inOrder(Root, visitedNodes);
         return visitedNodes;
     }
 
     public void postorderTraversal(BSTNode root, ArrayList<BSTNode> visitedNodes) {
         if (root != null) {
-            inorderTraversal(root.LeftChild, visitedNodes);
+            postorderTraversal(root.LeftChild, visitedNodes);
+            postorderTraversal(root.RightChild, visitedNodes);
             visitedNodes.add(root);
-            inorderTraversal(root.RightChild, visitedNodes);
         }
     }
 
-    public void inorderTraversal(BSTNode root, ArrayList<BSTNode> visitedNodes) {
-        if (root != null) {
-            inorderTraversal(root.LeftChild, visitedNodes);
-            visitedNodes.add(root);
-            inorderTraversal(root.RightChild, visitedNodes);
+
+    public void postOrder(BSTNode node, List<BSTNode> visitedNodes) {
+        if (node != null) {
+            BSTNode leftestChild = FinMinMax(node, false);
+            if (isExistRightChild(leftestChild)) {
+                postOrder(leftestChild.RightChild, visitedNodes);
+            }
+
+            visitedNodes.add(leftestChild);
+
+            boolean isNotExistRightChild = !isExistRightChild(leftestChild);
+            if (isNotExistRightChild) {
+                traverseParentPostOrder(leftestChild, visitedNodes);
+            }
+
+
         }
     }
+
+    public void traverseParentPostOrder(BSTNode node, List<BSTNode> visitedNodes) {
+        BSTNode parent = node.Parent;
+        boolean isExistParent = parent != null;
+        if (isExistParent) {
+
+            boolean fromRight = !ascendedFromLeft(node, parent);
+            if (fromRight || !isExistRightChild(parent)) {
+
+                visitedNodes.add(parent);
+
+                traverseParentPostOrder(parent, visitedNodes);
+            } else {
+                postOrder(parent.RightChild, visitedNodes);
+            }
+        }
+    }
+
 
     /**
      * Add leaf to list
@@ -595,6 +626,7 @@ class BST<T> {
         BSTNode parent = node.Parent;
         boolean isExistParent = parent != null;
         if (isExistParent) {
+
             boolean fromLeft = ascendedFromLeft(node, parent);
             if (fromLeft) {
                 visitedNodes.add(parent);
@@ -608,6 +640,14 @@ class BST<T> {
                 inOrder(parent.RightChild, visitedNodes);
             }
         }
+    }
+
+
+    /**
+     * Check left child is exist
+     */
+    public boolean isExistLeftChild(BSTNode node) {
+        return node.LeftChild != null;
     }
 
     /**

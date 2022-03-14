@@ -84,7 +84,7 @@ class DeepAllNodesPostorderTest {
     }
 
     @Test
-    public void WideAllNodes_Count_Add_Child_By_Method_First_Is_8() {
+    public void WideAllNodes_Count_Add_Child_By_Method_First_Is_2() {
         BSTNode<Integer> root = new BSTNode(8, 8, null);
         BST tree = new BST(root);
         tree.AddKeyValue(4, 4);
@@ -93,11 +93,14 @@ class DeepAllNodesPostorderTest {
         tree.AddKeyValue(6, 6);
         tree.AddKeyValue(5, 5);
         tree.AddKeyValue(7, 7);
-        assertEquals(root.NodeKey, ((BSTNode) tree.DeepAllNodes(BST.POST_ORDER).get(0)).NodeKey);
+        tree.printWrapper("", tree.Root, false);
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+        System.out.println(result);
+        assertEquals(2, ((BSTNode) tree.DeepAllNodes(BST.POST_ORDER).get(0)).NodeKey);
     }
 
     @Test
-    public void WideAllNodes_Count_Add_Child_By_Method_Last_Is_12() {
+    public void WideAllNodes_Count_Add_Child_By_Method_Last_Is_8() {
         BSTNode<Integer> root = new BSTNode(8, 8, null);
         BST tree = new BST(root);
         tree.AddKeyValue(4, 4);
@@ -107,7 +110,7 @@ class DeepAllNodesPostorderTest {
         tree.AddKeyValue(5, 5);
         tree.AddKeyValue(7, 7);
         int lastIndex = tree.DeepAllNodes(BST.POST_ORDER).size() - 1;
-        assertEquals(12, ((BSTNode) tree.DeepAllNodes(BST.POST_ORDER).get(lastIndex)).NodeKey);
+        assertEquals(8, ((BSTNode) tree.DeepAllNodes(BST.POST_ORDER).get(lastIndex)).NodeKey);
     }
 
     @Test
@@ -136,13 +139,135 @@ class DeepAllNodesPostorderTest {
         BSTNode leaf_14 = new BSTNode(14);
 
 
-        BSTNode[] array = {leaf_1, leaf_2, leaf_6, leaf_4, leaf_9, leaf_11, leaf_10, leaf_14, leaf_12, leaf_8};
+        BSTNode[] array = {leaf_1, leaf_2, leaf_6,
+                leaf_4,
+                leaf_9, leaf_11,
+                leaf_10,leaf_14,
+                leaf_12,
+                leaf_8};
         List<BSTNode> expectedList = Arrays.asList(array);
-        assertIterableEquals(expectedList, tree.DeepAllNodes(BST.POST_ORDER));
+
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+
+        System.out.println(expectedList);
+        System.out.println(result);
+        assertIterableEquals(expectedList, result);
     }
 
 
+    @Test
+    public void WideAllNodes_Postorder_Right_Branch() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(13, 13);
+        tree.AddKeyValue(11, 11);
+        tree.AddKeyValue(14, 14);
+        tree.AddKeyValue(12, 12);
+        tree.printWrapper("", tree.Root, false);
+        BSTNode leaf_8 = new BSTNode(8);
+        BSTNode leaf_11 = new BSTNode(11);
+        BSTNode leaf_12 = new BSTNode(12);
+        BSTNode leaf_13 = new BSTNode(13);
+        BSTNode leaf_14 = new BSTNode(14);
+
+        BSTNode[] array = {leaf_12, leaf_11,  leaf_14,
+                leaf_13, leaf_8};
+        List<BSTNode> expectedList = Arrays.asList(array);
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+        System.out.println("Expected :"+expectedList);
+        System.out.println("Actual   :"+result);
+        assertIterableEquals(expectedList, result);
+    }
 
 
+    @Test
+    public void WideAllNodes_Postorder_Right_Branch_Only_Doubled_Items() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(13, 13);
+        tree.AddKeyValue(11, 11);
+        tree.AddKeyValue(12, 12);
+        tree.printWrapper("", tree.Root, false);
+        BSTNode leaf_8 = new BSTNode(8);
+        BSTNode leaf_11 = new BSTNode(11);
+        BSTNode leaf_12 = new BSTNode(12);
+        BSTNode leaf_13 = new BSTNode(13);
 
+        BSTNode[] array = {leaf_12, leaf_11,
+                leaf_13, leaf_8};
+        List<BSTNode> expectedList = Arrays.asList(array);
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+        System.out.println("Expected :"+expectedList);
+        System.out.println("Actual   :"+result);
+        assertIterableEquals(expectedList, result);
+    }
+
+    @Test
+    public void WideAllNodes_Postorder_Right_Branch_Only_Doubled_Items_Second() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(13, 13);
+        tree.AddKeyValue(11, 11);
+        tree.printWrapper("", tree.Root, false);
+        BSTNode leaf_8 = new BSTNode(8);
+        BSTNode leaf_11 = new BSTNode(11);
+        BSTNode leaf_13 = new BSTNode(13);
+
+        BSTNode[] array = { leaf_11,
+                leaf_13, leaf_8};
+        List<BSTNode> expectedList = Arrays.asList(array);
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+        System.out.println("Expected :"+expectedList);
+        System.out.println("Actual   :"+result);
+        assertIterableEquals(expectedList, result);
+    }
+
+    @Test
+    public void WideAllNodes_Postorder_Right_Branch_Only_Doubled_Items_Third() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+        tree.AddKeyValue(11, 11);
+        tree.printWrapper("", tree.Root, false);
+        BSTNode leaf_8 = new BSTNode(8);
+        BSTNode leaf_11 = new BSTNode(11);
+
+        BSTNode[] array = { leaf_11,
+                 leaf_8};
+        List<BSTNode> expectedList = Arrays.asList(array);
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+        System.out.println("Expected :"+expectedList);
+        System.out.println("Actual   :"+result);
+        assertIterableEquals(expectedList, result);
+    }
+
+    @Test
+    public void WideAllNodes_Inorder_Left_Branch_With_Child_For_Minimal_Node() {
+        BSTNode<Integer> root = new BSTNode(8, 8, null);
+        BST tree = new BST(root);
+
+        tree.AddKeyValue(5, 5);
+        tree.AddKeyValue(6, 6);
+        tree.AddKeyValue(3, 3);
+        tree.AddKeyValue(4, 4);
+        tree.AddKeyValue(1, 1);
+        tree.AddKeyValue(2, 2);
+        tree.AddKeyValue(7, 7);
+        tree.printWrapper("", tree.Root, false);
+        BSTNode leaf_1 = new BSTNode(1);
+        BSTNode leaf_2 = new BSTNode(2);
+        BSTNode leaf_3 = new BSTNode(3);
+        BSTNode leaf_4 = new BSTNode(4);
+        BSTNode leaf_5 = new BSTNode(5);
+        BSTNode leaf_6 = new BSTNode(6);
+        BSTNode leaf_7 = new BSTNode(7);
+        BSTNode leaf_8 = new BSTNode(8);
+
+        BSTNode[] array = {leaf_2, leaf_1, leaf_4, leaf_7, leaf_3, leaf_6,
+                leaf_5, leaf_8};
+        List<BSTNode> expectedList = Arrays.asList(array);
+        List<BSTNode> result = tree.DeepAllNodes(BST.POST_ORDER);
+        System.out.println("Expected :"+expectedList);
+        System.out.println("Actual   :"+result);
+        assertIterableEquals(expectedList, result);
+    }
 }
