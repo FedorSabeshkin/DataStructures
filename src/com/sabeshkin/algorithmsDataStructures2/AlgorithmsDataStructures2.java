@@ -79,7 +79,7 @@ public class AlgorithmsDataStructures2
         boolean haveRightPart = mediumIndex<endSubset;
         if(haveRightPart){
             int startRightPartIndex = mediumIndex+1;
-            generatePartOfBSTArr(true,
+            generatePartOfBSTArr(false,
                     arrForBST,sortedInArr,
                     startRightPartIndex, endSubset, indexOfElementForBST);
         }
@@ -93,12 +93,15 @@ public class AlgorithmsDataStructures2
      *
      * return index of element in arr for BST
      */
-    public static int setElementInArrForBST( boolean isLeftChild, int[] arrForBST, int[] inArr,
+    public static int setElementInArrForBST( boolean isLeftChild,
+                                             int[] arrForBST, int[] sortedArr,
                                              int startSubset, int endSubset,
                                              int indexOfParentInBST, int mediumIndex){
 
-        int indexOfElementForBST = calculateIndexInArrForBST(isLeftChild, startSubset, endSubset, inArr, indexOfParentInBST);
-        arrForBST[indexOfElementForBST] = inArr[mediumIndex];
+        int indexOfElementForBST = calculateIndexInArrForBST(isLeftChild, startSubset, endSubset, sortedArr, indexOfParentInBST);
+        int elementOfSortedArr = sortedArr[mediumIndex];
+        //assert elementOfSortedArr>0:"Don't exist this elem in unit tests";
+        arrForBST[indexOfElementForBST] = elementOfSortedArr;
         return indexOfElementForBST;
     }
 

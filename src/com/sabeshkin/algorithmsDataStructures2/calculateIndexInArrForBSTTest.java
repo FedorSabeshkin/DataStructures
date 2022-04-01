@@ -7,36 +7,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class calculateIndexInArrForBSTTest {
 
     @Test
-    public void getMediumIndex_One_Node() {
-        int[] in = new int[]{1};
-        int expectedIndex = 0;
-        int minIndex = 0;
-        int maxIndex = in.length-1;
-        int result = AlgorithmsDataStructures2.getMediumIndex(minIndex, maxIndex);
-        assertEquals(expectedIndex, result);
-    }
-
-    @Test
-    public void getMediumIndex_Three_Nodes(){
+    public void calculateIndexInArrForBST_Three_Nodes(){
         int[] in = new int[]{1,2,3};
         int expectedElement = 2;
         int minIndex = 0;
         int maxIndex = in.length-1;
-        int result = AlgorithmsDataStructures2.getMediumIndex(minIndex, maxIndex);
-        assertEquals(expectedElement, in[result]);
+        int result = AlgorithmsDataStructures2.calculateIndexInArrForBST(false, minIndex, maxIndex, in, -1);
+        int[] out = new int[]{2,1,3};
+        assertEquals(expectedElement, out[result]);
     }
-
 
     @Test
-    public void getMediumIndex_getElement() {
-        int[] in = new int[]{1,2,3,4,5,6,7};
-        int expectedElement = 4;
+    public void calculateIndexInArrForBST_LeftPart(){
+        int[] in = new int[]{1,2,3};
+        int expectedElement = 1;
         int minIndex = 0;
-        int maxIndex = in.length-1;
-        assert maxIndex==6;
-        assert 6/2==3;
-        assert in[3]==4;
-        int result = AlgorithmsDataStructures2.getMediumIndex(minIndex, maxIndex);
-        assertEquals(expectedElement, in[result]);
+        int maxIndex = 1-1;
+        int result = AlgorithmsDataStructures2.calculateIndexInArrForBST(true, minIndex, maxIndex, in, 0);
+        int[] out = new int[]{2,1,3};
+        assertEquals(expectedElement, out[result]);
     }
+
+    @Test
+    public void calculateIndexInArrForBST_RightPart(){
+        int[] in = new int[]{1,2,3};
+        int expectedElement = 3;
+        int minIndex = 1;
+        int maxIndex = in.length-1;
+        int result = AlgorithmsDataStructures2.calculateIndexInArrForBST(false, minIndex, maxIndex, in, 0);
+        int[] out = new int[]{2,1,3};
+        assertEquals(expectedElement, out[result]);
+    }
+
+
+
 }
