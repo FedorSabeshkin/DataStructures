@@ -58,4 +58,18 @@ class BalancedBSTTest {
         assertEquals(in[4], balancedBST.Root.RightChild.RightChild.NodeKey);
         assertEquals(in[5], balancedBST.Root.RightChild.RightChild.NodeKey);
     }
+
+
+    @Test
+    public void CheckLevel(){
+        BalancedBST balancedBST = new BalancedBST();
+        int[] in = new int[]{1,2,3,4,5};
+        balancedBST.GenerateTree(in);
+        balancedBST.printWrapper("", balancedBST.Root, false);
+        assertEquals(0, balancedBST.Root.Level);
+        assertEquals(1, balancedBST.Root.RightChild.Level);
+        assertEquals(2, balancedBST.Root.RightChild.RightChild.Level);
+        assertEquals(1, balancedBST.Root.LeftChild.Level);
+        assertEquals(2, balancedBST.Root.LeftChild.RightChild.Level);
+    }
 }

@@ -18,7 +18,7 @@ class BSTNode {
 }
 
 class BalancedBST {
-    public BSTNode Root; 
+    public BSTNode Root;
 
     public BalancedBST() {
         Root = null;
@@ -116,8 +116,10 @@ class BalancedBST {
         boolean isFirstIteration = isFirstIteration();
         if(isFirstIteration){
             Root=child;
+            Root.Level = 0;
             return;
         }
+        setChildLevel(parent, child);
 
         child.Parent = parent;
         boolean isRightChild = !isLeftChild;
@@ -144,6 +146,16 @@ class BalancedBST {
             return;
         }
         parent.RightChild = child;
+    }
+
+    /**
+     *
+     *Set level of depth to node
+     *
+     */
+    public void setChildLevel(BSTNode parent,
+                              BSTNode child){
+        child.Level = parent.Level + 1;
     }
 
     /**
