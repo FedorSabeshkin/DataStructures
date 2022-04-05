@@ -3,11 +3,11 @@ package com.sabeshkin.BalancedBST;
 import java.util.*;
 
 class BSTNode {
-    public int NodeKey; // ключ узла
-    public BSTNode Parent; // родитель или null для корня
-    public BSTNode LeftChild; // левый потомок
-    public BSTNode RightChild; // правый потомок
-    public int Level; // глубина узла
+    public int NodeKey; 
+    public BSTNode Parent;
+    public BSTNode LeftChild;
+    public BSTNode RightChild;
+    public int Level;
 
     public BSTNode(int key, BSTNode parent) {
         NodeKey = key;
@@ -25,8 +25,21 @@ class BalancedBST {
     }
 
 
+    /**
+     * Check is balanced tree
+     * @param root_node
+     * @return
+     */
     public boolean IsBalanced(BSTNode root_node) {
-        return false; // сбалансировано ли дерево с корнем root_node
+        if(isNullNode(root_node)){
+            return true;
+        }
+        int maxDepthLeftBranch = determineMaxDepth(root_node.LeftChild, root_node.Level);
+        int maxDepthRightBranch = determineMaxDepth(root_node.RightChild, root_node.Level);
+        boolean isBalancedNode =Math.abs (maxDepthRightBranch - maxDepthLeftBranch)<= 1;
+        boolean isBalancedLeftChild = IsBalanced( root_node.LeftChild);
+        boolean isBalancedRightChild = IsBalanced( root_node.RightChild);
+        return isBalancedNode && isBalancedLeftChild && isBalancedRightChild;
     }
 
 
@@ -56,6 +69,21 @@ class BalancedBST {
             print(prefix + "     ", n.RightChild, false);
             System.out.println(prefix + ("|-- ") + n.NodeKey);
             print(prefix + "     ", n.LeftChild, true);
+        }
+    }
+
+    /**
+     * Print tree structure with level for each node
+     *
+     * @param prefix
+     * @param n
+     * @param isLeft
+     */
+    public void printLevel(String prefix, BSTNode n, boolean isLeft) {
+        if (n != null) {
+            printLevel(prefix + "     ", n.RightChild, false);
+            System.out.println(prefix + ("|-- ") + n.NodeKey + " Level: "+ n.Level);
+            printLevel(prefix + "     ", n.LeftChild, true);
         }
     }
 
@@ -113,6 +141,7 @@ class BalancedBST {
      */
     public void bindParentChild(boolean isLeftChild, BSTNode parent,
                                 BSTNode child){
+        assert  !child.equals(parent):"Child and parent it is difference nodes";
         boolean isFirstIteration = isFirstIteration();
         if(isFirstIteration){
             Root=child;
@@ -130,6 +159,7 @@ class BalancedBST {
         }
         parent.LeftChild = child;
 
+
     }
 
     /**
@@ -142,9 +172,10 @@ class BalancedBST {
 
         boolean isSameKeyNode = parent.RightChild !=null;
         if(isSameKeyNode){
-            parent.RightChild.RightChild = child;
+            addNextRightChild(parent.RightChild,child);
             return;
         }
+        setChildLevel(parent, child);
         parent.RightChild = child;
     }
 
@@ -155,7 +186,9 @@ class BalancedBST {
      */
     public void setChildLevel(BSTNode parent,
                               BSTNode child){
+        assert Root.Level == 0:"Root level must me 0";
         child.Level = parent.Level + 1;
+        assert child.Level - parent.Level == 1:"parent level always one less than children";
     }
 
     /**
@@ -188,5 +221,26 @@ class BalancedBST {
     public static int[] sortArray(int[] arr) {
         Arrays.sort(arr);
         return arr;
+    }
+
+    /**
+     * Determine max depth level of branch from node
+     *
+     */
+    public int determineMaxDepth(BSTNode rootOfSubtree, int parentLevel){
+        if(isNullNode(rootOfSubtree)){
+            return parentLevel;
+        }
+        int maxDepthLeftBranch = determineMaxDepth(rootOfSubtree.LeftChild, rootOfSubtree.Level);
+        int maxDepthRightBranch = determineMaxDepth(rootOfSubtree.RightChild, rootOfSubtree.Level);
+        return Math.max(maxDepthRightBranch, maxDepthLeftBranch);
+    }
+
+    /**
+     *
+     * Check node is null
+     */
+    public static boolean isNullNode(BSTNode node){
+        return node==null;
     }
 }
