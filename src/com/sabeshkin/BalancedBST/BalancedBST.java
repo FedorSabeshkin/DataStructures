@@ -3,7 +3,7 @@ package com.sabeshkin.BalancedBST;
 import java.util.*;
 
 class BSTNode {
-    public int NodeKey; 
+    public int NodeKey;
     public BSTNode Parent;
     public BSTNode LeftChild;
     public BSTNode RightChild;
@@ -176,6 +176,7 @@ class BalancedBST {
             return;
         }
         setChildLevel(parent, child);
+        assert child.Level - parent.Level == 1:"parent level always one less than children";
         parent.RightChild = child;
     }
 
@@ -223,8 +224,23 @@ class BalancedBST {
         return arr;
     }
 
+
     /**
      * Determine max depth level of branch from node
+     *
+     * Метод определения максимальной глубины
+     * Он принимает на вход узел от которого будем проверять максимальную глубину
+     * и уровень глубины, его родителя
+     * если узел равен нулю
+     * 	    возращаю глубину родителя
+     * сохраняю в переменную максимальной глубины, значение глубины рассматриваего узла (глубина родителя + 1)
+     * если есть левый потомок
+         * 	то вычисляю значение глубины для него, параметром глубины передаю вычисленное выше значение
+         * 	результат работы метода кладу в переменную для глубины левого дерева
+     * если есть правый потомок
+         * 	то вычисляю значение глубины для него, параметром глубины передаю вычисленное выше значение
+         * 	результат работы метода кладу в переменную для глубины правого дерева
+         * возвращаю максимум из глубин левого и правого потомков
      *
      */
     public int determineMaxDepth(BSTNode rootOfSubtree, int parentLevel){
