@@ -44,4 +44,55 @@ class HeapTest {
     public void MakeHeap_Several_Node(){
         MakeHeap_Several_Node_Test(1);
     }
+
+    @Test
+    public void GetMaxKey_Test(){
+        Heap heap = new Heap();
+        int[] in = new int[]{4, 3, 2, 1};
+        int depth = in.length;
+        heap.MakeHeap(in, depth);
+        printArray(heap.HeapArray);
+
+
+
+        assertEquals(3, heap.GetMax());
+        printArray(heap.HeapArray);
+        assertEquals(2, heap.GetMax());
+        printArray(heap.HeapArray);
+        assertEquals(1, heap.GetMax());
+        printArray(heap.HeapArray);
+        assertEquals(-1, heap.GetMax());
+        printArray(heap.HeapArray);
+
+        assertEquals(heap.HeapArray[0], heap.GetMax());
+        printArray(heap.HeapArray);
+
+        assertEquals(heap.DEFAULT_NODE_VALUE, heap.GetMax());
+        printArray(heap.HeapArray);
+
+    }
+
+    @Test
+    public void GetMaxKey_Without_Repeat_Keys_Test(){
+        Heap heap = new Heap();
+        int[] in = new int[]{4, 3, 2, 1};
+        int depth = in.length;
+        heap.MakeHeap(in, depth);
+        printArray(heap.HeapArray);
+
+        int excludedMax = heap.GetMax();
+        assertTrue(Arrays.stream(heap.HeapArray).noneMatch(value->value==excludedMax));
+        printArray(heap.HeapArray);
+        int excludedMax_2 = heap.GetMax();
+        assertTrue(Arrays.stream(heap.HeapArray).noneMatch(value->value==excludedMax_2));
+        printArray(heap.HeapArray);
+        int excludedMax_3 = heap.GetMax();
+        assertTrue(Arrays.stream(heap.HeapArray).noneMatch(value->value==excludedMax_3));
+        printArray(heap.HeapArray);
+        int excludedMax_4 = heap.GetMax();
+        assertTrue(Arrays.stream(heap.HeapArray).noneMatch(value->value==excludedMax_4));
+        printArray(heap.HeapArray);
+
+    }
+
 }

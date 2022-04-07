@@ -15,15 +15,29 @@ class Heap
     public static int OFFSET_LEFT_CHILD = 1;
     public static int OFFSET_RIGHT_CHILD = 2;
 
-    public static final int EMPTY_NODE = -1;
+    public static final int DEFAULT_NODE_VALUE = -1;
+    public static final int HAVE_NOT_CHILD_INDEX = -1;
+
+    /**
+     * Check that index valid for Heap array
+     * @param indexForCheck
+     * @return
+     */
+    public boolean isValidIndex(int indexForCheck){
+        return indexForCheck<HeapArray.length-1 && indexForCheck>=0;
+    }
 
     /**
      * get index for left child
      * @param indexOfParentInBST index of node(parent)
      * @return index of right child
      */
-    public static int getLeftChildIndex(int indexOfParentInBST){
-        return AMOUNT_OF_CHILDREN*indexOfParentInBST+OFFSET_LEFT_CHILD;
+    public int getLeftChildIndex(int indexOfParentInBST){
+        int childIndex = AMOUNT_OF_CHILDREN*indexOfParentInBST+OFFSET_LEFT_CHILD;
+        if(isValidIndex(childIndex)){
+            return childIndex;
+        }
+        return HAVE_NOT_CHILD_INDEX;
     }
 
     /**
@@ -31,8 +45,12 @@ class Heap
      * @param indexOfParentInBST  index of node(parent)
      * @return index of right child
      */
-    public static int getRightChildIndex(int indexOfParentInBST){
-        return AMOUNT_OF_CHILDREN*indexOfParentInBST+OFFSET_RIGHT_CHILD;
+    public  int getRightChildIndex(int indexOfParentInBST){
+        int childIndex =  AMOUNT_OF_CHILDREN*indexOfParentInBST+OFFSET_RIGHT_CHILD;
+        if(isValidIndex(childIndex)){
+            return childIndex;
+        }
+        return HAVE_NOT_CHILD_INDEX;
     }
 
     /**
@@ -45,13 +63,27 @@ class Heap
     }
 
     /**
+     * Check object is null
+     * @param object
+     * @return
+     */
+    public boolean isNull(Object object){
+        return object==null;
+    }
+
+    /**
      * Make heap from arr
      *
      */
     public void MakeHeap(int[] a, int depth)
     {
+
+        if(isNull(a)){
+            return;
+        }
+
         HeapArray = new int[depth];
-        Arrays.fill(HeapArray, -1);
+        Arrays.fill(HeapArray, DEFAULT_NODE_VALUE);
         lastFreeIndex = 0;
         Arrays.stream(a).forEach(number -> Add(number));
     }
@@ -106,12 +138,104 @@ class Heap
         HeapArray[indexOfChild] = replacedValue;
     }
 
+    /**
+     * Get and remove from heap her max key
+     *
+     */
     public int GetMax()
     {
-        // вернуть значение корня и перестроить кучу
-        return -1; // если куча пуста
+        int indexNodeForReplace = 0;
+        int maxKey = HeapArray[indexNodeForReplace];
+        int nodeForMove = getMinKeyWithoutRemove();
+        HeapArray[indexNodeForReplace] = nodeForMove;
+        int indexMinKey = HeapArray.length-1;
+        removeNodeByIndex(indexMinKey);
+        if(maxKey == nodeForMove){
+            if(lastFreeIndex==0){
+                //assert HeapArray[0]==-1:"Heap array must be contain only '-1'";
+            }
+            return maxKey;
+        }
+        int maxNearestChildIndex = getMaxNearestChildIndex(indexNodeForReplace);
+        int maxChild = HeapArray[maxNearestChildIndex];
+        while(nodeForMove<maxChild){
+            replaceNodesByIndex(indexNodeForReplace, maxNearestChildIndex);
+            indexNodeForReplace = maxNearestChildIndex;
+            maxNearestChildIndex = getMaxNearestChildIndex(indexNodeForReplace);
+            maxChild = HeapArray[maxNearestChildIndex];
+        }
+        return maxKey;
     }
 
+    /**
+     * Get index of max nearest child index
+     *
+     */
+    public int getMaxNearestChildIndex(int parentIndex)
+    {
+        int leftChildIndex = getLeftChildIndex(parentIndex);
+        int rightChildIndex = getRightChildIndex(parentIndex);
+
+        boolean isNotExistLeftChild = leftChildIndex==-1 && rightChildIndex!=-1;
+        if(isNotExistLeftChild){
+            return rightChildIndex;
+        }
+        boolean isNotExistRightChild = leftChildIndex!=-1 && rightChildIndex==-1;
+        if(isNotExistRightChild){
+            return leftChildIndex;
+        }
+
+        boolean isNotExistAllChildren = leftChildIndex==-1 && rightChildIndex==-1;
+        if(isNotExistAllChildren){
+            return parentIndex;
+        }
+
+
+        boolean isLeftBigger = HeapArray[leftChildIndex] >  HeapArray[rightChildIndex];
+        if(isLeftBigger){
+            return leftChildIndex;
+        }
+        return rightChildIndex;
+    }
+
+
+    /**
+     * Replace nodes
+     *
+     */
+    public void replaceNodesByIndex(int firstNodeIndex, int secondNodeIndex)
+    {
+        int firstValue = HeapArray[firstNodeIndex];
+        HeapArray[firstNodeIndex] = HeapArray[secondNodeIndex];
+        HeapArray[secondNodeIndex] = firstValue;
+    }
+
+    /**
+     * Remove from heap
+     *
+     */
+    public void removeNodeByIndex(int index)
+    {
+        HeapArray[index] = -1;
+        boolean haveNodeInHeap = lastFreeIndex>0;
+        if(haveNodeInHeap){
+            lastFreeIndex--;
+        }
+        assert lastFreeIndex >= 0:"You should validate lastFreeIndex";
+    }
+
+    /**
+     * Get min key
+     *
+     */
+    public int getMinKeyWithoutRemove()
+    {
+        int indexMinKey = lastFreeIndex-1;
+        if(isValidIndex(indexMinKey)){
+            return HeapArray[indexMinKey];
+        }
+        return DEFAULT_NODE_VALUE;
+    }
 
 
 }
