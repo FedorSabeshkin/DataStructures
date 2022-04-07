@@ -82,12 +82,21 @@ class Heap
             return;
         }
 
-        HeapArray = new int[depth];
+        int heapArraySise = calculateArrSizeForBinaryTree(depth);
+        HeapArray = new int[heapArraySise];
         Arrays.fill(HeapArray, DEFAULT_NODE_VALUE);
         lastFreeIndex = 0;
         Arrays.stream(a).forEach(number -> Add(number));
     }
 
+    /**
+     * Сalculate Arr Size For Binary Tree
+     *
+     */
+    public int calculateArrSizeForBinaryTree(int depth)
+    {
+        return (int) (Math.pow(AMOUNT_OF_CHILDREN,depth+1)-1);
+    }
 
     /**
      * Add new key to heap

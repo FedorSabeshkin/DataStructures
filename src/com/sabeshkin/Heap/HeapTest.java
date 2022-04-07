@@ -116,7 +116,7 @@ class HeapTest {
         Heap heap = new Heap();
         int[] in = new int[]{3, 2, 1};
         int depth = in.length;
-        heap.MakeHeap(in, depth);
+        heap.MakeHeap(in, 1);
         assertFalse(heap.Add(4));
     }
 
