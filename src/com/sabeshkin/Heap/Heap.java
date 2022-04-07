@@ -4,7 +4,7 @@ import java.util.*;
 
 class Heap
 {
-    public int [] HeapArray; // хранит неотрицательные числа-ключи
+    public int [] HeapArray; 
     private int lastFreeIndex;
 
     public Heap() {
@@ -24,7 +24,7 @@ class Heap
      * @return
      */
     public boolean isValidIndex(int indexForCheck){
-        return indexForCheck<HeapArray.length-1 && indexForCheck>=0;
+        return indexForCheck<HeapArray.length && indexForCheck>=0;
     }
 
     /**
@@ -106,10 +106,6 @@ class Heap
             lastFreeIndex++;
             return true;
         }
-        //как отработает кейс, когда Root меньше нового значения?
-        /*
-         *То есть мы уже заменим root на новое значение
-         */
         int parentIndex = getParentIndex(lastFreeIndex);
         int parent = HeapArray[parentIndex];
         int childIndex = lastFreeIndex;
@@ -148,11 +144,11 @@ class Heap
         int maxKey = HeapArray[indexNodeForReplace];
         int nodeForMove = getMinKeyWithoutRemove();
         HeapArray[indexNodeForReplace] = nodeForMove;
-        int indexMinKey = HeapArray.length-1;
+        int indexMinKey = getMinKeyIndex();
         removeNodeByIndex(indexMinKey);
         if(maxKey == nodeForMove){
             if(lastFreeIndex==0){
-                //assert HeapArray[0]==-1:"Heap array must be contain only '-1'";
+                assert HeapArray[0]==-1:"Heap array must be contain only '-1'";
             }
             return maxKey;
         }
@@ -166,7 +162,6 @@ class Heap
         }
         return maxKey;
     }
-
     /**
      * Get index of max nearest child index
      *
@@ -224,6 +219,8 @@ class Heap
         assert lastFreeIndex >= 0:"You should validate lastFreeIndex";
     }
 
+
+
     /**
      * Get min key
      *
@@ -235,6 +232,19 @@ class Heap
             return HeapArray[indexMinKey];
         }
         return DEFAULT_NODE_VALUE;
+    }
+
+    /**
+     * Get min key
+     *
+     */
+    public int getMinKeyIndex()
+    {
+        int indexMinKey = lastFreeIndex-1;
+        if(isValidIndex(indexMinKey)){
+            return indexMinKey;
+        }
+        return 0;
     }
 
 
