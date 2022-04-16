@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class SimpleGraphTest {
 
     @Test
+    void constructor_Zero_Size() {
+        SimpleGraph simpleGraph = new SimpleGraph(0);
+    }
+
+    @Test
     void removeVertex() {
         SimpleGraph simpleGraph = new SimpleGraph(5);
         IntStream.rangeClosed(1, 5).forEach(
