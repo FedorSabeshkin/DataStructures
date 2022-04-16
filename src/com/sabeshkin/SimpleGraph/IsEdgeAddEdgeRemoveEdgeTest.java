@@ -28,9 +28,8 @@ class IsEdgeAddEdgeRemoveEdgeTest {
                 number -> simpleGraph.AddVertex(number)
         );
         // A
-        simpleGraph.AddEdge(0, 1);
-        assertTrue( simpleGraph.IsEdge(0,1));
         simpleGraph.AddEdge(0, 2);
+        assertTrue( simpleGraph.IsEdge(0,2));
         simpleGraph.AddEdge(0, 3);
         // B
         assertFalse( simpleGraph.IsEdge(1,0));

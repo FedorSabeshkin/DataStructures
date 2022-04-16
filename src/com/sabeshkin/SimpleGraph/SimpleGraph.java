@@ -16,6 +16,8 @@ class SimpleGraph
     Vertex [] vertex;
     int [][] m_adjacency;
     int max_vertex;
+    final int EXIST_EDGE = 1;
+    final int NOT_EXIST_EDGE = 0;
 
     public SimpleGraph(int size)
     {
@@ -59,19 +61,36 @@ class SimpleGraph
         // ваш код удаления вершины со всеми её рёбрами
     }
 
+    /**
+     * Is exist edge
+     * @param v1
+     * @param v2
+     * @return
+     */
     public boolean IsEdge(int v1, int v2)
     {
-        // true если есть ребро между вершинами v1 и v2
-        return false;
+        return m_adjacency[v1][v2] == EXIST_EDGE;
     }
 
+    /**
+     *
+     * Add Edge
+     *
+     */
     public void AddEdge(int v1, int v2)
     {
-        // добавление ребра между вершинами v1 и v2
+        m_adjacency[v1][v2] = EXIST_EDGE;
+        m_adjacency[v2][v1] = EXIST_EDGE;
     }
 
+    /**
+     *
+     * Remove Edge
+     *
+     */
     public void RemoveEdge(int v1, int v2)
     {
-        // удаление ребра между вершинами v1 и v2
+        m_adjacency[v1][v2] = NOT_EXIST_EDGE;
+        m_adjacency[v2][v1] = NOT_EXIST_EDGE;
     }
 }
