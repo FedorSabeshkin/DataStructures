@@ -35,6 +35,7 @@ class SimpleGraph
      */
     public void AddVertex(int value)
     {
+
         Vertex vertexForAdd = new Vertex(value);
         setToFirstEmptyIndex(vertexForAdd);
     }
@@ -64,8 +65,10 @@ class SimpleGraph
      */
     public void RemoveVertex(int v)
     {
-        vertex[v]=null;
-        removeAllEdgesOfVertex(v);
+        if(isValidIndex(v)) {
+            vertex[v] = null;
+            removeAllEdgesOfVertex(v);
+        }
     }
 
     /**
@@ -88,7 +91,10 @@ class SimpleGraph
      */
     public boolean IsEdge(int v1, int v2)
     {
-        return m_adjacency[v1][v2] == EXIST_EDGE;
+        if(isValidIndex(v1) && isValidIndex(v2)) {
+            return m_adjacency[v1][v2] == EXIST_EDGE;
+        }
+        return false;
     }
 
     /**
@@ -98,8 +104,10 @@ class SimpleGraph
      */
     public void AddEdge(int v1, int v2)
     {
-        m_adjacency[v1][v2] = EXIST_EDGE;
-        m_adjacency[v2][v1] = EXIST_EDGE;
+        if(isValidIndex(v1) && isValidIndex(v2)) {
+            m_adjacency[v1][v2] = EXIST_EDGE;
+            m_adjacency[v2][v1] = EXIST_EDGE;
+        }
     }
 
     /**
@@ -109,7 +117,18 @@ class SimpleGraph
      */
     public void RemoveEdge(int v1, int v2)
     {
-        m_adjacency[v1][v2] = NOT_EXIST_EDGE;
-        m_adjacency[v2][v1] = NOT_EXIST_EDGE;
+        if(isValidIndex(v1) && isValidIndex(v2)){
+            m_adjacency[v1][v2] = NOT_EXIST_EDGE;
+            m_adjacency[v2][v1] = NOT_EXIST_EDGE;
+        }
+    }
+
+    /**
+     * Check it is valid index
+     * @param index
+     * @return
+     */
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < max_vertex;
     }
 }
