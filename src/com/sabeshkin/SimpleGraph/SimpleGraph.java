@@ -24,12 +24,33 @@ class SimpleGraph
         vertex = new Vertex[size];
     }
 
+    /**
+     * Add Vertex
+     *
+     */
     public void AddVertex(int value)
     {
-        // ваш код добавления новой вершины
-        // с значением value
-        // в незанятую позицию vertex
+        Vertex vertexForAdd = new Vertex(value);
+        setToFirstEmptyIndex(vertexForAdd);
     }
+
+    /**
+     * Set vertex to first empty index
+     * @param vertexForAdd
+     */
+    public void setToFirstEmptyIndex(Vertex vertexForAdd)
+    {
+
+        final Vertex EMPTY = null;
+        for(int i=0; i<max_vertex; i++){
+            if(vertex[i]==EMPTY){
+                vertex[i] = vertexForAdd;
+                return;
+            }
+        }
+    }
+
+
 
     // здесь и далее, параметры v -- индекс вершины
     // в списке  vertex
