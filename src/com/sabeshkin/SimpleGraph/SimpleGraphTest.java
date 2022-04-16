@@ -7,7 +7,15 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleGraphTest {
-
+    public static void printTwoDimensionalArray(int[][] a) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                System.out.printf("%d \t ", a[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("+++++++++++");
+    }
     @Test
     void constructor_Zero_Size() {
         SimpleGraph simpleGraph = new SimpleGraph(0);
@@ -39,7 +47,10 @@ class SimpleGraphTest {
         // E
         simpleGraph.AddEdge(4,1);
         int indexForRemove=1;
+        printTwoDimensionalArray( simpleGraph.m_adjacency);
         simpleGraph.RemoveVertex(indexForRemove);
+
+        printTwoDimensionalArray( simpleGraph.m_adjacency);
         // Check that all edges for vertex removed
         IntStream.rangeClosed(0, 4).forEach(
                 number -> assertEquals(0, simpleGraph.m_adjacency[indexForRemove][number])
@@ -51,3 +62,4 @@ class SimpleGraphTest {
         assertEquals(null, simpleGraph.vertex[indexForRemove]);
     }
 }
+
