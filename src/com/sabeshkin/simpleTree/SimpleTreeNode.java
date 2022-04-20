@@ -47,11 +47,58 @@ class SimpleTree<T> {
 
     private int size = 0;
 
-    public ArrayList<T> EvenTrees()
-    {
+    public ArrayList<T> EvenTrees() {
+
+        if (notIsSeveralNodesInTree()) {
+            return createEmptyArrayList();
+        }
+
+        return findEvenPairsForBreakChain();
+    }
+
+    /**
+     * Find and collect pairs for break chain
+     * @return
+     */
+    public ArrayList<T> findEvenPairsForBreakChain() {
+
         int expectedArr[] = new int[]{};
         ArrayList<T> expected = new ArrayList(Arrays.asList(expectedArr));
-        return  expected;
+        return expected;
+    }
+
+    /**
+     * create Empty ArrayList
+     * @return
+     */
+    public ArrayList<T> createEmptyArrayList() {
+        return new ArrayList<T>();
+    }
+
+    /**
+     * check that object is null
+     * @param objectForCheck
+     * @return
+     */
+    public boolean isNull(Object objectForCheck) {
+        return  objectForCheck == null;
+    }
+
+    /**
+     * Check that haven't children
+     * @param node
+     * @return
+     */
+    public boolean notHaveChildren(SimpleTreeNode<T> node) {
+        return  isNull(node.Children) || node.Children.size() == 0;
+    }
+
+    /**
+     * Check that we have several nodes in tree
+     * @return
+     */
+    public boolean notIsSeveralNodesInTree() {
+        return isNull(Root) || notHaveChildren(Root);
     }
 
     /**
@@ -212,6 +259,7 @@ class SimpleTree<T> {
 
     /**
      * Call function from consumer on each node
+     *
      * @param node
      * @param consumer
      */
@@ -225,6 +273,7 @@ class SimpleTree<T> {
 
     /**
      * Call makeOnEach(...) on each node child
+     *
      * @param children
      * @param consumer
      */
