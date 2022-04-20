@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.*;
 
 public class SimpleTreeNode<T> {
     public T NodeValue; // значение в узле
@@ -45,6 +46,13 @@ class SimpleTree<T> {
     }
 
     private int size = 0;
+
+    public ArrayList<T> EvenTrees()
+    {
+        int expectedArr[] = new int[]{};
+        ArrayList<T> expected = new ArrayList(Arrays.asList(expectedArr));
+        return  expected;
+    }
 
     /**
      * Add child to node
