@@ -9,10 +9,11 @@ import java.util.function.Predicate;
 import java.util.*;
 
 public class SimpleTreeNode<T> {
-    public T NodeValue; // значение в узле
-    public SimpleTreeNode<T> Parent; // родитель или null для корня
-    public List<SimpleTreeNode<T>> Children; // список дочерних узлов или null
+    public T NodeValue;
+    public SimpleTreeNode<T> Parent;
+    public List<SimpleTreeNode<T>> Children;
     public int level = 0;
+    public int descendantAmount;
 
     public SimpleTreeNode(T val, SimpleTreeNode<T> parent) {
         NodeValue = val;
@@ -38,7 +39,7 @@ public class SimpleTreeNode<T> {
 }
 
 class SimpleTree<T> {
-    public SimpleTreeNode<T> Root; // корень, может быть null
+    public SimpleTreeNode<T> Root;
 
     public SimpleTree(SimpleTreeNode<T> root) {
         Root = root;
@@ -47,15 +48,21 @@ class SimpleTree<T> {
 
     private int size = 0;
 
-    public ArrayList<T> EvenTrees() {
 
-        if (notIsSeveralNodesInTree()) {
-            return createEmptyArrayList();
-        }
 
-        return findEvenPairsForBreakChain();
+    /**
+     * Count and set descendants
+     * @return
+     */
+    public void descendantCount() {
+
+        descendantCountNode(Root);
     }
 
+    public void descendantCountNode(SimpleTreeNode<T> node){
+        int amountOfDescendant = 0;
+        node.descendantAmount = node.Children.size();
+    }
     /**
      * Find and collect pairs for break chain
      * @return
@@ -72,7 +79,7 @@ class SimpleTree<T> {
      * @return
      */
     public ArrayList<T> createEmptyArrayList() {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**
@@ -279,5 +286,60 @@ class SimpleTree<T> {
      */
     public void enumerationOfEach(List<SimpleTreeNode<T>> children, Consumer<SimpleTreeNode<T>> consumer) {
         children.stream().forEach(node -> makeOnEach(node, consumer));
+    }
+
+    /**
+     * Count children of node
+     * @param root
+     * @return
+     */
+    private int countChildrenOfNode(SimpleTreeNode<T> root) {
+        int nodes = 1;
+        if (isNull(root.Children)) {
+            return nodes;
+        }
+        for (SimpleTreeNode<T> child : root.Children) {
+            nodes += countChildrenOfNode(child);
+        }
+        return nodes;
+    }
+    /**
+     *
+     * @return pairs of parent and child between should remove of edge
+     */
+    public ArrayList<T> EvenTrees() {
+        ArrayList<T> nodePairs = new ArrayList<>();
+        if (Root != null && Count() % 2 == 0) {
+            findEdgesToRemove(Root, nodePairs);
+        }
+        return nodePairs;
+    }
+
+    /**
+     * find edge for remove for make forest
+     * @param root
+     * @param nodePairs
+     */
+    private void findEdgesToRemove(SimpleTreeNode<T> root, List<T> nodePairs) {
+        if (isNull(root.Children)) {
+            return;
+        }
+        for (SimpleTreeNode<T> child : root.Children) {
+            addEdgeForRemove(child, nodePairs);
+            findEdgesToRemove(child, nodePairs);
+        }
+    }
+
+    /**
+     * Check and if true, add edge for remove
+     * @param child
+     * @param nodePairs
+     */
+    private void addEdgeForRemove(SimpleTreeNode<T> child, List<T> nodePairs){
+        boolean isEvenAmountOfChildren = countChildrenOfNode(child) % 2 == 0;
+        if (isEvenAmountOfChildren) {
+            nodePairs.add(child.Parent.NodeValue);
+            nodePairs.add(child.NodeValue);
+        }
     }
 }

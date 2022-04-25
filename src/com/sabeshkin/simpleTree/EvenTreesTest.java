@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,28 +38,32 @@ class EvenTreesTest {
         tree.AddChild(leaf_8, leaf_9);
         SimpleTreeNode leaf_10 = new SimpleTreeNode(8, leaf_8);
         tree.AddChild(leaf_8, leaf_10);
-        int expectedArr[] = new int[]{1, 3, 1, 6};
+        Integer expectedArr[] = new Integer[]{1, 3, 1, 6};
         ArrayList<Integer> expected = new ArrayList(Arrays.asList(expectedArr));
         ArrayList<Integer> fact = tree.EvenTrees();
+        printArray(fact.toArray());
         assertArrayEquals(expected.toArray(), fact.toArray());
     }
+    public void printArray(Object[] array){
 
+        System.out.println(Arrays.toString(array));
+    }
     @Test
     public void EvenTrees_Only_Root_Element() {
         SimpleTreeNode<Integer> root = new SimpleTreeNode(1, null);
         SimpleTree tree = new SimpleTree(root);
-        int expectedArr[] = new int[]{};
+        Integer expectedArr[] = new Integer[]{};
         ArrayList<Integer> expected = new ArrayList(Arrays.asList(expectedArr));
         ArrayList<Integer> fact = tree.EvenTrees();
         assertArrayEquals(expected.toArray(), fact.toArray());
     }
 
     @Test
-    public void EvenTrees_Root_Is_Null() {
+    public void EvenTrees_Root_Is_Null_Size_Is_Zero() {
         SimpleTreeNode<Integer> root = new SimpleTreeNode(null, null);
         SimpleTree tree = new SimpleTree(root);
         ArrayList<Integer> fact = tree.EvenTrees();
-        assertEquals(null, fact);
+        assertEquals(0, fact.size());
     }
 
     @Test
