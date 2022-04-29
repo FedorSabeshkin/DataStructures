@@ -5,9 +5,11 @@ import java.util.*;
 class Vertex
 {
     public int Value;
+    public boolean Hit;
     public Vertex(int val)
     {
         Value = val;
+        Hit = false;
     }
 }
 
@@ -21,6 +23,8 @@ class SimpleGraph
     final Vertex EMPTY = null;
     int MAX_INDEX;
 
+
+
     public SimpleGraph(int size)
     {
         max_vertex = size;
@@ -28,6 +32,15 @@ class SimpleGraph
         vertex = new Vertex[size];
         MAX_INDEX = size-1;
     }
+
+    public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo)
+    {
+        // Узлы задаются позициями в списке vertex.
+        // Возвращается список узлов -- путь из VFrom в VTo.
+        // Список пустой, если пути нету.
+        return null;
+    }
+
 
     /**
      * Add Vertex
