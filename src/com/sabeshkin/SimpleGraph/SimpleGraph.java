@@ -1,53 +1,85 @@
 package com.sabeshkin.SimpleGraph;
 
 import java.util.*;
+import java.util.stream.*;
 
-class Vertex
-{
+class Vertex {
     public int Value;
     public boolean Hit;
-    public Vertex(int val)
-    {
+
+    public Vertex(int val) {
         Value = val;
         Hit = false;
     }
 }
 
-class SimpleGraph
-{
-    Vertex [] vertex;
-    int [][] m_adjacency;
+class SimpleGraph {
+    Vertex[] vertex;
+    int[][] m_adjacency;
     int max_vertex;
     final int EXIST_EDGE = 1;
     final int NOT_EXIST_EDGE = 0;
     final Vertex EMPTY = null;
     int MAX_INDEX;
+    final int NOT_FOUND_UNHINT = -1;
 
 
-
-    public SimpleGraph(int size)
-    {
+    public SimpleGraph(int size) {
         max_vertex = size;
-        m_adjacency = new int [size][size];
+        m_adjacency = new int[size][size];
         vertex = new Vertex[size];
-        MAX_INDEX = size-1;
+        MAX_INDEX = size - 1;
     }
 
-    public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo)
-    {
+    public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
         // Узлы задаются позициями в списке vertex.
         // Возвращается список узлов -- путь из VFrom в VTo.
         // Список пустой, если пути нету.
         return null;
     }
 
+    /**
+     * Select unhint child or
+     *
+     * @param vertexIndex
+     * @return
+     */
+    public int selectUnhitVertex(int vertexIndex) {
+        // find index of unhint element
+        OptionalInt  unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1)
+                .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
+                .filter(index -> !vertex[index].Hit)
+                .findFirst();
+        if(unhitNeighborOptinal.isPresent()){
+            return unhitNeighborOptinal.getAsInt();
+        }
+        return NOT_FOUND_UNHINT;
+    }
+
+    /**
+     * Check is that vertexIndex is have edge with anotherVertexIndex
+     * @param vertexIndex
+     * @param anotherVertexIndex
+     * @return
+     */
+    public boolean isEdgeNeighbor(int vertexIndex, int anotherVertexIndex){
+        return m_adjacency[vertexIndex][anotherVertexIndex] == EXIST_EDGE;
+    }
+
+    /**
+     * Hit vertex
+     *
+     * @param indexOfVertex
+     */
+    public void hitVertex(int indexOfVertex) {
+        Vertex vertexObject = vertex[indexOfVertex];
+        vertexObject.Hit = true;
+    }
 
     /**
      * Add Vertex
-     *
      */
-    public void AddVertex(int value)
-    {
+    public void AddVertex(int value) {
 
         Vertex vertexForAdd = new Vertex(value);
         setToFirstEmptyIndex(vertexForAdd);
@@ -55,13 +87,13 @@ class SimpleGraph
 
     /**
      * Set vertex to first empty index
+     *
      * @param vertexForAdd
      */
-    public void setToFirstEmptyIndex(Vertex vertexForAdd)
-    {
+    public void setToFirstEmptyIndex(Vertex vertexForAdd) {
 
-        for(int i=0; i<max_vertex; i++){
-            if(vertex[i]==EMPTY){
+        for (int i = 0; i < max_vertex; i++) {
+            if (vertex[i] == EMPTY) {
                 vertex[i] = vertexForAdd;
                 return;
             }
@@ -69,27 +101,27 @@ class SimpleGraph
     }
 
 
-
-
     /**
-     *
      * Remove Vertex
-     *
      */
-    public void RemoveVertex(int v)
-    {
-        if(isValidIndex(v)) {
+    public void RemoveVertex(int v) {
+        if (isValidIndex(v)) {
             vertex[v] = null;
             removeAllEdgesOfVertex(v);
         }
     }
 
+    public void acrossMatrixRow(int indexOfVertex) {
+        for (int i = 0; i < max_vertex; i++) {
+
+        }
+    }
+
     /**
      * Remove All Edges Of Vertex
-     *
      */
-    public void removeAllEdgesOfVertex(int indexOfVertex){
-        for(int i=0; i<max_vertex; i++){
+    public void removeAllEdgesOfVertex(int indexOfVertex) {
+        for (int i = 0; i < max_vertex; i++) {
             RemoveEdge(indexOfVertex, i);
         }
 //        assert m_adjacency[0][indexOfVertex]==0:"Edge must be removed";
@@ -98,39 +130,33 @@ class SimpleGraph
 
     /**
      * Is exist edge
+     *
      * @param v1
      * @param v2
      * @return
      */
-    public boolean IsEdge(int v1, int v2)
-    {
-        if(isValidIndex(v1) && isValidIndex(v2)) {
+    public boolean IsEdge(int v1, int v2) {
+        if (isValidIndex(v1) && isValidIndex(v2)) {
             return m_adjacency[v1][v2] == EXIST_EDGE;
         }
         return false;
     }
 
     /**
-     *
      * Add Edge
-     *
      */
-    public void AddEdge(int v1, int v2)
-    {
-        if(isValidIndex(v1) && isValidIndex(v2)) {
+    public void AddEdge(int v1, int v2) {
+        if (isValidIndex(v1) && isValidIndex(v2)) {
             m_adjacency[v1][v2] = EXIST_EDGE;
             m_adjacency[v2][v1] = EXIST_EDGE;
         }
     }
 
     /**
-     *
      * Remove Edge
-     *
      */
-    public void RemoveEdge(int v1, int v2)
-    {
-        if(isValidIndex(v1) && isValidIndex(v2)){
+    public void RemoveEdge(int v1, int v2) {
+        if (isValidIndex(v1) && isValidIndex(v2)) {
             m_adjacency[v1][v2] = NOT_EXIST_EDGE;
             m_adjacency[v2][v1] = NOT_EXIST_EDGE;
         }
@@ -138,6 +164,7 @@ class SimpleGraph
 
     /**
      * Check it is valid index
+     *
      * @param index
      * @return
      */
