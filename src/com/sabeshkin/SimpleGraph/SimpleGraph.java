@@ -74,8 +74,15 @@ class SimpleGraph {
      */
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
         clearSearchInfo();
-        ArrayList<Vertex> stack = new ArrayList<>();
-        return searchPath(VFrom, VTo, stack);
+        ArrayList<Integer> stack = new ArrayList<>();
+        stack = searchPath(VFrom, VTo, stack);
+        return stackIndexToVertex(stack);
+    }
+
+    public ArrayList<Vertex> stackIndexToVertex(ArrayList<Integer> stack) {
+        ArrayList<Vertex> stackOfVertex = new ArrayList<>();
+        stack.forEach(index -> stackOfVertex.add(vertex[index]));
+        return stackOfVertex;
     }
 
     /**
@@ -130,9 +137,8 @@ class SimpleGraph {
      * @param stack
      * @return
      */
-    public ArrayList<Vertex> setVertexToStack(int indexOfVertex, ArrayList<Vertex> stack) {
-        Vertex vertexObject = vertex[indexOfVertex];
-        stack.add(vertexObject);
+    public ArrayList<Integer> setVertexToStack(int indexOfVertex, ArrayList<Integer> stack) {
+        stack.add(indexOfVertex);
         return stack;
     }
 
@@ -144,12 +150,13 @@ class SimpleGraph {
      * @param stack
      * @return
      */
-    public ArrayList<Vertex> selectFromDeeperLevel(int parentIndex, int searchedVertexIndex, ArrayList<Vertex> stack) {
+    public ArrayList<Integer> selectFromDeeperLevel(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
         boolean isFoundVertex = isHaveSearchedInClosestChildren(parentIndex, searchedVertexIndex);
         if (isFoundVertex) {
             stack = setVertexToStack(searchedVertexIndex, stack);
             return stack;
         }
+
         // 4b)
         // select from deeper Children
         int nextParent = selectUnhitVertex(parentIndex);
@@ -157,6 +164,7 @@ class SimpleGraph {
         if (isHaveNextParent) {
             return searchPath(nextParent, searchedVertexIndex, stack);
         }
+
         // 5
         if(stack.size() > 0){
             int lastStackElementIndex = stack.size() - 1;
@@ -170,8 +178,9 @@ class SimpleGraph {
 
         int lastStackElementIndex = stack.size() - 1;
         // remove uppest element
-        nextParent = stack.remove(lastStackElementIndex);
-        return selectFromDeeperLevel(parentIndex, searchedVertexIndex, stack);
+        int indexForStartDeep = stack.get(lastStackElementIndex);
+        vertex[indexForStartDeep].Hit=true;
+        return selectFromDeeperLevel(indexForStartDeep, searchedVertexIndex, stack);
     }
 
     /**
@@ -195,7 +204,7 @@ class SimpleGraph {
      * @param stack
      * @return
      */
-    public ArrayList<Vertex> searchPath(int parentIndex, int searchedVertexIndex, ArrayList<Vertex> stack) {
+    public ArrayList<Integer> searchPath(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
 
         hitVertex(parentIndex);
         // 3
