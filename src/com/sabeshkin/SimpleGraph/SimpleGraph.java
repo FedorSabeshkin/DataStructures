@@ -73,11 +73,15 @@ class SimpleGraph {
      * @return
      */
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
+        if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
+            return new ArrayList<>();
+        }
         clearSearchInfo();
         ArrayList<Integer> stack = new ArrayList<>();
         stack = searchPath(VFrom, VTo, stack);
         return stackIndexToVertex(stack);
     }
+
 
     public ArrayList<Vertex> stackIndexToVertex(ArrayList<Integer> stack) {
         ArrayList<Vertex> stackOfVertex = new ArrayList<>();
