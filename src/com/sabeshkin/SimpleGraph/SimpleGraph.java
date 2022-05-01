@@ -12,6 +12,39 @@ class Vertex {
         Hit = false;
     }
 
+    /**
+     * We compare only  Value
+     * for easy check right DepthFirstSearch() in Unit tests
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean isSameObject = obj == this;
+        if (isSameObject) {
+            return true;
+        }
+
+        boolean isAnotherClassObject = !(obj instanceof Vertex);
+        if (isAnotherClassObject) {
+            return false;
+        }
+        Vertex bstNodeForCheck = (Vertex) obj;
+        boolean isEqualValue = this.Value == bstNodeForCheck.Value;
+
+        return isEqualValue;
+    }
+
+    /**
+     * Show Value of vertex
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return this.Value + "";
+    }
 
 }
 
@@ -33,11 +66,25 @@ class SimpleGraph {
         MAX_INDEX = size - 1;
     }
 
+    /**
+     * Search path between vertex by their indexes
+     * @param VFrom
+     * @param VTo
+     * @return
+     */
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
-        // Узлы задаются позициями в списке vertex.
-        // Возвращается список узлов -- путь из VFrom в VTo.
-        // Список пустой, если пути нету.
-        return null;
+        clearSearchInfo();
+        ArrayList<Vertex> stack = new ArrayList<>();
+        return searchPath(VFrom, VTo, stack);
+    }
+
+    /**
+     * Clear all hit about search
+     */
+    public void clearSearchInfo(){
+        IntStream.rangeClosed(0, max_vertex - 1).forEach(
+                vertexIndex -> vertex[vertexIndex].Hit = false
+        );
     }
 
     /**
@@ -63,7 +110,7 @@ class SimpleGraph {
      * @return
      */
     public boolean isEdgeNeighbor(int vertexIndex, int anotherVertexIndex) {
-        return m_adjacency[vertexIndex][anotherVertexIndex] == EXIST_EDGE;
+        return IsEdge(vertexIndex, anotherVertexIndex);
     }
 
     /**
@@ -91,13 +138,14 @@ class SimpleGraph {
 
     /**
      * Find searchedVertexIndex from more remote neighbours
+     *
      * @param parentIndex
      * @param searchedVertexIndex
      * @param stack
      * @return
      */
     public ArrayList<Vertex> selectFromDeeperLevel(int parentIndex, int searchedVertexIndex, ArrayList<Vertex> stack) {
-        boolean isFoundVertex = isHaveVertexInClosestChildren(parentIndex, searchedVertexIndex);
+        boolean isFoundVertex = isHaveSearchedInClosestChildren(parentIndex, searchedVertexIndex);
         if (isFoundVertex) {
             stack = setVertexToStack(searchedVertexIndex, stack);
             return stack;
@@ -105,21 +153,43 @@ class SimpleGraph {
         // 4b)
         // select from deeper Children
         int nextParent = selectUnhitVertex(parentIndex);
-        boolean isHavenextParent = nextParent != -1;
-        if (isHavenextParent) {
+        boolean isHaveNextParent = nextParent != -1;
+        if (isHaveNextParent) {
             return searchPath(nextParent, searchedVertexIndex, stack);
         }
         // 5
-        int lastStackElementIndex = stack.size() - 1;
-        stack.get(lastStackElementIndex);
-        boolean isEmptyStack = stack.size() == 0 if (isEmptyStack) {
+        if(stack.size() > 0){
+            int lastStackElementIndex = stack.size() - 1;
+            // remove uppest element
+            stack.remove(lastStackElementIndex);
+        }
+        boolean isEmptyStack = stack.size() == 0;
+        if (isEmptyStack) {
             return stack;
         }
+
+        int lastStackElementIndex = stack.size() - 1;
+        // remove uppest element
+        nextParent = stack.remove(lastStackElementIndex);
         return selectFromDeeperLevel(parentIndex, searchedVertexIndex, stack);
     }
 
     /**
+     * @param vertexIndex
+     * @param searchedVertexIndex
+     * @return
+     */
+    public boolean isHaveSearchedInClosestChildren(int vertexIndex, int searchedVertexIndex) {
+
+        OptionalInt searchedNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1)
+                .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
+                .filter(index -> index == searchedVertexIndex).findFirst();
+        return searchedNeighborOptinal.isPresent();
+    }
+
+    /**
      * Search path from parent to searchedVertex
+     *
      * @param parentIndex
      * @param searchedVertexIndex
      * @param stack
