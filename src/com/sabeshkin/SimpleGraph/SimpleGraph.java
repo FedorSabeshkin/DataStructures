@@ -11,6 +11,8 @@ class Vertex {
         Value = val;
         Hit = false;
     }
+
+
 }
 
 class SimpleGraph {
@@ -46,11 +48,8 @@ class SimpleGraph {
      */
     public int selectUnhitVertex(int vertexIndex) {
         // find index of unhint element
-        OptionalInt  unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1)
-                .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
-                .filter(index -> !vertex[index].Hit)
-                .findFirst();
-        if(unhitNeighborOptinal.isPresent()){
+        OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
+        if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
         }
         return NOT_FOUND_UNHINT;
@@ -58,11 +57,12 @@ class SimpleGraph {
 
     /**
      * Check is that vertexIndex is have edge with anotherVertexIndex
+     *
      * @param vertexIndex
      * @param anotherVertexIndex
      * @return
      */
-    public boolean isEdgeNeighbor(int vertexIndex, int anotherVertexIndex){
+    public boolean isEdgeNeighbor(int vertexIndex, int anotherVertexIndex) {
         return m_adjacency[vertexIndex][anotherVertexIndex] == EXIST_EDGE;
     }
 
@@ -74,6 +74,63 @@ class SimpleGraph {
     public void hitVertex(int indexOfVertex) {
         Vertex vertexObject = vertex[indexOfVertex];
         vertexObject.Hit = true;
+    }
+
+    /**
+     * Set vertex object by index to stack
+     *
+     * @param indexOfVertex
+     * @param stack
+     * @return
+     */
+    public ArrayList<Vertex> setVertexToStack(int indexOfVertex, ArrayList<Vertex> stack) {
+        Vertex vertexObject = vertex[indexOfVertex];
+        stack.add(vertexObject);
+        return stack;
+    }
+
+    /**
+     * Find searchedVertexIndex from more remote neighbours
+     * @param parentIndex
+     * @param searchedVertexIndex
+     * @param stack
+     * @return
+     */
+    public ArrayList<Vertex> selectFromDeeperLevel(int parentIndex, int searchedVertexIndex, ArrayList<Vertex> stack) {
+        boolean isFoundVertex = isHaveVertexInClosestChildren(parentIndex, searchedVertexIndex);
+        if (isFoundVertex) {
+            stack = setVertexToStack(searchedVertexIndex, stack);
+            return stack;
+        }
+        // 4b)
+        // select from deeper Children
+        int nextParent = selectUnhitVertex(parentIndex);
+        boolean isHavenextParent = nextParent != -1;
+        if (isHavenextParent) {
+            return searchPath(nextParent, searchedVertexIndex, stack);
+        }
+        // 5
+        int lastStackElementIndex = stack.size() - 1;
+        stack.get(lastStackElementIndex);
+        boolean isEmptyStack = stack.size() == 0 if (isEmptyStack) {
+            return stack;
+        }
+        return selectFromDeeperLevel(parentIndex, searchedVertexIndex, stack);
+    }
+
+    /**
+     * Search path from parent to searchedVertex
+     * @param parentIndex
+     * @param searchedVertexIndex
+     * @param stack
+     * @return
+     */
+    public ArrayList<Vertex> searchPath(int parentIndex, int searchedVertexIndex, ArrayList<Vertex> stack) {
+
+        hitVertex(parentIndex);
+        // 3
+        setVertexToStack(parentIndex, stack);
+        return selectFromDeeperLevel(parentIndex, searchedVertexIndex, stack);
     }
 
     /**

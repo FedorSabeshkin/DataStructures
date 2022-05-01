@@ -1,0 +1,81 @@
+package com.sabeshkin.SimpleGraph;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+
+class DepthFirstSearchTest {
+    public static void printTwoDimensionalArray(int[][] a) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                System.out.printf("%d \t ", a[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("+++++++++++");
+    }
+    @Test
+    void constructor_Zero_Size() {
+        SimpleGraph simpleGraph = new SimpleGraph(0);
+    }
+
+    @Test
+    void DepthFirstSearch_Test() {
+        SimpleGraph simpleGraph = new SimpleGraph(5);
+        IntStream.rangeClosed(1, 5).forEach(
+                number -> simpleGraph.AddVertex(number)
+        );
+        // A
+        simpleGraph.AddEdge(0,1);
+        simpleGraph.AddEdge(0,2);
+        simpleGraph.AddEdge(0,3);
+        // B
+        simpleGraph.AddEdge(1,0);
+        simpleGraph.AddEdge(1,3);
+        simpleGraph.AddEdge(1,4);
+        // C
+        simpleGraph.AddEdge(3,0);
+        simpleGraph.AddEdge(2,3);
+        // D
+        simpleGraph.AddEdge(3,0);
+        simpleGraph.AddEdge(3,1);
+        simpleGraph.AddEdge(3,2);
+        simpleGraph.AddEdge(3,3);
+        simpleGraph.AddEdge(3,4);
+        // E
+        simpleGraph.AddEdge(4,1);
+        printTwoDimensionalArray( simpleGraph.m_adjacency);
+
+        ArrayList<Vertex> expectedList = new ArrayList<>();
+        expectedList.add(new Vertex(0));
+        expectedList.add(new Vertex(1));
+        assertIterableEquals(expectedList, simpleGraph.DepthFirstSearch(0,1));
+        // another direction
+        ArrayList<Vertex> expectedList_2 = new ArrayList<>();
+        expectedList_2.add(new Vertex(1));
+        expectedList_2.add(new Vertex(0));
+        assertIterableEquals(expectedList_2, simpleGraph.DepthFirstSearch(1,0));
+
+        // 3 vertex in path
+        ArrayList<Vertex> expectedList_3 = new ArrayList<>();
+        expectedList_3.add(new Vertex(0));
+        expectedList_3.add(new Vertex(1));
+        expectedList_3.add(new Vertex(3));
+        ArrayList<Vertex> fact = simpleGraph.DepthFirstSearch(0,4);
+        assertEquals(3, fact.size());
+        assertIterableEquals(expectedList_3, fact);
+
+        // not exist path
+        ArrayList<Vertex> expectedListNotExistPath = new ArrayList<>();
+        simpleGraph.RemoveEdge(4, 1);
+        simpleGraph.RemoveEdge(4, 3);
+        ArrayList<Vertex> factNotExistPath = simpleGraph.DepthFirstSearch(0,4);
+        assertEquals(0, factNotExistPath.size());
+        assertIterableEquals(expectedListNotExistPath, factNotExistPath);
+    }
+}
+
