@@ -82,7 +82,11 @@ class SimpleGraph {
         return stackIndexToVertex(stack);
     }
 
-
+    /**
+     * Stack of indexes to stack of Vertex object
+     * @param stack
+     * @return
+     */
     public ArrayList<Vertex> stackIndexToVertex(ArrayList<Integer> stack) {
         ArrayList<Vertex> stackOfVertex = new ArrayList<>();
         stack.forEach(index -> stackOfVertex.add(vertex[index]));
@@ -99,13 +103,13 @@ class SimpleGraph {
     }
 
     /**
-     * Select unhint child or
+     * Find index of unhint element or return NOT_FOUND_UNHINT
      *
      * @param vertexIndex
      * @return
      */
     public int selectUnhitVertex(int vertexIndex) {
-        // find index of unhint element
+
         OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
         if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
@@ -160,31 +164,56 @@ class SimpleGraph {
             stack = setVertexToStack(searchedVertexIndex, stack);
             return stack;
         }
+        return findOnAnotherBranch( parentIndex,  searchedVertexIndex,  stack);
+    }
 
-        // 4b)
-        // select from deeper Children
-        int nextParent = selectUnhitVertex(parentIndex);
-        boolean isHaveNextParent = nextParent != -1;
-        if (isHaveNextParent) {
-            return searchPath(nextParent, searchedVertexIndex, stack);
+    /**
+     * Find vertex between more remote nodes
+     * @param parentIndex
+     * @param searchedVertexIndex
+     * @param stack
+     * @return
+     */
+    public ArrayList<Integer> findOnAnotherBranch(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
+        int nextNeighbour = selectUnhitVertex(parentIndex);
+        boolean isNextNeighbour = nextNeighbour != -1;
+        if (isNextNeighbour) {
+            return searchPath(nextNeighbour, searchedVertexIndex, stack);
         }
+        return findFromPrevVertex(parentIndex,  searchedVertexIndex,  stack);
 
-        // 5
-        if(stack.size() > 0){
-            int lastStackElementIndex = stack.size() - 1;
-            // remove uppest element
-            stack.remove(lastStackElementIndex);
-        }
+    }
+
+    /**
+     * Start find searchedVertex from another neighbours of vertex
+     * @param parentIndex
+     * @param searchedVertexIndex
+     * @param stack
+     * @return
+     */
+    public ArrayList<Integer> findFromPrevVertex(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
+        stack = removeLastFromStack(stack);
         boolean isEmptyStack = stack.size() == 0;
         if (isEmptyStack) {
             return stack;
         }
-
         int lastStackElementIndex = stack.size() - 1;
-        // remove uppest element
         int indexForStartDeep = stack.get(lastStackElementIndex);
         vertex[indexForStartDeep].Hit=true;
         return selectFromDeeperLevel(indexForStartDeep, searchedVertexIndex, stack);
+    }
+
+    /**
+     * Remove last element of stack if last element is exist
+     * @param stack
+     * @return changed or empty stack
+     */
+    private ArrayList<Integer> removeLastFromStack(ArrayList<Integer> stack){
+        if(stack.size() > 0){
+            int lastStackElementIndex = stack.size() - 1;
+            stack.remove(lastStackElementIndex);
+        }
+        return stack;
     }
 
     /**
@@ -211,7 +240,6 @@ class SimpleGraph {
     public ArrayList<Integer> searchPath(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
 
         hitVertex(parentIndex);
-        // 3
         setVertexToStack(parentIndex, stack);
         return selectFromDeeperLevel(parentIndex, searchedVertexIndex, stack);
     }
@@ -251,11 +279,6 @@ class SimpleGraph {
         }
     }
 
-    public void acrossMatrixRow(int indexOfVertex) {
-        for (int i = 0; i < max_vertex; i++) {
-
-        }
-    }
 
     /**
      * Remove All Edges Of Vertex
@@ -264,8 +287,6 @@ class SimpleGraph {
         for (int i = 0; i < max_vertex; i++) {
             RemoveEdge(indexOfVertex, i);
         }
-//        assert m_adjacency[0][indexOfVertex]==0:"Edge must be removed";
-//        assert m_adjacency[0][MAX_INDEX]==0:"Last edge also must be removed";
     }
 
     /**
