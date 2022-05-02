@@ -67,15 +67,76 @@ class SimpleGraph {
     }
 
 
+
+
     public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
     {
-        // Узлы задаются позициями в списке vertex.
-        // Возвращается список узлов -- путь из VFrom в VTo.
-        // Список пустой, если пути нету.
         if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
             return new ArrayList<>();
         }
-        return new ArrayList<>();
+        clearSearchInfo();
+        Queue queuePath = new LinkedList<Integer>();
+        int consideredIndex = VFrom;
+        hitVertex(consideredIndex);
+        queuePath = performPath(consideredIndex, VTo, queuePath);
+        Queue queuePathWithStart = new LinkedList<Integer>();
+        queuePathWithStart.add(VFrom);
+        boolean isExistPath = queuePath.size()>0;
+        if(isExistPath){
+            queuePath.forEach(index -> queuePathWithStart.add(index));
+            return queueToList(queuePathWithStart);
+        }
+        return queueToList(queuePath);
+    }
+
+
+    /**
+     * (2) Perform path to vertex and set it to queue
+     **/
+    public Queue<Integer> performPath(int consideredIndex, int searchedIndex,
+                                         Queue<Integer> queuePath)
+    {
+        int unhitNeighbourIndex = selectUnhitVertex(consideredIndex);
+        boolean isFoundUnhit = unhitNeighbourIndex != NOT_FOUND_UNHINT;
+        if(isFoundUnhit){
+            return addNeighbourToPath(consideredIndex,
+                    unhitNeighbourIndex,
+                    searchedIndex, queuePath);
+        }
+        boolean isExistIndexToConside = queuePath.size()>0;
+        if(isExistIndexToConside){
+            int nextConsideredIndex = queuePath.poll();
+            return performPath(nextConsideredIndex, searchedIndex, queuePath);
+        }
+        return queuePath;
+    }
+
+    /**
+     * (3)
+     **/
+    public Queue<Integer> addNeighbourToPath(int consideredIndex,
+                                            int unhitNeighbourIndex,
+                                            int searchedIndex,
+                                            Queue<Integer> queuePath)
+    {
+        hitVertex(unhitNeighbourIndex);
+        queuePath.add(unhitNeighbourIndex);
+        boolean isFoundPathEnd = unhitNeighbourIndex == searchedIndex;
+        if(isFoundPathEnd){
+            return queuePath;
+        }
+        return performPath(consideredIndex, searchedIndex, queuePath);
+    }
+
+    /**
+     * Queue of indexes to list of Vertex object
+     * @param queue
+     * @return
+     */
+    public ArrayList<Vertex> queueToList(Queue<Integer> queue) {
+        ArrayList<Vertex> path = new ArrayList<>();
+        queue.forEach(index -> path.add(vertex[index]));
+        return path;
     }
 
     /**
@@ -122,7 +183,10 @@ class SimpleGraph {
      */
     public int selectUnhitVertex(int vertexIndex) {
 
-        OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
+        OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1)
+                .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
+                .filter(index -> !vertex[index].Hit)
+                .findFirst();
         if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
         }
