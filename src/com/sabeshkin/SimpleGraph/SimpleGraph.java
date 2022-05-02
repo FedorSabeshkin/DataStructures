@@ -66,6 +66,18 @@ class SimpleGraph {
         MAX_INDEX = size - 1;
     }
 
+
+    public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
+    {
+        // Узлы задаются позициями в списке vertex.
+        // Возвращается список узлов -- путь из VFrom в VTo.
+        // Список пустой, если пути нету.
+        if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
+            return new ArrayList<>();
+        }
+        return new ArrayList<>();
+    }
+
     /**
      * Search path between vertex by their indexes
      * @param VFrom
