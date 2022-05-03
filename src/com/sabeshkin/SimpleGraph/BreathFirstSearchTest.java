@@ -3,9 +3,10 @@ package com.sabeshkin.SimpleGraph;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class BreathFirstSearchTest {
@@ -117,26 +118,15 @@ class BreathFirstSearchTest {
     @Test
     void BreadthFirstSearch_Comprating_With_DepthFirst_Search_Test() {
         SimpleGraph simpleGraph = initilazeMockGraph();
-
         ArrayList<Vertex> breadthExpectedList_3 = new ArrayList<>();
         breadthExpectedList_3.add(new Vertex(1));
-        breadthExpectedList_3.add(new Vertex(4));
+        breadthExpectedList_3.add(new Vertex(2));
         breadthExpectedList_3.add(new Vertex(5));
         ArrayList<Vertex> factBreadth = simpleGraph.BreadthFirstSearch(0,4);
-        System.out.println("fact BreadthFirstSearch A E: " + factBreadth);
         System.out.println("expe BreadthFirstSearch A E: " + breadthExpectedList_3);
+        System.out.println("fact BreadthFirstSearch A E: " + factBreadth);
         assertEquals(3, factBreadth.size());
-        //assertIterableEquals(breadthExpectedList_3, factBreadth);
-
-
-        ArrayList<Vertex> expectedList_3 = new ArrayList<>();
-        expectedList_3.add(new Vertex(1));
-        expectedList_3.add(new Vertex(2));
-        expectedList_3.add(new Vertex(5));
-        ArrayList<Vertex> fact = simpleGraph.DepthFirstSearch(0,4);
-        System.out.println("DepthFirstSearch A E: " + fact);
-        assertEquals(3, fact.size());
-        assertIterableEquals(expectedList_3, fact);
+        assertIterableEquals(breadthExpectedList_3, factBreadth);
     }
 }
 

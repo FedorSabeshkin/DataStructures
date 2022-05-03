@@ -57,7 +57,7 @@ class SimpleGraph {
     final int NOT_EXIST_EDGE = 0;
     final Vertex EMPTY = null;
     int MAX_INDEX;
-    final int NOT_FOUND_UNHINT = -1;
+    final int NOT_FOUND_UNHIT = -1;
     ArrayList<Integer> shortestPathIndexes;
 
     public SimpleGraph(int size) {
@@ -75,7 +75,7 @@ class SimpleGraph {
         if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
             return new ArrayList<>();
         }
-        Queue queuePath = new LinkedList<Integer>();
+        Queue<Integer> queuePath = new LinkedList<Integer>();
         clearSearchInfo();
         shortestPathIndexes.add(VFrom);
         int consideredIndex = VFrom;
@@ -86,8 +86,9 @@ class SimpleGraph {
 
     /**
      *
-     * Add index to path, and remove prev added if prev is a part of not optimal path
-     * SHOULD BE: unit tests
+     * Add index to path, and remove prev added
+     * if prev is a part of not optimal path
+     *
      **/
     public void addIndexToPath(int indexForAdd) {
         int lastIndexInArr = shortestPathIndexes.size()-1;
@@ -105,13 +106,13 @@ class SimpleGraph {
     }
 
     /**
-     * (2) Perform path to vertex and set it to queue
+     *  Perform path to vertex and set it to queue
      **/
     public Queue<Integer> performPath(int consideredIndex, int searchedIndex,
                                          Queue<Integer> queuePath)
     {
         int unhitNeighbourIndex = selectUnhitVertex(consideredIndex);
-        boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHINT;
+        boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
         if(isExistUnhitNeighbour){
             return addNeighbourToPath(consideredIndex,
                     unhitNeighbourIndex,
@@ -201,7 +202,7 @@ class SimpleGraph {
     }
 
     /**
-     * Find index of unhint element or return NOT_FOUND_UNHINT
+     * Find index of unhint element or return NOT_FOUND_UNHIT
      *
      * @param vertexIndex
      * @return
@@ -215,7 +216,7 @@ class SimpleGraph {
         if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
         }
-        return NOT_FOUND_UNHINT;
+        return NOT_FOUND_UNHIT;
     }
 
     /**
