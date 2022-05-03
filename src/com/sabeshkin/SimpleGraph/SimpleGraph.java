@@ -109,7 +109,7 @@ class SimpleGraph {
      *  Perform path to vertex and set it to queue
      **/
     public Queue<Integer> performPath(int consideredIndex, int searchedIndex,
-                                         Queue<Integer> queuePath)
+                                      Queue<Integer> queuePath)
     {
         int unhitNeighbourIndex = selectUnhitVertex(consideredIndex);
         boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
@@ -132,9 +132,9 @@ class SimpleGraph {
      * Add Neighbour To Path
      **/
     public Queue<Integer> addNeighbourToPath(int consideredIndex,
-                                            int unhitNeighbourIndex,
-                                            int searchedIndex,
-                                            Queue<Integer> queuePath)
+                                             int unhitNeighbourIndex,
+                                             int searchedIndex,
+                                             Queue<Integer> queuePath)
     {
         hitVertex(unhitNeighbourIndex);
         Vertex consideredVertex = vertex[consideredIndex];
@@ -194,8 +194,8 @@ class SimpleGraph {
     public void clearSearchInfo(){
         IntStream.rangeClosed(0, max_vertex - 1).forEach(
                 vertexIndex -> {
-                                vertex[vertexIndex].Hit = false;
-                                vertex[vertexIndex].Level=0;
+                    vertex[vertexIndex].Hit = false;
+                    vertex[vertexIndex].Level=0;
                 }
         );
         shortestPathIndexes = new ArrayList<>();
