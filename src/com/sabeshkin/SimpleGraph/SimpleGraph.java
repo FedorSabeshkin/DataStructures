@@ -6,6 +6,7 @@ import java.util.stream.*;
 class Vertex {
     public int Value;
     public boolean Hit;
+    public int Level;
 
     public Vertex(int val) {
         Value = val;
@@ -57,7 +58,7 @@ class SimpleGraph {
     final Vertex EMPTY = null;
     int MAX_INDEX;
     final int NOT_FOUND_UNHINT = -1;
-
+    ArrayList<Integer> shortestPathIndexes;
 
     public SimpleGraph(int size) {
         max_vertex = size;
@@ -74,21 +75,34 @@ class SimpleGraph {
         if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
             return new ArrayList<>();
         }
-        clearSearchInfo();
         Queue queuePath = new LinkedList<Integer>();
+        clearSearchInfo();
+        shortestPathIndexes.add(VFrom);
         int consideredIndex = VFrom;
         hitVertex(consideredIndex);
-        queuePath = performPath(consideredIndex, VTo, queuePath);
-        Queue queuePathWithStart = new LinkedList<Integer>();
-        queuePathWithStart.add(VFrom);
-        boolean isExistPath = queuePath.size()>0;
-        if(isExistPath){
-            queuePath.forEach(index -> queuePathWithStart.add(index));
-            return queueToList(queuePathWithStart);
-        }
-        return queueToList(queuePath);
+        performPath(consideredIndex, VTo, queuePath);
+        return stackIndexToVertex(shortestPathIndexes);
     }
 
+    /**
+     *
+     * Add index to path, and remove prev added if prev is a part of not optimal path
+     * SHOULD BE: unit tests
+     **/
+    public void addIndexToPath(int indexForAdd) {
+        int lastIndexInArr = shortestPathIndexes.size()-1;
+        int lastAddedIndex = shortestPathIndexes.get(lastIndexInArr);
+        Vertex lastAddedVertex = vertex[lastAddedIndex];
+        Vertex vertexForAdd = vertex[indexForAdd];
+        boolean isLastLessNextLevel = lastAddedVertex.Level < vertexForAdd.Level;
+        if(isLastLessNextLevel){
+            shortestPathIndexes.add(indexForAdd);
+            return;
+        }
+        shortestPathIndexes.remove(lastIndexInArr);
+        shortestPathIndexes.add(indexForAdd);
+        return;
+    }
 
     /**
      * (2) Perform path to vertex and set it to queue
@@ -97,8 +111,8 @@ class SimpleGraph {
                                          Queue<Integer> queuePath)
     {
         int unhitNeighbourIndex = selectUnhitVertex(consideredIndex);
-        boolean isFoundUnhit = unhitNeighbourIndex != NOT_FOUND_UNHINT;
-        if(isFoundUnhit){
+        boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHINT;
+        if(isExistUnhitNeighbour){
             return addNeighbourToPath(consideredIndex,
                     unhitNeighbourIndex,
                     searchedIndex, queuePath);
@@ -106,13 +120,15 @@ class SimpleGraph {
         boolean isExistIndexToConside = queuePath.size()>0;
         if(isExistIndexToConside){
             int nextConsideredIndex = queuePath.poll();
+            addIndexToPath(nextConsideredIndex);
             return performPath(nextConsideredIndex, searchedIndex, queuePath);
         }
+        clearSearchInfo();
         return queuePath;
     }
 
     /**
-     * (3)
+     * Add Neighbour To Path
      **/
     public Queue<Integer> addNeighbourToPath(int consideredIndex,
                                             int unhitNeighbourIndex,
@@ -120,9 +136,14 @@ class SimpleGraph {
                                             Queue<Integer> queuePath)
     {
         hitVertex(unhitNeighbourIndex);
+        Vertex consideredVertex = vertex[consideredIndex];
+        Vertex unhitNeighbour = vertex[unhitNeighbourIndex];
+        unhitNeighbour.Level = consideredVertex.Level + 1;
+
         queuePath.add(unhitNeighbourIndex);
         boolean isFoundPathEnd = unhitNeighbourIndex == searchedIndex;
         if(isFoundPathEnd){
+            shortestPathIndexes.add(searchedIndex);
             return queuePath;
         }
         return performPath(consideredIndex, searchedIndex, queuePath);
@@ -171,8 +192,12 @@ class SimpleGraph {
      */
     public void clearSearchInfo(){
         IntStream.rangeClosed(0, max_vertex - 1).forEach(
-                vertexIndex -> vertex[vertexIndex].Hit = false
+                vertexIndex -> {
+                                vertex[vertexIndex].Hit = false;
+                                vertex[vertexIndex].Level=0;
+                }
         );
+        shortestPathIndexes = new ArrayList<>();
     }
 
     /**
