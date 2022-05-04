@@ -13,29 +13,7 @@ class Vertex {
         Hit = false;
     }
 
-    /**
-     * We compare only  Value
-     * for easy check right DepthFirstSearch() in Unit tests
-     *
-     * @param obj
-     * @return
-     */
-    @Override
-    public boolean equals(Object obj) {
-        boolean isSameObject = obj == this;
-        if (isSameObject) {
-            return true;
-        }
 
-        boolean isAnotherClassObject = !(obj instanceof Vertex);
-        if (isAnotherClassObject) {
-            return false;
-        }
-        Vertex bstNodeForCheck = (Vertex) obj;
-        boolean isEqualValue = this.Value == bstNodeForCheck.Value;
-
-        return isEqualValue;
-    }
 
     /**
      * Show Value of vertex
@@ -75,12 +53,11 @@ class SimpleGraph {
         if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
             return new ArrayList<>();
         }
-        Queue<Integer> queuePath = new LinkedList<Integer>();
+        Queue<Integer> queuePath = new LinkedList<>();
         clearSearchInfo();
         shortestPathIndexes.add(VFrom);
-        int consideredIndex = VFrom;
-        hitVertex(consideredIndex);
-        performPath(consideredIndex, VTo, queuePath);
+        hitVertex(VFrom);
+        performPath(VFrom, VTo, queuePath);
         return stackIndexToVertex(shortestPathIndexes);
     }
 
@@ -102,7 +79,6 @@ class SimpleGraph {
         }
         shortestPathIndexes.remove(lastIndexInArr);
         shortestPathIndexes.add(indexForAdd);
-        return;
     }
 
     /**
@@ -150,16 +126,6 @@ class SimpleGraph {
         return performPath(consideredIndex, searchedIndex, queuePath);
     }
 
-    /**
-     * Queue of indexes to list of Vertex object
-     * @param queue
-     * @return
-     */
-    public ArrayList<Vertex> queueToList(Queue<Integer> queue) {
-        ArrayList<Vertex> path = new ArrayList<>();
-        queue.forEach(index -> path.add(vertex[index]));
-        return path;
-    }
 
     /**
      * Search path between vertex by their indexes
