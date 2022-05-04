@@ -1,8 +1,6 @@
 package com.sabeshkin.SimpleGraph;
 
 import java.util.*;
-import java.util.stream.*;
-
 class Vertex {
     public int Value;
     public boolean Hit;
@@ -13,7 +11,29 @@ class Vertex {
         Hit = false;
     }
 
+    /**
+     * We compare only  Value
+     * for easy check right DepthFirstSearch() in Unit tests
+     *
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj) {
+        boolean isSameObject = obj == this;
+        if (isSameObject) {
+            return true;
+        }
 
+        boolean isAnotherClassObject = !(obj instanceof Vertex);
+        if (isAnotherClassObject) {
+            return false;
+        }
+        Vertex bstNodeForCheck = (Vertex) obj;
+        boolean isEqualValue = this.Value == bstNodeForCheck.Value;
+
+        return isEqualValue;
+    }
 
     /**
      * Show Value of vertex
@@ -158,12 +178,13 @@ class SimpleGraph {
      * Clear all hit about search
      */
     public void clearSearchInfo(){
-        IntStream.rangeClosed(0, max_vertex - 1).forEach(
+        java.util.stream.IntStream.rangeClosed(0, max_vertex - 1).forEach(
                 vertexIndex -> {
                     vertex[vertexIndex].Hit = false;
                     vertex[vertexIndex].Level=0;
                 }
         );
+
         shortestPathIndexes = new ArrayList<>();
     }
 
@@ -175,10 +196,11 @@ class SimpleGraph {
      */
     public int selectUnhitVertex(int vertexIndex) {
 
-        OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1)
+        OptionalInt unhitNeighborOptinal = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1)
                 .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
                 .filter(index -> !vertex[index].Hit)
                 .findFirst();
+
         if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
         }
@@ -291,7 +313,7 @@ class SimpleGraph {
      */
     public boolean isHaveSearchedInClosestChildren(int vertexIndex, int searchedVertexIndex) {
 
-        OptionalInt searchedNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1)
+        OptionalInt searchedNeighborOptinal = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1)
                 .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
                 .filter(index -> index == searchedVertexIndex).findFirst();
         return searchedNeighborOptinal.isPresent();
