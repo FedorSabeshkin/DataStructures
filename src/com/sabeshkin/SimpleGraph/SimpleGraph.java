@@ -1,7 +1,7 @@
 package com.sabeshkin.SimpleGraph;
 
 import java.util.*;
-import java.util.stream.*;
+
 class Vertex {
     public int Value;
     public boolean Hit;
@@ -75,7 +75,7 @@ class SimpleGraph {
         shortestPathIndexes.add(VFrom);
         hitVertex(VFrom);
         boolean isSamePoint = VFrom == VTo;
-        if(isSamePoint){
+        if (isSamePoint) {
             return stackIndexToVertex(shortestPathIndexes);
         }
         Queue<Integer> queuePath = new LinkedList<>();
@@ -172,20 +172,20 @@ class SimpleGraph {
      * Clear all hit about search
      */
     public void clearSearchInfo() {
-        IntStream.rangeClosed(0, max_vertex - 1).forEach(vertexIndex -> {
+        for (int vertexIndex = 0; vertexIndex < max_vertex; vertexIndex++) {
             clearParams(vertexIndex);
-        });
-
+        }
         shortestPathIndexes = new ArrayList<>();
     }
 
     /**
      * Clear search params of Vertex object
+     *
      * @param vertexIndex
      */
     public void clearParams(int vertexIndex) {
         Vertex vertexObject = vertex[vertexIndex];
-        if(vertexObject != EMPTY){
+        if (vertexObject != EMPTY) {
             vertexObject.Hit = false;
             vertexObject.Level = 0;
         }
@@ -199,7 +199,7 @@ class SimpleGraph {
      */
     public int selectUnhitVertex(int vertexIndex) {
 
-        OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
+        OptionalInt unhitNeighborOptinal = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
 
         if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
@@ -316,7 +316,7 @@ class SimpleGraph {
      */
     public boolean isHaveSearchedInClosestChildren(int vertexIndex, int searchedVertexIndex) {
 
-        OptionalInt searchedNeighborOptional = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> index == searchedVertexIndex).findFirst();
+        OptionalInt searchedNeighborOptional = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> index == searchedVertexIndex).findFirst();
         return searchedNeighborOptional.isPresent();
     }
 
