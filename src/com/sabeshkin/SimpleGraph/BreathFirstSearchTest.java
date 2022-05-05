@@ -128,5 +128,44 @@ class BreathFirstSearchTest {
         assertEquals(3, factBreadth.size());
         assertIterableEquals(breadthExpectedList_3, factBreadth);
     }
+
+    @Test
+    void BreadthFirstSearch_Same_Point_Test() {
+        SimpleGraph simpleGraph = initilazeMockGraph();
+        ArrayList<Vertex> breadthExpectedList_3 = new ArrayList<>();
+        breadthExpectedList_3.add(new Vertex(1));
+        ArrayList<Vertex> factBreadth = simpleGraph.BreadthFirstSearch(0,0);
+        assertEquals(1, factBreadth.size());
+        assertIterableEquals(breadthExpectedList_3, factBreadth);
+    }
+
+    @Test
+    void BreadthFirstSearch_One_Null_Without_Exception_Test() {
+        SimpleGraph simpleGraph = new SimpleGraph(5);
+        IntStream.rangeClosed(1, 4).forEach(
+                number -> simpleGraph.AddVertex(number)
+        );
+        // A
+        simpleGraph.AddEdge(0,1);
+        simpleGraph.AddEdge(0,2);
+        simpleGraph.AddEdge(0,3);
+        // B
+        simpleGraph.AddEdge(1,0);
+        simpleGraph.AddEdge(1,3);
+        // C
+        simpleGraph.AddEdge(3,0);
+        simpleGraph.AddEdge(2,3);
+        // D
+        simpleGraph.AddEdge(3,0);
+        simpleGraph.AddEdge(3,1);
+        simpleGraph.AddEdge(3,2);
+        simpleGraph.AddEdge(3,3);
+        ArrayList<Vertex> breadthExpectedList_3 = new ArrayList<>();
+        breadthExpectedList_3.add(new Vertex(1));
+        breadthExpectedList_3.add(new Vertex(2));
+        ArrayList<Vertex> factBreadth = simpleGraph.BreadthFirstSearch(0,1);
+        assertEquals(2, factBreadth.size());
+        assertIterableEquals(breadthExpectedList_3, factBreadth);
+    }
 }
 

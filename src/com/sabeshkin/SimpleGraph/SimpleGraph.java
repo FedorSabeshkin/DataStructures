@@ -1,6 +1,7 @@
 package com.sabeshkin.SimpleGraph;
 
 import java.util.*;
+import java.util.stream.*;
 class Vertex {
     public int Value;
     public boolean Hit;
@@ -66,34 +67,33 @@ class SimpleGraph {
     }
 
 
-
-
-    public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
-    {
-        if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
+    public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo) {
+        if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {
             return new ArrayList<>();
         }
-        Queue<Integer> queuePath = new LinkedList<>();
         clearSearchInfo();
         shortestPathIndexes.add(VFrom);
         hitVertex(VFrom);
+        boolean isSamePoint = VFrom == VTo;
+        if(isSamePoint){
+            return stackIndexToVertex(shortestPathIndexes);
+        }
+        Queue<Integer> queuePath = new LinkedList<>();
         performPath(VFrom, VTo, queuePath);
         return stackIndexToVertex(shortestPathIndexes);
     }
 
     /**
-     *
      * Add index to path, and remove prev added
      * if prev is a part of not optimal path
-     *
      **/
     public void addIndexToPath(int indexForAdd) {
-        int lastIndexInArr = shortestPathIndexes.size()-1;
+        int lastIndexInArr = shortestPathIndexes.size() - 1;
         int lastAddedIndex = shortestPathIndexes.get(lastIndexInArr);
         Vertex lastAddedVertex = vertex[lastAddedIndex];
         Vertex vertexForAdd = vertex[indexForAdd];
         boolean isLastLessNextLevel = lastAddedVertex.Level < vertexForAdd.Level;
-        if(isLastLessNextLevel){
+        if (isLastLessNextLevel) {
             shortestPathIndexes.add(indexForAdd);
             return;
         }
@@ -102,20 +102,16 @@ class SimpleGraph {
     }
 
     /**
-     *  Perform path to vertex and set it to queue
+     * Perform path to vertex and set it to queue
      **/
-    public Queue<Integer> performPath(int consideredIndex, int searchedIndex,
-                                      Queue<Integer> queuePath)
-    {
+    public Queue<Integer> performPath(int consideredIndex, int searchedIndex, Queue<Integer> queuePath) {
         int unhitNeighbourIndex = selectUnhitVertex(consideredIndex);
         boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
-        if(isExistUnhitNeighbour){
-            return addNeighbourToPath(consideredIndex,
-                    unhitNeighbourIndex,
-                    searchedIndex, queuePath);
+        if (isExistUnhitNeighbour) {
+            return addNeighbourToPath(consideredIndex, unhitNeighbourIndex, searchedIndex, queuePath);
         }
-        boolean isExistIndexToConside = queuePath.size()>0;
-        if(isExistIndexToConside){
+        boolean isExistIndexToConside = queuePath.size() > 0;
+        if (isExistIndexToConside) {
             int nextConsideredIndex = queuePath.poll();
             addIndexToPath(nextConsideredIndex);
             return performPath(nextConsideredIndex, searchedIndex, queuePath);
@@ -127,11 +123,7 @@ class SimpleGraph {
     /**
      * Add Neighbour To Path
      **/
-    public Queue<Integer> addNeighbourToPath(int consideredIndex,
-                                             int unhitNeighbourIndex,
-                                             int searchedIndex,
-                                             Queue<Integer> queuePath)
-    {
+    public Queue<Integer> addNeighbourToPath(int consideredIndex, int unhitNeighbourIndex, int searchedIndex, Queue<Integer> queuePath) {
         hitVertex(unhitNeighbourIndex);
         Vertex consideredVertex = vertex[consideredIndex];
         Vertex unhitNeighbour = vertex[unhitNeighbourIndex];
@@ -139,7 +131,7 @@ class SimpleGraph {
 
         queuePath.add(unhitNeighbourIndex);
         boolean isFoundPathEnd = unhitNeighbourIndex == searchedIndex;
-        if(isFoundPathEnd){
+        if (isFoundPathEnd) {
             shortestPathIndexes.add(searchedIndex);
             return queuePath;
         }
@@ -149,12 +141,13 @@ class SimpleGraph {
 
     /**
      * Search path between vertex by their indexes
+     *
      * @param VFrom
      * @param VTo
      * @return
      */
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
-        if(!isValidIndex(VFrom) || !isValidIndex(VTo)){
+        if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {
             return new ArrayList<>();
         }
         clearSearchInfo();
@@ -165,6 +158,7 @@ class SimpleGraph {
 
     /**
      * Stack of indexes to stack of Vertex object
+     *
      * @param stack
      * @return
      */
@@ -177,15 +171,24 @@ class SimpleGraph {
     /**
      * Clear all hit about search
      */
-    public void clearSearchInfo(){
-        java.util.stream.IntStream.rangeClosed(0, max_vertex - 1).forEach(
-                vertexIndex -> {
-                    vertex[vertexIndex].Hit = false;
-                    vertex[vertexIndex].Level=0;
-                }
-        );
+    public void clearSearchInfo() {
+        IntStream.rangeClosed(0, max_vertex - 1).forEach(vertexIndex -> {
+            clearParams(vertexIndex);
+        });
 
         shortestPathIndexes = new ArrayList<>();
+    }
+
+    /**
+     * Clear search params of Vertex object
+     * @param vertexIndex
+     */
+    public void clearParams(int vertexIndex) {
+        Vertex vertexObject = vertex[vertexIndex];
+        if(vertexObject != EMPTY){
+            vertexObject.Hit = false;
+            vertexObject.Level = 0;
+        }
     }
 
     /**
@@ -196,10 +199,7 @@ class SimpleGraph {
      */
     public int selectUnhitVertex(int vertexIndex) {
 
-        OptionalInt unhitNeighborOptinal = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1)
-                .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
-                .filter(index -> !vertex[index].Hit)
-                .findFirst();
+        OptionalInt unhitNeighborOptinal = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
 
         if (unhitNeighborOptinal.isPresent()) {
             return unhitNeighborOptinal.getAsInt();
@@ -254,11 +254,12 @@ class SimpleGraph {
             stack = setVertexToStack(searchedVertexIndex, stack);
             return stack;
         }
-        return findOnAnotherBranch( parentIndex,  searchedVertexIndex,  stack);
+        return findOnAnotherBranch(parentIndex, searchedVertexIndex, stack);
     }
 
     /**
      * Find vertex between more remote nodes
+     *
      * @param parentIndex
      * @param searchedVertexIndex
      * @param stack
@@ -270,12 +271,13 @@ class SimpleGraph {
         if (isNextNeighbour) {
             return searchPath(nextNeighbour, searchedVertexIndex, stack);
         }
-        return findFromPrevVertex(parentIndex,  searchedVertexIndex,  stack);
+        return findFromPrevVertex(parentIndex, searchedVertexIndex, stack);
 
     }
 
     /**
      * Start find searchedVertex from another neighbours of vertex
+     *
      * @param parentIndex
      * @param searchedVertexIndex
      * @param stack
@@ -289,17 +291,18 @@ class SimpleGraph {
         }
         int lastStackElementIndex = stack.size() - 1;
         int indexForStartDeep = stack.get(lastStackElementIndex);
-        vertex[indexForStartDeep].Hit=true;
+        vertex[indexForStartDeep].Hit = true;
         return selectFromDeeperLevel(indexForStartDeep, searchedVertexIndex, stack);
     }
 
     /**
      * Remove last element of stack if last element is exist
+     *
      * @param stack
      * @return changed or empty stack
      */
-    private ArrayList<Integer> removeLastFromStack(ArrayList<Integer> stack){
-        if(stack.size() > 0){
+    private ArrayList<Integer> removeLastFromStack(ArrayList<Integer> stack) {
+        if (stack.size() > 0) {
             int lastStackElementIndex = stack.size() - 1;
             stack.remove(lastStackElementIndex);
         }
@@ -313,10 +316,8 @@ class SimpleGraph {
      */
     public boolean isHaveSearchedInClosestChildren(int vertexIndex, int searchedVertexIndex) {
 
-        OptionalInt searchedNeighborOptinal = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1)
-                .filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex))
-                .filter(index -> index == searchedVertexIndex).findFirst();
-        return searchedNeighborOptinal.isPresent();
+        OptionalInt searchedNeighborOptional = IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> index == searchedVertexIndex).findFirst();
+        return searchedNeighborOptional.isPresent();
     }
 
     /**
