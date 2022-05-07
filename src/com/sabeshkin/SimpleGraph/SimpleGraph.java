@@ -89,14 +89,25 @@ class SimpleGraph {
      */
     public void collectWeakVertices(int indexOfVertex,
                                     ArrayList<Integer> weakVertices){
-        ArrayList<Integer> neighbourIndexes = collectNeighbourIndexes(indexOfVertex);
-        Optional<Integer> triangleNeighbourOptional = neighbourIndexes.stream().
-                filter(indexOfNeighbour ->  isHaveNeighbour(indexOfNeighbour, neighbourIndexes))
-                .findFirst();
-        if(triangleNeighbourOptional.isPresent()){
+        List<Integer> triangleNeighbourList = collectTriangleNeighbour(indexOfVertex);
+        boolean isExistTriangleNeighbour = triangleNeighbourList.size()>0;
+        if(isExistTriangleNeighbour){
             return;
         }
         weakVertices.add(indexOfVertex);
+    }
+
+    /**
+     * Collect "Triangle" Neighbours
+     * @param indexOfVertex
+     * @return
+     */
+    public List<Integer> collectTriangleNeighbour(int indexOfVertex){
+        ArrayList<Integer> neighbourIndexes = collectNeighbourIndexes(indexOfVertex);
+        List<Integer> triangleNeighbourList = neighbourIndexes.stream()
+                .filter(indexOfNeighbour ->  isHaveNeighbour(indexOfNeighbour, neighbourIndexes))
+                .collect(java.util.stream.Collectors.toList());
+        return triangleNeighbourList;
     }
 
     /**
@@ -109,14 +120,24 @@ class SimpleGraph {
 
         ArrayList<Integer> neighbourIndexes = new ArrayList<>();
         int unhitNeighbourIndex = selectUnhitNeighbour(indexOfVertex);
-        boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
-        while(isExistUnhitNeighbour){
+        while(isExistUnhitNeighbour(unhitNeighbourIndex)){
+            hitVertex(unhitNeighbourIndex);
             neighbourIndexes.add(unhitNeighbourIndex);
+            int prevUnhitNeighbourIndex = unhitNeighbourIndex;
             unhitNeighbourIndex = selectUnhitNeighbour(indexOfVertex);
-            isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
+            assert unhitNeighbourIndex != prevUnhitNeighbourIndex:"Reunit-test selectUnhitNeighbour()";
         }
         clearSearchInfo();
         return neighbourIndexes;
+    }
+
+    /**
+     *
+     * Check is Exist Unhit Neighbour for index Of Vertex
+     *
+     **/
+    public boolean isExistUnhitNeighbour(int unhitNeighbourIndex){
+        return unhitNeighbourIndex != NOT_FOUND_UNHIT;
     }
 
     /**
