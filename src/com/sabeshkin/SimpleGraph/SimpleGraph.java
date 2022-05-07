@@ -105,7 +105,7 @@ class SimpleGraph {
     public List<Integer> collectTriangleNeighbour(int indexOfVertex){
         ArrayList<Integer> neighbourIndexes = collectNeighbourIndexes(indexOfVertex);
         List<Integer> triangleNeighbourList = neighbourIndexes.stream()
-                .filter(indexOfNeighbour ->  isHaveNeighbour(indexOfNeighbour, neighbourIndexes))
+                .filter(indexOfNeighbour ->  isHaveNeighbourInList(indexOfNeighbour, neighbourIndexes))
                 .collect(java.util.stream.Collectors.toList());
         return triangleNeighbourList;
     }
@@ -145,11 +145,11 @@ class SimpleGraph {
      * Check if indexOfVertex have neighbour in input list
      *
      **/
-    public boolean isHaveNeighbour(int indexOfVertex,
-                                   ArrayList<Integer> indexesOfVertices){
+    public boolean isHaveNeighbourInList(int indexOfVertex,
+                                         ArrayList<Integer> indexesOfVertices){
         Optional<Integer> neighbours = indexesOfVertices.stream()
                 .filter(potentialNeighbour ->
-                        IsEdge(indexOfVertex, potentialNeighbour)).findFirst();
+                        isEdgeNeighbor(indexOfVertex, potentialNeighbour)).findFirst();
 
 
         return neighbours.isPresent();
@@ -321,7 +321,8 @@ class SimpleGraph {
      * @return
      */
     public boolean isEdgeNeighbor(int vertexIndex, int anotherVertexIndex) {
-        return IsEdge(vertexIndex, anotherVertexIndex);
+        boolean isDifferenceIndexes = vertexIndex!=anotherVertexIndex;
+        return IsEdge(vertexIndex, anotherVertexIndex) && isDifferenceIndexes;
     }
 
     /**

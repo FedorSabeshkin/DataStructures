@@ -39,7 +39,6 @@ class CollectTriangleNeighbourTest {
     @Test
     void CollectTriangleNeighbour_Remove_Edge_B_D_Test() {
         SimpleGraph simpleGraph = initilazeMockGraph();
-        // B E
         simpleGraph.RemoveEdge(1, 3);
         ArrayList<Integer> expectedList = new ArrayList<>();
         expectedList.add(2);
@@ -51,12 +50,24 @@ class CollectTriangleNeighbourTest {
     @Test
     void CollectTriangleNeighbour_Remove_Edge_A_B_Test() {
         SimpleGraph simpleGraph = initilazeMockGraph();
-        // B E
+        // A B
         simpleGraph.RemoveEdge(0, 1);
         ArrayList<Integer> expectedList = new ArrayList<>();
         expectedList.add(2);
         expectedList.add(3);
         List<Integer>factBreadth = simpleGraph.collectTriangleNeighbour(0);
+        assertIterableEquals(expectedList, factBreadth);
+    }
+
+    @Test
+    void CollectTriangleNeighbour_From_B_Remove_Edge_B_A_And_B_E_Test() {
+        SimpleGraph simpleGraph = initilazeMockGraph();
+        // A B
+        simpleGraph.RemoveEdge(0, 1);
+        // A E
+        simpleGraph.RemoveEdge(1, 4);
+        ArrayList<Integer> expectedList = new ArrayList<>();
+        List<Integer>factBreadth = simpleGraph.collectTriangleNeighbour(1);
         assertIterableEquals(expectedList, factBreadth);
     }
 
