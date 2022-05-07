@@ -24,7 +24,7 @@ class BreathFirstSearchTest {
         SimpleGraph simpleGraph = new SimpleGraph(0);
     }
 
-    private SimpleGraph initilazeMockGraph(){
+    public static SimpleGraph initilazeMockGraph(){
         SimpleGraph simpleGraph = new SimpleGraph(5);
         IntStream.rangeClosed(1, 5).forEach(
                 number -> simpleGraph.AddVertex(number)

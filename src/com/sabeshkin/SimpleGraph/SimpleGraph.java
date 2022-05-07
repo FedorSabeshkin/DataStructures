@@ -57,6 +57,7 @@ class SimpleGraph {
     final Vertex EMPTY = null;
     int MAX_INDEX;
     final int NOT_FOUND_UNHIT = -1;
+    final int NOT_FOUND_EMPTY = -1;
     ArrayList<Integer> shortestPathIndexes;
 
     public SimpleGraph(int size) {
@@ -65,6 +66,90 @@ class SimpleGraph {
         vertex = new Vertex[size];
         MAX_INDEX = size - 1;
     }
+
+    /**
+     * Find weak vertices
+     *
+     **/
+    public ArrayList<Vertex> WeakVertices()
+    {
+        ArrayList<Integer> weakVerticesIndexes = new ArrayList<>();
+        int lastFillIndex = findLastFillIndex();
+        assert lastFillIndex<max_vertex:"Check findLastFillIndex() method edge cases";
+        java.util.stream.IntStream.rangeClosed(0, lastFillIndex).forEach(
+                indexOfVertex -> collectWeakVertices(indexOfVertex, weakVerticesIndexes));
+
+        return stackIndexToVertex(weakVerticesIndexes);
+    }
+
+    /**
+     *
+     * Collect weak wertices
+     *
+     */
+    public void collectWeakVertices(int indexOfVertex,
+                                    ArrayList<Integer> weakVertices){
+        ArrayList<Integer> neighbourIndexes = collectNeighbourIndexes(indexOfVertex);
+        Optional<Integer> triangleNeighbourOptional = neighbourIndexes.stream().
+                filter(indexOfNeighbour ->  isHaveNeighbour(indexOfNeighbour, neighbourIndexes))
+                .findFirst();
+        if(triangleNeighbourOptional.isPresent()){
+            return;
+        }
+        weakVertices.add(indexOfVertex);
+    }
+
+    /**
+     *
+     * Collect neihbours indexes of indexOfVertex
+     *
+     **/
+    public ArrayList<Integer> collectNeighbourIndexes(int indexOfVertex)
+    {
+
+        ArrayList<Integer> neighbourIndexes = new ArrayList<>();
+        int unhitNeighbourIndex = selectUnhitNeighbour(indexOfVertex);
+        boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
+        while(isExistUnhitNeighbour){
+            neighbourIndexes.add(unhitNeighbourIndex);
+            unhitNeighbourIndex = selectUnhitNeighbour(indexOfVertex);
+            isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
+        }
+        clearSearchInfo();
+        return neighbourIndexes;
+    }
+
+    /**
+     *
+     * Check if indexOfVertex have neighbour in input list
+     *
+     **/
+    public boolean isHaveNeighbour(int indexOfVertex,
+                                   ArrayList<Integer> indexesOfVertices){
+        Optional<Integer> neighbours = indexesOfVertices.stream()
+                .filter(potentialNeighbour ->
+                        IsEdge(indexOfVertex, potentialNeighbour)).findFirst();
+
+
+        return neighbours.isPresent();
+    }
+
+
+
+    /**
+     * Find first empty index. IT is will max what we will see
+     *
+     */
+    public int findLastFillIndex() {
+        OptionalInt firstEmptyIndexOpt = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1).filter(
+                vertexIndex -> vertex[vertexIndex] == EMPTY
+        ).findFirst();
+        if(firstEmptyIndexOpt.isPresent()){
+            return firstEmptyIndexOpt.getAsInt()-1;
+        }
+        return max_vertex-1;
+    }
+
 
 
     public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo) {
@@ -105,7 +190,7 @@ class SimpleGraph {
      * Perform path to vertex and set it to queue
      **/
     public Queue<Integer> performPath(int consideredIndex, int searchedIndex, Queue<Integer> queuePath) {
-        int unhitNeighbourIndex = selectUnhitVertex(consideredIndex);
+        int unhitNeighbourIndex = selectUnhitNeighbour(consideredIndex);
         boolean isExistUnhitNeighbour = unhitNeighbourIndex != NOT_FOUND_UNHIT;
         if (isExistUnhitNeighbour) {
             return addNeighbourToPath(consideredIndex, unhitNeighbourIndex, searchedIndex, queuePath);
@@ -192,12 +277,12 @@ class SimpleGraph {
     }
 
     /**
-     * Find index of unhint element or return NOT_FOUND_UNHIT
+     * Find index of unhint neighbour or return NOT_FOUND_UNHIT
      *
      * @param vertexIndex
      * @return
      */
-    public int selectUnhitVertex(int vertexIndex) {
+    public int selectUnhitNeighbour(int vertexIndex) {
 
         OptionalInt unhitNeighborOptinal = java.util.stream.IntStream.rangeClosed(0, max_vertex - 1).filter(anotherVertexIndex -> isEdgeNeighbor(vertexIndex, anotherVertexIndex)).filter(index -> !vertex[index].Hit).findFirst();
 
@@ -266,7 +351,7 @@ class SimpleGraph {
      * @return
      */
     public ArrayList<Integer> findOnAnotherBranch(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
-        int nextNeighbour = selectUnhitVertex(parentIndex);
+        int nextNeighbour = selectUnhitNeighbour(parentIndex);
         boolean isNextNeighbour = nextNeighbour != -1;
         if (isNextNeighbour) {
             return searchPath(nextNeighbour, searchedVertexIndex, stack);

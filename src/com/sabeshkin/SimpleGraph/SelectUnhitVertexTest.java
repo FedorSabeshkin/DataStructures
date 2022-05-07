@@ -51,13 +51,13 @@ class SelectUnhitVertexTest {
 
 
         // Check that removed from vertex arr
-        assertEquals(1, simpleGraph.selectUnhitVertex(0));
+        assertEquals(1, simpleGraph.selectUnhitNeighbour(0));
         simpleGraph.hitVertex(1);
-        assertEquals(2, simpleGraph.selectUnhitVertex(0));
+        assertEquals(2, simpleGraph.selectUnhitNeighbour(0));
         simpleGraph.hitVertex(2);
-        assertEquals(3, simpleGraph.selectUnhitVertex(0));
+        assertEquals(3, simpleGraph.selectUnhitNeighbour(0));
         simpleGraph.hitVertex(3);
-        assertEquals(-1, simpleGraph.selectUnhitVertex(0));
+        assertEquals(-1, simpleGraph.selectUnhitNeighbour(0));
     }
 }
 
