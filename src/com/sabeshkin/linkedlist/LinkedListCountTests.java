@@ -1,12 +1,13 @@
 package com.sabeshkin.linkedlist;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class LinkedListCountTests {
 	LinkedList linkedList;
-	
+
 	@Test
 	public void testCountTen() {
 		linkedList = new LinkedList();
@@ -19,7 +20,7 @@ public class LinkedListCountTests {
 				10,
 				linkedList.count());
 	}
-	
+
 	@Test
 	public void testCountOne() {
 		linkedList = new LinkedList();
@@ -29,7 +30,7 @@ public class LinkedListCountTests {
 				1,
 				linkedList.count());
 	}
-	
+
 	@Test
 	public void testCountZero() {
 		linkedList = new LinkedList();

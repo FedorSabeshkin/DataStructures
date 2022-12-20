@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 public class LinkedListRemoveAllTest {
 	LinkedList linkedList;
 	
-	
-	
 	@Test
 	public void testRemoveAllFromListWithOnlyOneElementHeadIsNull() {
 		linkedList = new LinkedList();
